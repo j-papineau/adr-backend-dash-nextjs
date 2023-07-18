@@ -6,10 +6,9 @@ import ZipBarChart from '@/components/ZipBarChart'
 import RecentZipSearches from '@/components/RecentZipSearches'
 import  Head  from 'next/head'
 import ZipSearchData from '@/components/ZipSearchData'
-import Title from 'antd/es/skeleton/Title'
 import { Divider } from 'antd'
 
-const inter = Inter({ subsets: ['latin'] })
+//const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (

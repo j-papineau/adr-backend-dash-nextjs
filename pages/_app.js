@@ -9,5 +9,8 @@ export default function App({ Component, pageProps }) {
     <SideBarAlt>
       <Component {...pageProps} />
     </SideBarAlt> 
+    // <Sidebar>
+    //   <Component {...pageProps} />
+    // </Sidebar>
  )
 }

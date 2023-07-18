@@ -1,22 +1,11 @@
 import Link from "next/link";
-import { MdOutlineDashboard } from "react-icons/md";
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { RiSettings4Line } from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
-import {BsFillChatLeftQuoteFill} from "react-icons/bs"
 import { spencerView } from "@/data/sideBarItems";
 import Image from "next/image";
 import { Divider } from "antd";
 
 const SideBarAlt = ({ children }) => {
-  //   const menuItems = [
-
-  //     {name: "dashboard", link: "/", icon: MdOutlineDashboard}
-
-  //   ]
 
   const menus = spencerView
 
