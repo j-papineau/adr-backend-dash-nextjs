@@ -6,6 +6,8 @@ import ZipBarChart from '@/components/ZipBarChart'
 import RecentZipSearches from '@/components/RecentZipSearches'
 import  Head  from 'next/head'
 import ZipSearchData from '@/components/ZipSearchData'
+import Title from 'antd/es/skeleton/Title'
+import { Divider } from 'antd'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +22,7 @@ export default function Home() {
     </Head>
     <main className='bg-gray-100 min-h-screen'>
       <Header/>
+      <Divider/>
         <DashCards/>
           <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
             <ZipSearchData/>

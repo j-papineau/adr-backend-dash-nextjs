@@ -1,7 +1,12 @@
 import React from 'react'
+import Title from 'antd/es/skeleton/Title'
 
 const DashCards = () => {
   return (
+    <div>
+    <h2 className='pl-2 mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-4xl dark:text-black'>
+        Marketing AaG
+    </h2>
     <div className='grid lg:grid-cols-5 gap-4 p-4'>
         <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
             <div className='flex flex-col w-full pb-4'>
@@ -32,7 +37,7 @@ const DashCards = () => {
             </p>
         </div>
     </div>
-    
+    </div>
   )
 }
 
