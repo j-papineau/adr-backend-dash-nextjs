@@ -34,7 +34,7 @@ const Login = () => {
         <form className="mt-6">
           <div className="mt-2">
             
-            <div onClick={handleSignIn} className="w-full flex items-center justify-center px-10 py-4 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+            <div onClick={handleSignIn} className="w-full flex items-center justify-center px-10 py-4 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 cursor-pointer">
                     <FcGoogle/>
                     <p className="pl-3">Login with ADR account</p>
             </div>

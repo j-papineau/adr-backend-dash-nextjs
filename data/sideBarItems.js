@@ -7,9 +7,11 @@ import {BsFillChatLeftQuoteFill} from "react-icons/bs"
 import { MdOutlineDashboard } from "react-icons/md";
 
 export const spencerView = [
+    
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Profile", link: "/profile", icon: AiOutlineUser },
-    { name: "Analytics", link: "/", icon: TbReportAnalytics},
-    { name: "Settings", link: "/", icon: RiSettings4Line },
+    { name: "Zip Search Analytics", link: "/zipSearchData", icon: TbReportAnalytics},
     { name: "Quote Tool", link: "/spencer-quote-tool", icon: BsFillChatLeftQuoteFill},
+    { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
+    { name: "Settings", link: "/", icon: RiSettings4Line},
+    
 ]

@@ -1,10 +1,10 @@
 import React from 'react'
-import ProfileHeader from '@/components/ProfileHeader'
+import Header from '@/components/Header'
 
 const Profile = () => {
   return (
     <div className='bg-gray-100 min-h-screen'>
-      <ProfileHeader></ProfileHeader>
+      <Header title="Profile"/>
     </div>
   )
 }
