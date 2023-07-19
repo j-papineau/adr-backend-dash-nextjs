@@ -12,12 +12,15 @@
     "antd": "^5.7.0",
     "autoprefixer": "10.4.14",
     "chart.js": "^4.3.0",
+    "firebase": "^10.0.0",
     "jquery": "^3.7.0",
     "next": "13.4.10",
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-firebaseui": "^6.0.0",
     "react-icons": "^4.10.1",
     "tailwindcss": "3.3.3"
   }

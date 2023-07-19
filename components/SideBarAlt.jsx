@@ -4,14 +4,39 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { spencerView } from "@/data/sideBarItems";
 import Image from "next/image";
 import { Divider } from "antd";
+import { UserAuth } from "@/context/AuthContext";
+import { FiLogOut } from "react-icons/fi";
+import Login from "@/pages/login";
+
 
 const SideBarAlt = ({ children }) => {
 
   const menus = spencerView
+  const {user, logOut, googleSignIn} = UserAuth()
+
+  const handleSignIn = async () => {
+    try{
+      await googleSignIn()
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const handleSignOut = async ()  => {
+    try{
+      console.log("signingOut")
+      await logOut();
+    } catch (error){
+      console.log(error);
+    }
+  }
 
   const [open, setOpen] = useState(true);
   return (
-    <div className="flex">
+    <div>
+    {!user ? (<Login></Login>) : (
+
+        <div className="flex">
       <div
         className={`bg-[#0e0e0e] min-h-screen ${
           open ? "w-72" : "w-16"
@@ -63,10 +88,24 @@ const SideBarAlt = ({ children }) => {
               </h2>
             </Link>
           ))}
+
+          {!user ? (<div></div>) : (
+              <div onClick={handleSignOut} className="group items-center font-medium p-2 flex mt-10 cursor-pointer hover:bg-gray-800 rounded-md">
+              <FiLogOut size={20}></FiLogOut>
+              <h2 className="pl-4 overflow-hidden">Log Out</h2>
+              </div>
+          )}
+
+          
         </div>
       </div>
       <main className="w-full">{children}</main>
     </div>
+
+    )
+    }
+    </div>
+    
   );
 };
 
