@@ -4,12 +4,13 @@ import {useRef, useState, useEffect} from 'react'
 //import styles from './SegmentedControl.module.css'
 import ZipBarChart from './ZipBarChart';
 import TopRegionsBar from './TopRegionsBar';
+import { Divider } from 'antd';
 
 
 const ZipSearchData = () => {
     const[selectedValue1, setSelectedValue1] = useState("searches");
   return (
-    <div className='w-full md:col-span-2 relative  m-auto p-4 border rounded-lg bg-white flex-col justify-center'>
+    <div className='w-full md:col-span-2 relative  m-auto p-4 border rounded-lg bg-white dark:bg-darculaBG-heavy flex-col justify-center'>
         <div className='flex-row'>
         <div className='container'>
             <SegmentedControl 
@@ -33,8 +34,8 @@ const ZipSearchData = () => {
         </div>
         
         </div>
-        <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
-        <div>
+        <Divider className='bg-black dark:bg-slate-200'/>
+        <div >
            {
             (selectedValue1 === 'searches') && <ZipBarChart></ZipBarChart>
            }

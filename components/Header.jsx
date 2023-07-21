@@ -14,7 +14,7 @@ const Header = (props) => {
 
   const userNames = user.displayName.split(" ");
 
-  console.log(user);
+  //console.log(user);
 
   const handleSignOut = async () => {
     try{
@@ -30,10 +30,10 @@ const Header = (props) => {
     <div>
       <div className='flex flex-row justify-between px-4 pt-4'>
         <div className='flex justify-center items-center'>
-          <h2 className="font-semibold text-black">{title}</h2>
+          <h2 className="font-semibold text-black dark:text-slate-300">{title}</h2>
         </div>
         <div className='flex justify-center items-center'>
-          <h2 className='text-black italic p-2'>Welcome Back, {userNames[0]}</h2>
+          <h2 className='text-black  dark:text-slate-300 italic p-2'>Welcome Back, {userNames[0]}</h2>
           <div className='flex'>
             <Dropdown placement='bottom-left'>
             <Dropdown.Trigger>
@@ -63,7 +63,7 @@ const Header = (props) => {
           </div>
         </div>  
       </div>
-      <Divider></Divider>
+      <Divider className='bg-black dark:bg-slate-200'></Divider>
     </div>
   )
 }

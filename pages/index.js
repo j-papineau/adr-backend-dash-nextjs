@@ -19,7 +19,7 @@ export default function Home() {
       <meta name='viewport' content='width=device-width, initial-scale=1'/>
       <link rel='icon' href='/favico.ico'/>
     </Head>
-    <main className='bg-gray-100 min-h-screen'>
+    <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen'>
       <Header  title="ADR Backend" />
       
         <DashCards/>

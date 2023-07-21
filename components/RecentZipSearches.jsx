@@ -5,18 +5,18 @@ import {FaShoppingBag, FaSearch} from 'react-icons/fa'
 
 const RecentZipSearches = () => {
   return (
-    <div className='w-full col-span-1 relative lg:h-[85vh] h-[65vh] m-auto p-4 border rounded-lg bg-white overflow-scroll'>
+    <div className='w-full col-span-1 relative lg:h-[85vh] h-[65vh] m-auto p-4 border rounded-lg bg-white dark:bg-darculaBG-heavy overflow-y-scroll overflow-x-hidden '>
       <h1>Recent Searches</h1>
       <ul>
         {data.map((item, id) => (
-          <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 flex items-center cursor-pointer'>
+          <li key={id} className='bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 rounded-lg my-3 p-2 flex items-center cursor-pointer'>
               <div className='bg-blue-100 rounded-lg p-3'>
                 <FaSearch className='text-blue-500'/>
               </div>
-              <div className='pl-4'>
-                <p className='text-gray-800 font-bold'>{item.search}</p>
-                <p className='text-gray-400 text-sm'>Returned: {item.destinationSlug}</p>
-                <p className='text-gray-700 italic'>From: {item.sourceURL}</p>
+              <div className='pl-4 text-slate-700 dark:text-slate-200'>
+                <p className=' font-bold'>{item.search}</p>
+                <p className=' text-sm'>Returned: {item.destinationSlug}</p>
+                <p className=' italic'>From: {item.sourceURL}</p>
               </div>
               <div className='pl-4'>
                 
