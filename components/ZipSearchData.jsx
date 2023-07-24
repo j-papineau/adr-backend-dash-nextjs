@@ -5,12 +5,18 @@ import {useRef, useState, useEffect} from 'react'
 import ZipBarChart from './ZipBarChart';
 import TopRegionsBar from './TopRegionsBar';
 import { Divider } from 'antd';
+import { motion } from 'framer-motion';
 
+/*
+
+    THIS IS THE STATIC DEMO COMPONENT
+
+*/
 
 const ZipSearchData = () => {
     const[selectedValue1, setSelectedValue1] = useState("searches");
   return (
-    <div className='w-full md:col-span-2 relative  m-auto p-4 border rounded-lg bg-white dark:bg-darculaBG-heavy flex-col justify-center'>
+    <motion.div className='w-full md:col-span-2 relative  m-auto p-4 border rounded-lg bg-white dark:bg-darculaBG-heavy flex-col justify-center'>
         <div className='flex-row'>
         <div className='container'>
             <SegmentedControl 
@@ -44,7 +50,7 @@ const ZipSearchData = () => {
            }
         </div>
        
-    </div>
+    </motion.div>
   )
 }
 

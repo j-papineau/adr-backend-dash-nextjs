@@ -6,6 +6,8 @@ import { Card } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import ZipGraphs from '@/components/ZipGraphs'
 import axios from 'axios'
+import { Button } from '@nextui-org/react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const zipSearchData = () => {
 
@@ -16,10 +18,12 @@ const zipSearchData = () => {
 
   useEffect(() => {
 
-    axios.get(url).then((response) => {
+    axios.get(url).then(async (response) => {
+        
         setData(response.data);
         
         setLoading(false);
+        refreshData();
     })
     
     }, [])
@@ -28,20 +32,44 @@ const zipSearchData = () => {
       setLoading(!isLoading);
     }
 
+    async function refreshData(){
+      setLoading(true);
+
+      await delay(400);
+      axios.get(url).then((response) => {
+        setData(response.data);
+        
+        setLoading(false);
+      })
+
+    }
+
+    function delay(time){
+      return new Promise(resolve => setTimeout(resolve, time))
+    }
+
 
 
   return (
-    <div className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen'>
-      <p onClick={checkLoading}>Check Loading</p>
+    <AnimatePresence>
+        <div className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen overflow-x-hidden overflow-y-scroll'>
+      <motion.div>
         <Header title="Zip Search Data"/>
+        <Button onPress={refreshData} className='mr-10 ml-10'>Refresh Data</Button>
         <ZipCards data={data} isLoading={isLoading}></ZipCards>
 
         <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
-          <ZipGraphs></ZipGraphs>
+          <ZipGraphs data={data} isLoading={isLoading}></ZipGraphs>
           <ZipSeachList data={data} isLoading={isLoading}></ZipSeachList>
         </div>
-       
+      </motion.div>  
     </div>
+
+
+
+
+    </AnimatePresence>
+    
   )
 }
 

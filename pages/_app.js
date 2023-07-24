@@ -7,6 +7,7 @@ import Login from './login'
 import {useState, useEffect} from 'react'
 //import react from 'react'
 import { Button } from 'antd'
+import { AnimatePresence, motion } from 'framer-motion'
 
 
 export default function App({ Component, pageProps }) {
@@ -44,7 +45,18 @@ export default function App({ Component, pageProps }) {
    <AuthContextProvider>
     
       <SideBarAlt  darkThemeChange={handleThemeSwitch}>
-        <Component {...pageProps} />
+        <AnimatePresence
+          initial={{ x:1000 }}
+          animate={{ x:0 }}
+          transition={{ duration: 1}}
+          exit= {{x:1000}}
+        >
+          <motion.div>
+            <Component {...pageProps} />
+          </motion.div>
+          
+        </AnimatePresence>
+        
         {/* <p className='bg-blue-100 dark:bg-purple-900'>Tester</p> */}
       </SideBarAlt>
     
