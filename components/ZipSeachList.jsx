@@ -5,21 +5,13 @@ import { FaSearch } from 'react-icons/fa';
 import moment from 'moment';
 
 
-const ZipSeachList = () => {
+const ZipSeachList = ({data, isLoading}) => {
 
-    const [data, setData] = useState([]);
-    const [isLoading, setLoading] = useState(false);
-    const url = 'https://adrstagingreal.wpengine.com/Joel-Dash/php/pullAllTracking.php';
+    
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        axios.get(url).then((response) => {
-            setData(response.data);
-            setLoading(false);
-            
-        })
-        
-    }, [])
+    // }, [])
 
     function convertDataDateToTime(input){
 
@@ -40,7 +32,7 @@ const ZipSeachList = () => {
                 </div>
                 <div className='pl-4 text-slate-700 dark:text-slate-200'>
                     <p className=' font-bold'>{item.zip}</p>
-                    <p className=' text-sm'>Returned: {item.destinationSlug}</p>
+                    <p className=' text-sm'>Returned: {item.slug}</p>
                     <p className=' italic'>From: {item.sourceURL}</p>
                 </div>
                 <div className='pl-4'>
