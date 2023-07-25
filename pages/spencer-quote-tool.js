@@ -4,6 +4,7 @@ import { ReactDOM } from "react"
 
 
 
+
 export default function Spencer() {
     return (
       <>
@@ -12,7 +13,7 @@ export default function Spencer() {
         <Header  title="Bins Quote Tool"/>
 
         <div>
-            
+            <AdrMap/>
         </div>
         
           

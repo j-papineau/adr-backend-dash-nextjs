@@ -48,7 +48,7 @@ const SideBarAlt = ({ children, darkThemeChange}) => {
 
   
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div>
     {!user ? (<Login></Login>) : (

@@ -1,9 +1,9 @@
 
 import Header from "@/components/Header"
 import dynamic from "next/dynamic"
+import AdrMap from "@/components/AdrMap"
 
-const AdrMap = dynamic(() => import('@/components/AdrMap'),
-{ssr: false})
+
 
 
 export default function adrmap() {
@@ -14,8 +14,8 @@ export default function adrmap() {
         <Header  title="ADR Map"/>
 
         
-            <AdrMap/>
-        
+            
+        <AdrMap/>
            
         
        
