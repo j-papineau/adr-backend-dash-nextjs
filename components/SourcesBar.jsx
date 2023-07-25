@@ -87,7 +87,7 @@ const SourcesBar = ({data}) => {
         }
 
         while(sourcesArray.length != 0){
-            let count = 0;
+            let count = 1;
             let current = mode(sourcesArray);
             count = sourcesArray.filter(x => x === current).length;
             sourcesArray = sourcesArray.filter(x => x !== current);

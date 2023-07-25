@@ -30,6 +30,7 @@ const ZipSeachList = ({data, isLoading}) => {
 
   return (
     <div className='w-full col-span-1 relative h-screen m-auto p-4 border rounded-lg bg-white dark:bg-darculaBG-heavy overflow-y-scroll overflow-x-hidden '>
+      <h2 className='text-xl text-black dark:text-white font-poppins '>Search Feed</h2>
       {isLoading ? (<Loading/>) : (
           
             data.map((item, id) => (

@@ -1,34 +1,65 @@
-import React from 'react'
-import { MapContainer, TileLayer } from 'react-leaflet'
-import dynamic from 'next/dynamic'
-import "leaflet/dist/leaflet.css";
-//import ReactLeafletKML from 'react-leaflet-kml'
+import React, { useMemo } from 'react'
+import { useLoadScript, GoogleMap, KmlLayer } from '@react-google-maps/api'
+import { Loading } from '@nextui-org/react'
 
+const AdrMap = () => {
 
+  const libraries = useMemo(() => ['places'],[])
 
+  const {isLoaded} = useLoadScript({
+    googleMapsApiKey: "AIzaSyD1gQOeZR8idLOw-CtAOSN7_2tVlKW6XKI",
+    libraries: libraries,
+  })
 
-function AdrMap() {
-
-  const position = [51.505, -0.09]
-
-  // const kmlText = ""
-  // const parser = new DOMParser();
-  // const kml = parser.parseFromString(kmlText, 'text/kml');
-
-
-  return (
-    <>
-      <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    
-  </MapContainer>
-
-
-    </>
+  const mapCenter = useMemo(
+    () => ({lat:29, lng:-81})
   )
+
+  function generateRandom() {
+    return Math.random() * 10000000000000000
+  }
+
+  // const mapOptions = useMemo<google.maps.MapOptions>(
+  //   () => ({
+  //     disableDefaultUI: true,
+  //     clickableIcons: true,
+  //     scrollwheel: false,
+  //   }),
+  //   []
+  // );
+
+  if(!isLoaded){
+    return <Loading/>
+  }
+
+  return(
+
+
+    <div className='text-black'>
+      <GoogleMap
+        options={{
+          clickableIcons:true
+        }}
+        zoom={5}
+        center={mapCenter}
+        mapTypeId={google.maps.MapTypeId.ROADMAP}
+        mapContainerStyle={{ width: '800px', height: '800px' }}
+        onLoad={() => console.log('Map Component Loaded...')}
+      >
+
+        <KmlLayer
+          url=
+          {"https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh" 
+        + '&ver=' + generateRandom()}
+          options={{preserveViewport : false}}
+          />
+
+        </GoogleMap>
+    </div>
+  )
+    
+   
 }
 
 export default AdrMap
+

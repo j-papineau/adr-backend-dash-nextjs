@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react"
 import { Loading } from "@nextui-org/react";
 import SegmentedControl from "./SegmentedControl";
 import { Divider } from "antd";
-import SearchesBar from "./SearchesBar";
+import SearchesGraph from "./SearchesGraph";
 import SourcesBar from "./SourcesBar";
 
 
@@ -42,7 +42,7 @@ const ZipGraphs = ({data, isLoading}) => {
         </Loading>) : (
           <div>
             {
-              (selectedValue1 === 'searches') && <SearchesBar data={data}/>
+              (selectedValue1 === 'searches') && <SearchesGraph data={data}/>
             }
             {
               (selectedValue1 === 'topSources') && <SourcesBar data={data}/>

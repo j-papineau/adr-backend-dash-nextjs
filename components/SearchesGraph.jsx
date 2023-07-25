@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Bar} from 'react-chartjs-2'
+import { FaTools } from 'react-icons/fa';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -45,8 +46,9 @@ const SearchesBar = ({data}) => {
 
 
   return (
-    <div>
-      
+    <div className='flex text-3xl text-black dark:text-white'>
+      <FaTools className='m-4'/>
+      <p className='p-4'>still in progress, try other tab</p>
     </div>
   )
 }

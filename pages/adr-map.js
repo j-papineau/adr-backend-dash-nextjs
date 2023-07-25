@@ -16,6 +16,8 @@ export default function adrmap() {
         
             <AdrMap className='h-screen w-screen'/>
         
+           
+        
        
          
         

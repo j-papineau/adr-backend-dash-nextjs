@@ -20,7 +20,7 @@ export default function Home() {
       <link rel='icon' href='/favico.ico'/>
     </Head>
     <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen'>
-      <Header  title="ADR Backend" />
+      <Header  title="ADR Backend  *this is a demo page* " />
       
         <DashCards/>
           <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
