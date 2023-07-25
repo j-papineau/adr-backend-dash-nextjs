@@ -3,7 +3,7 @@ import { Divider } from 'antd'
 import { UserAuth } from '@/context/AuthContext'
 import Image from 'next/image'
 import { Dropdown, Avatar, Text } from '@nextui-org/react'
-import Button from '@nextui-org/react'
+
 
 
 
@@ -41,7 +41,7 @@ const Header = (props) => {
               <Avatar
                 bordered
                 size="lg"
-                as="Button"
+                as="button"
                 color="primary"
                 src={user.photoURL}/>
             </Dropdown.Trigger>

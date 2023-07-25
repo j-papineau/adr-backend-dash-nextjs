@@ -19,6 +19,9 @@ const AdrMap = () => {
     return Math.random() * 10000000000000000
   }
 
+  //const mapURL = "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh"
+  const mapURL = "https://www.google.com/maps/d/u/0/kml?mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh&ll=29.83549664344489%2C-82.32165930861&z=7"
+
   // const mapOptions = useMemo<google.maps.MapOptions>(
   //   () => ({
   //     disableDefaultUI: true,
@@ -35,7 +38,7 @@ const AdrMap = () => {
   return(
 
 
-    <div className='text-black'>
+    
       <GoogleMap
         options={{
           clickableIcons:true
@@ -48,14 +51,12 @@ const AdrMap = () => {
       >
 
         <KmlLayer
-          url=
-          {"https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh" 
-        + '&ver=' + generateRandom()}
+          url={mapURL}
           options={{preserveViewport : false}}
           />
 
         </GoogleMap>
-    </div>
+    
   )
     
    

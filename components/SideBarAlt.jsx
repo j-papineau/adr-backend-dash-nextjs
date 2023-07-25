@@ -5,7 +5,7 @@ import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { spencerView } from "@/data/sideBarItems";
 import Image from "next/image";
-import { Button, Divider } from "antd";
+import { Divider } from "antd";
 import { UserAuth } from "@/context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
 import Login from "@/pages/login";

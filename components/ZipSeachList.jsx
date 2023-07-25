@@ -34,12 +34,12 @@ const ZipSeachList = ({data, isLoading}) => {
       {isLoading ? (<Loading/>) : (
           
             data.map((item, id) => (
-            <motion.div
+            <motion.div key={id}
             initial={{x:500}}
             animate={{x:0}}
             transition={{duration:.7}}
             >
-              <li key={id} className='bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 rounded-lg my-3 p-2 flex items-center cursor-pointer'>
+              <li key={item} className='bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 rounded-lg my-3 p-2 flex items-center cursor-pointer'>
                 <div className='bg-blue-100 rounded-lg p-3'>
                     <FaSearch className='text-blue-500'/>
                 </div>
