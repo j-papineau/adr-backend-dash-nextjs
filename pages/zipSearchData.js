@@ -58,7 +58,7 @@ const zipSearchData = () => {
         <Button onPress={refreshData} className='mr-10 ml-10'>Refresh Data</Button>
         <ZipCards data={data} isLoading={isLoading}></ZipCards>
 
-        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
+        <div className='p-4 grid lg:grid-cols-3 grid-cols-1 gap-4'>
           <ZipGraphs data={data} isLoading={isLoading}></ZipGraphs>
           <ZipSeachList data={data} isLoading={isLoading}></ZipSeachList>
         </div>
