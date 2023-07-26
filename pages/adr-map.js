@@ -2,8 +2,9 @@
 
 import Header from "@/components/Header"
 import dynamic from "next/dynamic"
-//import AdrMap from "@/components/AdrMap"
-import ADRMap from "@/components/ADRMapTut"
+import ADRMap from "@/components/AdrMap"
+import Map from "@/components/map"
+
 
 
 
@@ -12,9 +13,7 @@ export default function adrmap() {
     return (
       
       
-        <div>
-          <ADRMap/>
-        </div>
+        <div>hello</div>
       
       
     )

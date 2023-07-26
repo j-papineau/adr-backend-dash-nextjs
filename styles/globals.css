@@ -102,6 +102,11 @@ body {
   z-index: 0;
 }
 
+.map-container {
+  height: 100%;
+  width: 100%;
+}
+
 .controls.ready::before {
   transition: transform 0.3s ease, width 0.3s ease;
 }

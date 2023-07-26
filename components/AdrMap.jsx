@@ -13,7 +13,7 @@ const ADRMap = () => {
   const libraries = useMemo(() => ['places'], []);
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
+    googleMapsApiKey: "AIzaSyDC1y0pr-XmHq2UbAj8cUeDx2unB_MwCv8",
     libraries: libraries,
   });
 
@@ -40,7 +40,7 @@ const ADRMap = () => {
 
   return (
     
-    <div className='flex text-black dark:text-white p-4 '>
+    <div className='flex text-black dark:text-white p-4 ' style={{height: '100%', width:'100%'}}>
       <div className=' w-[25%] p-2'>
         <p>Sidebar</p>
         {/* <input className='text-black'
@@ -63,7 +63,7 @@ const ADRMap = () => {
           }}
         />
       </div>
-      <div>
+      <div style={{height: '100%', width:'100%'}}>
         <GoogleMap
         zoom={4}
         center={mapCenter}
