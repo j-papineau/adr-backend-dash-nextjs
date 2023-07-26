@@ -24,8 +24,8 @@ const ADRMap = () => {
     () => ({lat: lat, lng: lng}), [lat, lng]
   )
 
- // const kmlURL = "https://www.google.com/maps/d/u/0/kml?mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh"
-  const kmlURL = "https://adrstagingreal.wpengine.com/Joel-Dash/Map-Tools/MAIN/assets/ADRMap.kml"
+  const kmlURL = "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh"
+ // const kmlURL = "https://adrstagingreal.wpengine.com/Joel-Dash/Map-Tools/MAIN/assets/ADRMap.kml"
  
   
   
@@ -63,7 +63,7 @@ const ADRMap = () => {
           }}
         />
       </div>
-      <div style={{height: '100%', width:'100%'}}>
+      <div >
         <GoogleMap
         zoom={4}
         center={mapCenter}
@@ -74,6 +74,7 @@ const ADRMap = () => {
         <KmlLayer 
           url= {kmlURL}
           options={{ preserveViewport: true }}
+          onLoad={console.log("loaded kml")}
         />
          
 
