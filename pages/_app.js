@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
 
   //const [theme, setTheme] = useState("light");
 
-  const [darkTheme, setDarkTheme] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(true)
 
 
   // useEffect(() => {

@@ -1,28 +1,21 @@
+'use client'
 
 import Header from "@/components/Header"
 import dynamic from "next/dynamic"
-import AdrMap from "@/components/AdrMap"
+//import AdrMap from "@/components/AdrMap"
+import ADRMap from "@/components/ADRMapTut"
 
 
 
 
 export default function adrmap() {
     return (
-      <>
       
-      <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen overflow-x-hidden overflow-y-scroll '>
-        <Header  title="ADR Map"/>
-
-        
-            
-        <AdrMap/>
-           
-        
-       
-         
-        
-          
-      </main>
-      </>
+      
+        <div>
+          <ADRMap/>
+        </div>
+      
+      
     )
   }
