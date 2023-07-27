@@ -3,10 +3,12 @@ import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import MapSearchBar from './MapSearchBar';
+import SearchBar from "./SearchBar"
+
 
 
 const containerStyle = {
-  width: '600px',
+  width: '900px',
   height: '600px'
 };
 
@@ -43,11 +45,12 @@ function Map() {
   }, [])
 
   return isLoaded ? (
+    
 
     <div className='flex text-black dark:text-white p-4'>
-        <div className='w-[25%] p-2'>
-           {/* <MapSearchBar setLat={setLat} setLng={setLng}/> */}
-        </div>
+
+      
+        
         <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

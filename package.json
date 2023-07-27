@@ -30,6 +30,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-firebaseui": "^6.0.0",
     "react-google": "^0.0.3",
+    "react-google-autocomplete": "^2.7.3",
     "react-google-maps": "^9.4.5",
     "react-icons": "^4.10.1",
     "react-leaflet": "^4.2.1",
