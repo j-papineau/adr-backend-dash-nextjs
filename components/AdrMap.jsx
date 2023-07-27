@@ -68,11 +68,11 @@ const ADRMap = () => {
         zoom={4}
         center={mapCenter}
         mapTypeId={google.maps.MapTypeId.ROADMAP}
-        mapContainerStyle={{width: '800px', height: '800px'}}
+        mapContainerStyle={{width: '800px', height: '600px'}}
         >
 
         <KmlLayer 
-          url= {kmlURL}
+          url='https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh'
           options={{ preserveViewport: true }}
           onLoad={console.log("loaded kml")}
         />

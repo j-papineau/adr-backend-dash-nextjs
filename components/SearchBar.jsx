@@ -1,13 +1,8 @@
 import React from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
-import { Input } from "@nextui-org/react";
 
 
-const PlacesAutocomplete = ({
-  onAddressSelect,
-}: {
-  onAddressSelect?: (address: string) => void;
-}) => {
+const PlacesAutocomplete = () => {
   const {
     ready,
     value,
@@ -44,15 +39,13 @@ const PlacesAutocomplete = ({
   };
 
   return (
-    <div className="text-black dark:text-white">
-      <Input 
-        clearable
-        
+    <div>
+      <input className="text-black"
         value={value}
         
         disabled={!ready}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="123 Easy St."
+        placeholder="123 easy street"
       />
 
       {status === 'OK' && (

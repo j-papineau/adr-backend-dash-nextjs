@@ -1,8 +1,9 @@
+'use client'
 import React, {useState, useMemo} from 'react'
 import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
-import MapSearchBar from './MapSearchBar';
+
 import SearchBar from "./SearchBar"
 
 
@@ -18,10 +19,11 @@ function Map() {
 
     const libraries = useMemo(() => ['places'], []);
 
-    const [lat, setLat] = useState(-27)
-    const [lng, setLng] = useState(85)
+    // const [lat, setLat] = useState(-27)
+    // const [lng, setLng] = useState(85)
     
-    const [center, setCenter] = useState(lat, lng);
+    const [center, setCenter] = useState({lat: 27, lng: -85});
+    const [zoom, setZoom] = useState(1);
 
 
   const { isLoaded } = useJsApiLoader({
@@ -35,8 +37,11 @@ function Map() {
   const onLoad = React.useCallback(function callback(map) {
     //onload goes here
 
+    
     const bounds = new window.google.maps.LatLngBounds({lat:-27,lng: 85});
     map.fitBounds(bounds);
+    // map.setCenter({lat:-27, lng: 85})
+    console.log("onload")
 
     setMap(map)
   }, [])
@@ -47,25 +52,69 @@ function Map() {
 
   return isLoaded ? (
     
+  <div className='flex'>
 
-    <div className='flex text-black p-4'>
-
-      
-        
+  
+    <div className='text-black p-4'>
         <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={5}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        <KmlLayer
-            url='https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh'
-            options={{preserveViewport: false}}
-        />
+        zoom={zoom}
+        onLoad={map => {
+         
+         const kml = new google.maps.KmlLayer({
+          url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",
+          map: map,
+         })
+
+         setMap(map);
+         
+          
+        }}  
         
+      >
+        {/* <KmlLayer
+            url='https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh'
+            options={{preserveViewport: true}}
+            onLoad={console.log("KML LOADED")}
+        /> */}
+        <></>
       </GoogleMap>
     </div>
+    <div >
+      <PlacesAutoComplete
+      onAddressSelect={(address) => {
+        getGeocode({address: address}).then((results) => {
+          const { lat, lng} = getLatLng(results[0]);
+
+          // setLat(lat);
+          // setLng(lng);
+          setCenter({lat: lat, lng: lng})
+          setZoom(10)
+
+          const infowindow = new google.maps.InfoWindow({
+            content: "<p>HELLO</p>"
+          })
+          
+          const marker = new google.maps.Marker({
+            position:{lat:lat, lng:lng},
+            map:map,
+            title:"TESTING"
+          })
+
+          infowindow.open({
+            anchor:marker,
+            map,
+          })
+
+        })
+      }}
+      />
+    </div>
+      
+
+
+  </div>
      
   ) : <></>
 }

@@ -22,11 +22,8 @@ export default function adrmap() {
       
       <main className="bg-slate-300 h-screen w-full dark:bg-darculaBG-heavy">
         <Header title="ADR Map"/>
-        <SearchBar
-        onAddressSelect={(address) => {
-            console.log(address);
-        }}/>
-        <Map className="text-black"/>
+        <Map />
+        
       </main>
         
       
