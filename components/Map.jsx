@@ -26,7 +26,8 @@ function Map() {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDC1y0pr-XmHq2UbAj8cUeDx2unB_MwCv8"
+    googleMapsApiKey: "AIzaSyDC1y0pr-XmHq2UbAj8cUeDx2unB_MwCv8",
+    libraries: libraries
   })
 
   const [map, setMap] = React.useState(null)
@@ -47,7 +48,7 @@ function Map() {
   return isLoaded ? (
     
 
-    <div className='flex text-black dark:text-white p-4'>
+    <div className='flex text-black p-4'>
 
       
         

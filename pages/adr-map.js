@@ -12,15 +12,21 @@ import SearchBar from "@/components/SearchBar"
 
 
 export default function adrmap() {
+
+    function addressSelected(address){
+
+    }
+
+
     return (
       
       <main className="bg-slate-300 h-screen w-full dark:bg-darculaBG-heavy">
         <Header title="ADR Map"/>
         <SearchBar
-        onAddressSelect={(adress) => {
-            console.log(adress);
+        onAddressSelect={(address) => {
+            console.log(address);
         }}/>
-        <Map/>
+        <Map className="text-black"/>
       </main>
         
       
