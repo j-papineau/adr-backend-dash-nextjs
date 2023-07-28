@@ -13,7 +13,7 @@ export const AuthContextProvider = ({children}) => {
 
     const [user, setUser] = useState(null)
     //add default config
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(null)
 
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider()

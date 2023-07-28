@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react'
 import { Divider } from 'antd'
 import { UserAuth } from '@/context/AuthContext'
 import Image from 'next/image'
-import { Dropdown, Avatar, Text } from '@nextui-org/react'
+import { Dropdown, Avatar, Text, useAsyncList } from '@nextui-org/react'
+
+
 
 
 
@@ -13,9 +15,12 @@ const Header = (props) => {
 
   const {user, logOut, userData} = UserAuth();
 
-  const [teamName, setTeamName] = useState("")
+ 
 
   const userNames = user.displayName.split(" ");
+
+  // const teamName = userData.userData.team;
+  const [teamName, setTeamName] = useState("")
 
   //console.log(user);
 
@@ -29,22 +34,29 @@ const Header = (props) => {
   }
 
   useEffect(() => {
-    console.log("from header")
-    
-   
+
+    if(userData != null){
+      console.log("from header")
+      console.log(userData)
+      setTeamName(userData.userData.team)
+    }
+     
 
   }, [userData])
   
 
   return (
-    <div>
-      <div className='flex flex-row justify-between px-4 pt-4'>
+    <div className='items-center'>
+      <div className='flex flex-row justify-between px-4 pt-4 items-center'>
         <div className='flex justify-center items-center'>
           <h2 className="font-semibold text-black dark:text-slate-300">{title}</h2>
         </div>
         <div className='flex justify-center items-center'>
-          <h2 className='text-black  dark:text-slate-300 italic p-2'>Welcome Back, {userNames[0]}</h2>
-          <h2 className='text-black  dark:text-slate-300 italic p-2'></h2>
+          <div className='mr-4 mt-3'>
+           <h2 className='text-black  dark:text-slate-300'>Welcome Back, {userNames[0]}</h2>
+           <p className='text-black text-sm dark:text-slate-300 italic'>{teamName}</p>
+          </div>
+          
           <div className='flex'>
             <Dropdown placement='bottom-left'>
             <Dropdown.Trigger>
