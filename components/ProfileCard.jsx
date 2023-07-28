@@ -21,7 +21,7 @@ const ProfileCard = () => {
     <div>
         
         {(dataArrived) ? (
-        <div className='flex flex-row  text-black dark:text-white px-4 p-8 m-2 items-center justify-between
+        <div className='flex flex-row  text-black dark:text-white px-4 p-8 m-2 items-center w-[vw]
          bg-slate-300 dark:bg-darculaBG-heavy rounded-md border'>
             <div className='p-2'>
                 <Image className='rounded-sm'
@@ -45,7 +45,6 @@ const ProfileCard = () => {
                 <Loading/>
                  <p className='text-black dark:text-white'>loading profile data...</p>
             </div>
-           
         )}
             
     </div>
