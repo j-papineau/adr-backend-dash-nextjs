@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Divider } from 'antd'
 import { UserAuth } from '@/context/AuthContext'
 import Image from 'next/image'
@@ -11,7 +11,9 @@ const Header = (props) => {
 
   let title = props.title;
 
-  const {user, logOut} = UserAuth();
+  const {user, logOut, userData} = UserAuth();
+
+  const [teamName, setTeamName] = useState("")
 
   const userNames = user.displayName.split(" ");
 
@@ -25,6 +27,13 @@ const Header = (props) => {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    console.log("from header")
+    
+   
+
+  }, [userData])
   
 
   return (
@@ -35,6 +44,7 @@ const Header = (props) => {
         </div>
         <div className='flex justify-center items-center'>
           <h2 className='text-black  dark:text-slate-300 italic p-2'>Welcome Back, {userNames[0]}</h2>
+          <h2 className='text-black  dark:text-slate-300 italic p-2'></h2>
           <div className='flex'>
             <Dropdown placement='bottom-left'>
             <Dropdown.Trigger>
