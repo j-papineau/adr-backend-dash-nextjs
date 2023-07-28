@@ -3,7 +3,7 @@ import Header from '@/components/Header'
 
 const Profile = () => {
   return (
-    <div className='bg-gray-100 min-h-screen'>
+    <div className='bg-gray-100 dark:bg-darculaBG-medium min-h-screen'>
       <Header title="Profile"/>
     </div>
   )
