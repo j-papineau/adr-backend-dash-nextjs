@@ -36,8 +36,8 @@ const Header = (props) => {
   useEffect(() => {
 
     if(userData != null){
-      console.log("from header")
-      console.log(userData)
+     
+      //console.log(userData)
       setTeamName(userData.userData.team)
     }
      
