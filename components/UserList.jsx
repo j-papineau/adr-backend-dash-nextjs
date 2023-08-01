@@ -26,9 +26,13 @@ const UserList = () => {
    async function getAllUsers(){
         
         let users = []
+        let ids = []
         const querySnap = await getDocs(collection(db, "Users"));
         querySnap.forEach((doc) => {
-            users.push(doc.data())
+            users.push({
+                id: doc.id,
+                data: doc.data(),
+            })
         })
         setUserListData(users);
         //console.log(users)
@@ -63,7 +67,7 @@ const UserList = () => {
              <div className=' h-[65vh] overflow-y-scroll w-full'>
                 {userListData.map((item, id) => (
                     <li key={id} className='cursor-pointer h-20 list-none'>
-                        <UserListItem user={item} openEditModal={openEditModal} refreshList={refreshList}/>
+                        <UserListItem user={item.data} uid={item.id} openEditModal={openEditModal} refreshList={refreshList}/>
                     </li>
                 )) }
              </div>
