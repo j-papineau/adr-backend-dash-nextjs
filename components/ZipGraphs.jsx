@@ -4,6 +4,8 @@ import SegmentedControl from "./SegmentedControl";
 import { Divider } from "antd";
 import SearchesGraph from "./SearchesGraph";
 import SourcesBar from "./SourcesBar";
+import ZipSearchMap from "./ZipSearchMap";
+import Error from "./Error";
 
 
 const ZipGraphs = ({data, isLoading}) => {
@@ -42,7 +44,7 @@ const ZipGraphs = ({data, isLoading}) => {
         </Loading>) : (
           <div>
             {
-              (selectedValue1 === 'searches') && <SearchesGraph data={data}/>
+              (selectedValue1 === 'searches') && <Error errorText={"Joel hasn't built this graph yet"}/>
             }
             {
               (selectedValue1 === 'topSources') && <SourcesBar data={data}/>

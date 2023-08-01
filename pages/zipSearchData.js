@@ -6,8 +6,10 @@ import { Card } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import ZipGraphs from '@/components/ZipGraphs'
 import axios from 'axios'
-import { Button } from '@nextui-org/react'
+import { Button, Loading } from '@nextui-org/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import ZipSearchMap from '@/components/ZipSearchMap'
+
 
 const zipSearchData = () => {
 
@@ -62,6 +64,10 @@ const zipSearchData = () => {
           <ZipGraphs data={data} isLoading={isLoading}></ZipGraphs>
           <ZipSeachList data={data} isLoading={isLoading}></ZipSeachList>
         </div>
+        {isLoading ? (<Loading/>) : (
+          <ZipSearchMap data={data}/>
+        )}
+        
       </motion.div>  
     </div>
 
