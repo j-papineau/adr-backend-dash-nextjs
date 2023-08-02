@@ -1,5 +1,5 @@
 import react from "react";
-import { UserAuth } from "@/context/AuthContext";
+import { UserAuth } from "../context/AuthContext";
 import Link from "next/link";
 import {FcGoogle} from "react-icons/fc"
 import Image from "next/image";

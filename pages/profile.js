@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '@/components/Header'
-import ProfileSettings from '@/components/ProfileSettings'
-import ProfileCard from '@/components/ProfileCard'
+import Header from '../components/Header'
+import ProfileSettings from '../components/ProfileSettings'
+import ProfileCard from '../components/ProfileCard'
 
 const Profile = () => {
   return (

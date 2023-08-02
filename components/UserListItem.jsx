@@ -4,7 +4,7 @@ import { RiAdminLine } from 'react-icons/ri'
 import { FaCode } from 'react-icons/fa'
 import { Divider } from 'antd'
 import { Modal, Input, Row, Checkbox, Button, Text, Spacer} from '@nextui-org/react'
-import { teams, privs } from '@/data/defaults'
+import { teams, privs } from '../data/defaults'
 import {
     Dropdown,
     DropdownTrigger,
@@ -14,7 +14,7 @@ import {
   } from "@nextui-org/dropdown";
 
   import { doc, setDoc } from 'firebase/firestore'
-  import { db } from '@/firebase'
+  import { db } from '../firebase'
 
 
 const UserListItem = ({user, openEditModal, refreshList, uid}) => {

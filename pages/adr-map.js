@@ -1,10 +1,10 @@
 'use client'
 
-import Header from "@/components/Header"
+import Header from "../components/Header"
 import dynamic from "next/dynamic"
-import ADRMap from "@/components/AdrMap"
-import Map from "@/components/Map"
-import SearchBar from "@/components/SearchBar"
+import ADRMap from "../components/AdrMap"
+import Map from "../components/Map"
+import SearchBar from "../components/SearchBar"
 
 
 

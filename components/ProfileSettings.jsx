@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserAuth } from '@/context/AuthContext'
+import { UserAuth } from '../context/AuthContext'
 import { Card } from '@nextui-org/react'
 
 const ProfileSettings = () => {

@@ -1,9 +1,9 @@
 import React, {useState, useRef} from "react"
-import Header from "@/components/Header"
-import { UserAuth } from "@/context/AuthContext"
-import Error from "@/components/Error"
-import UserList from "@/components/UserList"
-import SegmentedControl from "@/components/SegmentedControl"
+import Header from "../components/Header"
+import { UserAuth } from "../context/AuthContext"
+import Error from "../components/Error"
+import UserList from "../components/UserList"
+import SegmentedControl from "../components/SegmentedControl"
 
 
 

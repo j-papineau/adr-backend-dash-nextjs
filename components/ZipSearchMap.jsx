@@ -54,7 +54,7 @@ function Map({data}) {
   }, [])
 
   async function createSearchMarkers(map){
-    console.log("from create search")
+    
 
     // console.log("first zip: " + data[0].zip)
     // getLatLngZip(data[0].zip).then((res) => {

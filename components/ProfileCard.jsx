@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { UserAuth } from '@/context/AuthContext'
+import { UserAuth } from '../context/AuthContext'
 import { Image, Loading } from '@nextui-org/react';
 
 

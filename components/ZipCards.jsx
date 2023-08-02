@@ -5,7 +5,7 @@ import { Loading } from '@nextui-org/react';
 import { motion } from 'framer-motion';
 import jQuery from 'jquery';
 import { FcRefresh } from 'react-icons/fc';
-import { Divider } from 'antd';
+import { DatePicker, Divider } from 'antd';
 import { FaSearch } from 'react-icons/fa';
 
 
@@ -33,7 +33,6 @@ const ZipCards = ({data, isLoading}) => {
 
     useEffect(() => {
 
-        
         getTopZip();
         getTopRegion();
         
@@ -49,6 +48,7 @@ const ZipCards = ({data, isLoading}) => {
         let zip, count, id, destination;
         let obj = {zip, count, id};
         let ordered = []
+        
     
         
         for(let i = 0; i < data.length; i++){
@@ -125,7 +125,7 @@ const ZipCards = ({data, isLoading}) => {
                 animate={{ opacity:1, y:0, }}
                 transition={{ duration:.5 }}
                 >
-                    <h2 className='dark:text-white mt-1 mb-4 font-medium text-3xl'>Top Zips:</h2>
+                    <h2 className='dark:text-white mt-1 mb-4 font-medium text-3xl'>Top Zips</h2>
                     
                     {topZips.map((item, id) => (
 
@@ -161,7 +161,7 @@ const ZipCards = ({data, isLoading}) => {
                 animate={{ opacity:1, y:0, }}
                 transition={{ duration:.5 }}
                 >
-                    <h2 className='dark:text-white mt-1 mb-4 font-medium text-3xl'>Top Regions:</h2>
+                    <h2 className='dark:text-white mt-1 mb-4 font-medium text-3xl'>Top Regions</h2>
                     
                     {topRegions.map((item, id) => (
 
@@ -179,6 +179,17 @@ const ZipCards = ({data, isLoading}) => {
                     
                 </motion.div>
                )}
+            </div>
+        </div>
+        <div className='lg:col-span-2 col-span-1 bg-white dark:bg-darculaBG-heavy dark:text-white flex justify-between w-full border p-4 rounded-lg overflow-hidden'>
+            <div className='flex flex-row items-center justify-between'>
+                
+                    <h2 className='dark:text-white text-3xl'>Total Searches</h2>
+                
+                        
+                    {isLoading ? (<Loading/>) : (
+                        <p className='text-3xl mx-10 dark:text-slate-300'>{data.length}</p>
+                    )}
             </div>
         </div>
        

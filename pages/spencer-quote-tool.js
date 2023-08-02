@@ -1,6 +1,6 @@
-import AdrMap from "@/components/AdrMap"
-import Header from "@/components/Header"
-import SpencerMap from "@/components/SpencerMap"
+import AdrMap from "../components/AdrMap"
+import Header from "../components/Header"
+import SpencerMap from "../components/SpencerMap"
 import { ReactDOM } from "react"
 
 

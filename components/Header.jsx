@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { Divider } from 'antd'
-import { UserAuth } from '@/context/AuthContext'
+import { UserAuth } from '../context/AuthContext'
 import Image from 'next/image'
 import { Dropdown, Avatar, Text, useAsyncList } from '@nextui-org/react'
 

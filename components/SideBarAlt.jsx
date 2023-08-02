@@ -3,12 +3,12 @@
 import Link from "next/link";
 import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { spencerView, basicView, devView } from "@/data/sideBarItems";
+import { spencerView, basicView, devView } from "../data/sideBarItems";
 import Image from "next/image";
 import { Divider } from "antd";
-import { UserAuth } from "@/context/AuthContext";
+import { UserAuth } from "../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
-import Login from "@/pages/login";
+import Login from "../pages/login";
 import { useState, useEffect } from "react";
 import { Switch, Checkbox, Loading } from "@nextui-org/react";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";

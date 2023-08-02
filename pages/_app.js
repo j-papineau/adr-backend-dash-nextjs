@@ -1,12 +1,10 @@
-import SideBarAlt from '@/components/SideBarAlt'
-import Sidebar from '@/components/Sidebar'
-import { AuthContextProvider } from '@/context/AuthContext'
-import '@/styles/globals.css'
-import { UserAuth } from '@/context/AuthContext'
+import SideBarAlt from '../components/SideBarAlt'
+import { AuthContextProvider } from '../context/AuthContext'
+import '../styles/globals.css'
+import { UserAuth } from '../context/AuthContext'
 import Login from './login'
 import {useState, useEffect} from 'react'
 //import react from 'react'
-import { Button } from 'antd'
 import { AnimatePresence, motion } from 'framer-motion'
 
 

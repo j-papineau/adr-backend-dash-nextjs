@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import Header from '@/components/Header'
-import DashCards from '@/components/DashCards'
-import ZipBarChart from '@/components/ZipBarChart'
-import RecentZipSearches from '@/components/RecentZipSearches'
+import Header from '../components/Header'
+import DashCards from '../components/DashCards'
+import ZipBarChart from '../components/ZipBarChart'
+import RecentZipSearches from '../components/RecentZipSearches'
 import  Head  from 'next/head'
-import ZipSearchData from '@/components/ZipSearchData'
+import ZipSearchData from '../components/ZipSearchData'
 import { Divider } from 'antd'
 
 //const inter = Inter({ subsets: ['latin'] })

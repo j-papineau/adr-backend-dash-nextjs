@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '@/components/Header'
-import Error from '@/components/Error'
+import Header from '../components/Header'
+import Error from '../components/Error'
 
 
 const Profile = () => {

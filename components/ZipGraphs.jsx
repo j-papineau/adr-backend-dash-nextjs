@@ -6,9 +6,10 @@ import SearchesGraph from "./SearchesGraph";
 import SourcesBar from "./SourcesBar";
 import ZipSearchMap from "./ZipSearchMap";
 import Error from "./Error";
+import SearchUsage from "./SearchUsage";
 
 
-const ZipGraphs = ({data, isLoading}) => {
+const ZipGraphs = ({rawData, data, isLoading}) => {
 
   const[selectedValue1, setSelectedValue1] = useState("searches");
 
@@ -24,7 +25,7 @@ const ZipGraphs = ({data, isLoading}) => {
             controlRef={useRef()}
             segments={[
                 {
-                    label: 'Searches',
+                    label: 'Search Usage',
                     value: 'searches',
                     ref: useRef(),
                 },
@@ -44,7 +45,7 @@ const ZipGraphs = ({data, isLoading}) => {
         </Loading>) : (
           <div>
             {
-              (selectedValue1 === 'searches') && <Error errorText={"Joel hasn't built this graph yet"}/>
+              (selectedValue1 === 'searches') && <SearchUsage rawData={rawData}/>
             }
             {
               (selectedValue1 === 'topSources') && <SourcesBar data={data}/>
