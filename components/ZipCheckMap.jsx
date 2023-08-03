@@ -1,5 +1,5 @@
 'use client'
-import React, {useState, useMemo} from 'react'
+import React, {useState, useMemo, useEffect} from 'react'
 import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
@@ -25,6 +25,7 @@ function Map() {
     
     const [center, setCenter] = useState({lat: 27, lng: -85});
     const [zoom, setZoom] = useState(1);
+    const [selectedRegion, setSelectedRegion] = useState("none")
 
 
   const { isLoaded } = useJsApiLoader({
@@ -53,15 +54,50 @@ function Map() {
 
 //MAP METHODS
 
+    const [markers, setMarkers] = useState({})
 
 
+    useEffect(() => {
+
+      if((selectedRegion !== "none")){
+        console.log("region changed: " + selectedRegion)
+      }
+
+      
+
+    }, [selectedRegion])
+
+
+    async function createMarkersByRegion(){
+      
+    }
 
 
   return isLoaded ? (
     
   <div className='flex'>
 
-    
+      <div className='flex flex-col items-center justify-center mx-auto '>
+        <p className='text-2xl'>Selected Region: {selectedRegion}</p>
+        <div className='p-2'>
+         <RegionsDropDown setSelectedRegion={setSelectedRegion}/>
+        </div>
+        
+        <div className='h-[50vh]'>
+                <PlacesAutoComplete
+                onAddressSelect={(address) => {
+                    getGeocode({address: address}).then((results) => {
+                    const { lat, lng} = getLatLng(results[0]);
+                    setCenter({lat: lat, lng: lng})
+                    setZoom(10)
+                    })
+                }}
+                />
+        </div>
+      
+
+        
+    </div>
 
   
     <div className='text-black p-4'>
@@ -85,29 +121,7 @@ function Map() {
         <></>
       </GoogleMap>
     </div>
-    <div>
-        <div className='h-[25vh]'>
-         <RegionsDropDown/>
-        </div>
-        
-        <div className='h-[50vh]'>
-                <PlacesAutoComplete
-                onAddressSelect={(address) => {
-                    getGeocode({address: address}).then((results) => {
-                    const { lat, lng} = getLatLng(results[0]);
-                    setCenter({lat: lat, lng: lng})
-                    setZoom(10)
-                    })
-                }}
-                />
-        </div>
-      
-
-        
-    </div>
-      
-
-
+    
   </div>
      
   ) : <></>

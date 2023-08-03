@@ -1,5 +1,6 @@
 import React from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
+// import { Input } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
 
 
@@ -49,7 +50,7 @@ const PlacesAutocomplete = ({
         clearable
         
         value={value}
-        
+        label="Search"
         disabled={!ready}
         onChange={(e) => setValue(e.target.value)}
         placeholder="123 Easy St."

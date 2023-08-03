@@ -8,26 +8,7 @@ import {
   } from "@nextui-org/dropdown";
   import { Button, Loading } from '@nextui-org/react';
 
-const RegionsDropDown = () => {
-
-    // const items = [
-    //       {
-    //         key: "new",
-    //         slug: "New file",
-    //       },
-    //       {
-    //         key: "copy",
-    //         slug: "Copy link",
-    //       },
-    //       {
-    //         key: "edit",
-    //         slug: "Edit file",
-    //       },
-    //       {
-    //         key: "delete",
-    //         slug: "Delete file",
-    //       }
-    // ]
+const RegionsDropDown = ({ setSelectedRegion }) => {
 
     const [items, setItems] = useState([ {slug: "tampa"}])
     const [isLoading, setLoading] = useState(true);
@@ -44,30 +25,35 @@ const RegionsDropDown = () => {
 
     }   
 
+    
+
 
 
   return (
   <div>
 
 {isLoading ? (<Loading/>) : (
+  <div>
     <Dropdown backdrop='blur'>
-    <DropdownTrigger>
-      <Button 
-        variant="bordered" 
-      >
-        Select Region
-      </Button>
-    </DropdownTrigger>
-    <DropdownMenu  aria-label="Dynamic Actions" className='bg-white p-4 h-[25vh] overflow-y-scroll' items={items}>
-      {(item) => (
-        <DropdownItem
-          key={item.slug}
+      <DropdownTrigger>
+        <Button 
+          variant="bordered" 
         >
-          {item.slug}
-        </DropdownItem>
-      )}
-    </DropdownMenu>
-  </Dropdown>
+          Select Region
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu  closeOnSelect aria-label="Dynamic Actions" variant='faded' className='bg-white h-[25vh] overflow-y-scroll' items={items} onAction={(e) => setSelectedRegion(e)}>
+        {(item) => (
+          <DropdownItem
+            key={item.slug}
+          >
+            {item.slug}
+          </DropdownItem>
+        )}
+      </DropdownMenu>
+    </Dropdown>
+  </div>
+   
   )}
   </div>
   )
