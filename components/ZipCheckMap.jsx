@@ -3,7 +3,7 @@ import React, {useState, useMemo, useEffect} from 'react'
 import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
-import { Button, Loading } from '@nextui-org/react';
+import { Button, Loading, Textarea } from '@nextui-org/react';
 
 import SearchBar from "./SearchBar"
 import RegionsDropDown from './RegionsDropDown';
@@ -56,7 +56,8 @@ function Map() {
 
 //MAP METHODS
 
-    const [markers, setMarkers] = useState({})
+    const [markers, setMarkers] = useState([])
+    const [selectedZips, setSelectedZips] = useState([])
     
 
 
@@ -67,10 +68,6 @@ function Map() {
         zoomMapToZip(selectedRegion.zip)
         createMarkersByRegion(selectedRegion.slug)
       }
-
-      
-
-      
 
     }, [selectedRegion])
 
@@ -114,18 +111,33 @@ function Map() {
         const marker =  new google.maps.Marker({
             position: {lat: lat, lng: lng},
             map,
-            title: zip
+            title: zip,
+            icon: "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
         });
+
+        marker.addListener("click", () => {
+            console.log(marker.title)
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+            setSelectedZips(current => [...current, marker.title])
+        })
 
         setMarkers(current => [...current, marker])
         
     }
 
+    function deleteZip(){
+
+    }
+
     function clearMarkers(){
 
-        console.log(markers)
-
-
+       
+        if(markers.length > 1){
+            markers.forEach(marker => {
+                marker.setMap(null);
+            });
+            setMarkers(null)
+        }
     }
 
 
@@ -145,7 +157,7 @@ function Map() {
         </div>
         
         <div className='h-[50vh]'>
-                <PlacesAutoComplete
+                {/* <PlacesAutoComplete
                 onAddressSelect={(address) => {
                     getGeocode({address: address}).then((results) => {
                     const { lat, lng} = getLatLng(results[0]);
@@ -153,7 +165,10 @@ function Map() {
                     setZoom(10)
                     })
                 }}
-                />
+                /> */}
+                <p>Selected Zips</p>
+                <Textarea isReadOnly aria-label="selected zips" value={selectedZips}/>
+                <Button className='my-4' color={"warning"}>Delete Selected</Button>
         </div>
       
 
