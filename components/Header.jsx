@@ -74,8 +74,8 @@ const Header = (props) => {
                 color="primary"
                 src={user.photoURL}/>
             </DropdownTrigger>
-            <DropdownMenu color="secondary" aria-label="avatar menu">
-              <DropdownItem key="profile" css={{height: "$18"}}>
+            <DropdownMenu className='bg-white p-2 rounded-md' color="secondary" aria-label="avatar menu">
+              <DropdownItem  key="profile" css={{height: "$18"}}>
                 <Text b color="inherit" css={{d:"flex"}}>
                   Signed in to:
                 </Text>
@@ -83,9 +83,9 @@ const Header = (props) => {
                   {user.email}
                 </Text>
               </DropdownItem>
-              <DropdownItem color="error" key="logout" withDivide>
+              <DropdownItem color="error" className='text-red-500' key="logout" withDivide>
                 <p onClick={handleSignOut}>
-                <Text b color="inherit" css={{d:"flex"}}>Sign Out</Text>
+                <Text b color="inherit"  css={{d:"flex"}}>Sign Out</Text>
                 </p>
               </DropdownItem>
             </DropdownMenu>
