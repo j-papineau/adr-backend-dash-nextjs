@@ -10,8 +10,9 @@ import {
 
 const RegionsDropDown = ({ setSelectedRegion }) => {
 
-    const [items, setItems] = useState([ {slug: "tampa"}])
+    const [items, setItems] = useState({})
     const [isLoading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         getDropdownItems()
@@ -42,10 +43,20 @@ const RegionsDropDown = ({ setSelectedRegion }) => {
           Select Region
         </Button>
       </DropdownTrigger>
-      <DropdownMenu  closeOnSelect aria-label="Dynamic Actions" variant='faded' className='bg-white h-[25vh] overflow-y-scroll' items={items} onAction={(e) => setSelectedRegion(e)}>
+      <DropdownMenu  closeOnSelect aria-label="Dynamic Actions" variant='faded' className='bg-white h-[25vh] overflow-y-scroll' items={items} 
+      onAction={(e) => {
+        let slug = "no slug found"
+        items.forEach(element => {
+          if(element.zip === e)
+            slug = element.slug
+        });
+
+        setSelectedRegion({zip: e, slug:slug})
+
+      }}>
         {(item) => (
           <DropdownItem
-            key={item.slug}
+            key={item.zip}
           >
             {item.slug}
           </DropdownItem>

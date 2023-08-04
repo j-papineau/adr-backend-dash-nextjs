@@ -3,10 +3,11 @@ import React, {useState, useMemo, useEffect} from 'react'
 import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
+import { Button, Loading } from '@nextui-org/react';
 
 import SearchBar from "./SearchBar"
 import RegionsDropDown from './RegionsDropDown';
-
+import { allZips } from "../data/zips"
 
 
 const containerStyle = {
@@ -25,7 +26,8 @@ function Map() {
     
     const [center, setCenter] = useState({lat: 27, lng: -85});
     const [zoom, setZoom] = useState(1);
-    const [selectedRegion, setSelectedRegion] = useState("none")
+    const [selectedRegion, setSelectedRegion] = useState({zip: "9999", slug:"none"})
+    const [zipsLoading, setZipsLoading] = useState(false);
 
 
   const { isLoaded } = useJsApiLoader({
@@ -55,21 +57,75 @@ function Map() {
 //MAP METHODS
 
     const [markers, setMarkers] = useState({})
+    
 
 
     useEffect(() => {
 
-      if((selectedRegion !== "none")){
+      if((selectedRegion.zip !== "9999")){
         console.log("region changed: " + selectedRegion)
+        zoomMapToZip(selectedRegion.zip)
+        createMarkersByRegion(selectedRegion.slug)
       }
+
+      
 
       
 
     }, [selectedRegion])
 
+    async function zoomMapToZip(zip){
+        console.log("zooming to " + zip)
+        let lat, lng 
+        allZips.forEach(element => {
+           if(element.Zipcode == zip){
+            lat = element.Lat
+            lng = element.Long
+           } 
+        })
 
-    async function createMarkersByRegion(){
-      
+        map.setCenter({lat: lat, lng: lng})
+        map.setZoom(8)
+    }
+
+
+    async function createMarkersByRegion(slug){
+        setMarkers([]);
+        setZipsLoading(true)
+        const response = await fetch("https://adrstagingreal.wpengine.com/Joel-Dash/php/zipsInRegion.php?region=" + slug);
+        const zips = await response.json();
+
+        zips.forEach(item => {
+            allZips.forEach(element => {
+                if(element.Zipcode == item.ZIP){
+                    let lat = element.Lat;
+                    let lng = element.Long;
+                    addMarker(lat, lng, item.ZIP)
+                }
+            });
+        });
+
+        setZipsLoading(false);
+
+    }
+
+    function addMarker(lat, lng, zip){
+
+        const marker =  new google.maps.Marker({
+            position: {lat: lat, lng: lng},
+            map,
+            title: zip
+        });
+
+        setMarkers(current => [...current, marker])
+        
+    }
+
+    function clearMarkers(){
+
+        console.log(markers)
+
+
     }
 
 
@@ -78,9 +134,14 @@ function Map() {
   <div className='flex'>
 
       <div className='flex flex-col items-center justify-center mx-auto '>
-        <p className='text-2xl'>Selected Region: {selectedRegion}</p>
+        <p className='text-2xl'>Selected Region:</p>
+        <p className='uppercase'>{selectedRegion.slug}</p>
         <div className='p-2'>
          <RegionsDropDown setSelectedRegion={setSelectedRegion}/>
+         {zipsLoading ? (<Loading/>) : (
+            <></>
+         )}
+         <Button className='my-4' color="warning" onPress={clearMarkers} >Clear Map</Button>
         </div>
         
         <div className='h-[50vh]'>
