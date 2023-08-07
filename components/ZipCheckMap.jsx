@@ -1,6 +1,6 @@
 'use client'
 import React, {useState, useMemo, useEffect} from 'react'
-import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, KmlLayer, MarkerClusterer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import { Button, Loading, Textarea } from '@nextui-org/react';
@@ -103,6 +103,14 @@ function Map() {
                 }
             });
         });
+
+       
+
+        let markerCluster = new MarkerClusterer(map, markers, {
+          imagePath: 'https://github.com/googlearchive/js-marker-clusterer/blob/gh-pages/images/m2.png',
+          gridSize: 10,
+          minimumClusterSize: 2
+        })
 
         setZipsLoading(false);
 
