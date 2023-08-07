@@ -4,6 +4,7 @@ import { GoogleMap, KmlLayer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import { Button, Loading, Textarea } from '@nextui-org/react';
+import axios from 'axios';
 
 import SearchBar from "./SearchBar"
 import RegionsDropDown from './RegionsDropDown';
@@ -58,6 +59,7 @@ function Map() {
 
     const [markers, setMarkers] = useState([])
     const [selectedZips, setSelectedZips] = useState([])
+    const [selectedMarkers, setSelectedMarkers] = useState({})
     
 
 
@@ -112,20 +114,42 @@ function Map() {
             position: {lat: lat, lng: lng},
             map,
             title: zip,
-            icon: "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
+            icon: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
         });
 
         marker.addListener("click", () => {
-            console.log(marker.title)
-            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
-            setSelectedZips(current => [...current, marker.title])
+            
+
+            if(marker.icon === 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'){
+              //turn green to add
+              marker.setIcon('https://maps.google.com/mapfiles/ms/icons/green-dot.png')
+              setSelectedZips(current => [...current, marker.title])
+            }else{
+              //turn red to remove
+              marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png')
+              let newArray = selectedZips.filter((e) => e !== marker.title)  
+              setSelectedZips(newArray);
+            }
+            
+           
+            
         })
 
         setMarkers(current => [...current, marker])
         
     }
 
-    function deleteZip(){
+    async function deleteSelected(){
+      let temp = selectedZips
+      const url = "https://adrstagingreal.wpengine.com/Joel-Dash/php/deleteZip.php?appZip="
+      temp.forEach(async element => {
+        const response = await fetch(url + element)
+      });
+
+      setSelectedZips([]);
+      refreshArea();
+      
+
 
     }
 
@@ -139,6 +163,14 @@ function Map() {
             setMarkers(null)
         }
     }
+
+    function refreshArea(){
+      let temp = selectedRegion;
+      setSelectedRegion[{zip: "33619", slug:"tampa"}];
+      setSelectedRegion[temp];
+    }
+
+    
 
 
   return isLoaded ? (
@@ -168,7 +200,7 @@ function Map() {
                 /> */}
                 <p>Selected Zips</p>
                 <Textarea isReadOnly aria-label="selected zips" value={selectedZips}/>
-                <Button className='my-4' color={"warning"}>Delete Selected</Button>
+                <Button onPress={deleteSelected} className='my-4' color={"secondary"}>Delete Selected</Button>
         </div>
       
 
