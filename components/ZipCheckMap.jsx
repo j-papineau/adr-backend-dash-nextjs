@@ -9,6 +9,9 @@ import axios from 'axios';
 import SearchBar from "./SearchBar"
 import RegionsDropDown from './RegionsDropDown';
 import { allZips } from "../data/zips"
+import { Switch } from '@mui/material';
+
+
 
 
 const containerStyle = {
@@ -29,6 +32,7 @@ function Map() {
     const [zoom, setZoom] = useState(1);
     const [selectedRegion, setSelectedRegion] = useState({zip: "9999", slug:"none"})
     const [zipsLoading, setZipsLoading] = useState(false);
+    const [polygonMode, setPolygonMode] = useState(false);
 
 
   const { isLoaded } = useJsApiLoader({
@@ -180,6 +184,8 @@ function Map() {
 
     
 
+    
+
 
   return isLoaded ? (
     
@@ -209,6 +215,11 @@ function Map() {
                 <p>Selected Zips</p>
                 <Textarea isReadOnly aria-label="selected zips" value={selectedZips}/>
                 <Button onPress={deleteSelected} className='my-4' color={"secondary"}>Delete Selected</Button>
+                <Switch color={"secondary"} onChange={(e) => {
+                  setPolygonMode(e.target.checked)
+                  console.log(polygonMode)
+                  }}/>
+                <p>Polygon Mode</p>
         </div>
       
 
@@ -222,6 +233,20 @@ function Map() {
         center={center}
         zoom={zoom}
         onLoad={map => {
+
+          google.maps.event.addListener(map, 'click', function(event) {
+
+            if(polygonMode){
+              var marker = new google.maps.Marker({
+                position:event.latLng,
+                map:map
+              })
+            }else{
+              console.log("polygon mode off")
+            }
+            
+
+          })
          
          const kml = new google.maps.KmlLayer({
           url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",

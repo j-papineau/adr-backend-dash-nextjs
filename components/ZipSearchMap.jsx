@@ -132,7 +132,10 @@ function Map({data}) {
         mapContainerStyle={containerStyle}
         center={center}
         zoom={zoom}
+        
         onLoad={async map => {
+
+          
          
          const kml = new google.maps.KmlLayer({
           url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",

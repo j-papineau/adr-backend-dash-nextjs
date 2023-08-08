@@ -5,11 +5,12 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import {BsFillChatLeftQuoteFill} from "react-icons/bs"
 import { MdDashboard, MdOutlineDashboard } from "react-icons/md";
-import { FaMap } from "react-icons/fa";
+import { FaMap, FaSearch } from "react-icons/fa";
 import { FaUserSecret } from "react-icons/fa";
 import NoPrivs from "../components/NoPrivs";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaCog } from "react-icons/fa";
+
 
 export const spencerView = [
     
@@ -33,7 +34,7 @@ export const devView = [
     
     {name: "Mktg. Dash", link: "/marketing-dash", icon: MdDashboard},
     { name: "Zip Search Analytics", link: "/zipSearchData", icon: TbReportAnalytics},
-    { name: "Zip Search DB/Tools", link: "/zipSearchTools", icon: FaCog},
+    { name: "Zip Search DB/Tools", link: "/zipSearchTools", icon: FaSearch},
     { name: "Quote Tool", link: "/spencer-quote-tool", icon: BsFillChatLeftQuoteFill},
     { name: "ADR Map", link: "/adr-map", icon: FaMap},
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
