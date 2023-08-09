@@ -1,5 +1,5 @@
 'use client'
-import React, {useState, useMemo, useEffect} from 'react'
+import React, {useState, useMemo, useEffect, useRef} from 'react'
 import { GoogleMap, KmlLayer, MarkerClusterer, useJsApiLoader } from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
@@ -33,6 +33,7 @@ function Map() {
     const [selectedRegion, setSelectedRegion] = useState({zip: "9999", slug:"none"})
     const [zipsLoading, setZipsLoading] = useState(false);
     const [polygonMode, setPolygonMode] = useState(false);
+    const mapReference = useRef()
 
 
   const { isLoaded } = useJsApiLoader({
@@ -52,7 +53,6 @@ function Map() {
     // map.setCenter({lat:-27, lng: 85})
     console.log("onload")
 
-    setMap(map)
   }, [])
 
   const onUnmount = React.useCallback(function callback(map) {
@@ -182,6 +182,27 @@ function Map() {
       setSelectedRegion[temp];
     }
 
+
+    
+
+
+    const mapClick = (e) => {
+
+      
+
+      if(polygonMode){
+        var marker = new google.maps.Marker({
+          position:e.latLng,
+          map:map
+        })
+      }else{
+        console.log("poly mode is off")
+      }
+
+     
+
+    }
+
     
 
     
@@ -232,21 +253,14 @@ function Map() {
         mapContainerStyle={containerStyle}
         center={center}
         zoom={zoom}
+        ref={mapReference}
+        id='googlemap'
+        onClick={mapClick}
         onLoad={map => {
 
-          google.maps.event.addListener(map, 'click', function(event) {
+          
 
-            if(polygonMode){
-              var marker = new google.maps.Marker({
-                position:event.latLng,
-                map:map
-              })
-            }else{
-              console.log("polygon mode off")
-            }
-            
-
-          })
+          
          
          const kml = new google.maps.KmlLayer({
           url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",
