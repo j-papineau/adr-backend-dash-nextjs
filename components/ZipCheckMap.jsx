@@ -184,6 +184,7 @@ function Map() {
 
 
     
+    const [polyMarkers, setPolyMarkers] = useState([])
 
 
     const mapClick = (e) => {
@@ -195,6 +196,10 @@ function Map() {
           position:e.latLng,
           map:map
         })
+
+
+        setPolyMarkers(current => [...current, marker]);
+
       }else{
         console.log("poly mode is off")
       }
@@ -203,7 +208,42 @@ function Map() {
 
     }
 
-    
+  const [polygon, setPolygon] = useState();
+
+  function drawPoly(){
+
+    let coords = [];
+
+    polyMarkers.forEach(marker => {
+      coords.push(marker.getPosition())
+    });
+
+    let tempPoly = new google.maps.Polygon({
+      paths:coords,
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+    })
+
+    polyMarkers.forEach(item => {
+      item.setMap(null)
+    });
+
+    setPolyMarkers([])
+
+    tempPoly.setMap(map)
+    tempPoly.setEditable(true)
+
+
+
+  }
+
+  const [customKML, setCustomKML] = useState();
+  const [kmlClickable, setKmlClickable] = useState(true);
+
+  
 
     
 
@@ -224,23 +264,36 @@ function Map() {
         </div>
         
         <div className='h-[50vh]'>
-                {/* <PlacesAutoComplete
-                onAddressSelect={(address) => {
-                    getGeocode({address: address}).then((results) => {
-                    const { lat, lng} = getLatLng(results[0]);
-                    setCenter({lat: lat, lng: lng})
-                    setZoom(10)
-                    })
-                }}
-                /> */}
+                
                 <p>Selected Zips</p>
                 <Textarea isReadOnly aria-label="selected zips" value={selectedZips}/>
                 <Button onPress={deleteSelected} className='my-4' color={"secondary"}>Delete Selected</Button>
-                <Switch color={"secondary"} onChange={(e) => {
-                  setPolygonMode(e.target.checked)
-                  console.log(polygonMode)
-                  }}/>
-                <p>Polygon Mode</p>
+                <div className='py-4'>
+                  <div>
+                    <p>ADR Overlay Clickable</p>
+                    <Switch color={"primary"} defaultChecked={true} onChange={(e) => {
+                      setKmlClickable(e.target.checked)
+                      if(!e.target.checked){
+                        customKML.setOptions({
+                          clickable:false
+                        })
+                      }else{
+                        customKML.setOptions({
+                          clickable:true
+                        })
+                      }
+                    }}/>
+                  </div>
+
+                  <p>Polygon Mode</p>
+                  <Switch color={"secondary"} onChange={(e) => {
+                    setPolygonMode(e.target.checked)
+                    console.log(polygonMode)
+                    }}/>
+                  
+                  <Button color={"primary"} onPress={drawPoly}>Draw Polygon</Button>
+                </div>
+                
         </div>
       
 
@@ -266,6 +319,10 @@ function Map() {
           url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",
           map: map,
          })
+
+         setCustomKML(kml)
+
+         
 
          setMap(map);
          

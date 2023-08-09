@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Tabs, Tab, Box} from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 import CheckZips from "../components/CheckZips"
+import ZipRadiusMap from './ZipRadiusMap';
 
 
 type Props = {}
@@ -31,7 +32,7 @@ const ZipSearchTools = (props: Props) => {
                 wrapped />
                 <Tab
                 value="two"
-                label="label two"
+                label="Zip Radius"
                 wrapped
                  />
                 <Tab
@@ -46,7 +47,12 @@ const ZipSearchTools = (props: Props) => {
                 <CheckZips/>
             </div>
         </TabPanel>
-        <TabPanel value='two'>Item Two</TabPanel>
+        <TabPanel value='two'>
+            <div className='text-black dark:text-white m-auto'>
+                <p className='text-center py-4'>Note: many zips are served out of the same area, and will only be displayed as a single marker</p>
+                <ZipRadiusMap/>
+            </div>
+        </TabPanel>
         <TabPanel value='three'>Item Three</TabPanel>
 
         </TabContext>
