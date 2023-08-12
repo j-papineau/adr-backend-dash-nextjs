@@ -16,7 +16,7 @@ const ZipSearchTools = (props: Props) => {
     }
   
     return (
-    <div className='text-black dark:text-white'>
+    <div className='text-black dark:text-white h-screen'>
         <TabContext value={value}>
         <Box sx={{width: "100%"}}>
             <Tabs centered

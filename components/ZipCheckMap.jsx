@@ -1,6 +1,6 @@
 'use client'
 import React, {useState, useMemo, useEffect, useRef} from 'react'
-import { GoogleMap, KmlLayer, MarkerClusterer, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, KmlLayer, MarkerClusterer, useJsApiLoader} from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import { Button, Loading, Textarea } from '@nextui-org/react';
@@ -9,7 +9,8 @@ import axios from 'axios';
 import SearchBar from "./SearchBar"
 import RegionsDropDown from './RegionsDropDown';
 import { allZips } from "../data/zips"
-import { Switch } from '@mui/material';
+import { Alert, Switch } from '@mui/material';
+
 
 
 
@@ -154,25 +155,32 @@ function Map() {
     async function deleteSelected(){
       let temp = selectedZips
       const url = "https://adrstagingreal.wpengine.com/Joel-Dash/php/deleteZip.php?appZip="
+      let count = 0;
       temp.forEach(async element => {
-        const response = await fetch(url + element)
+        const response = await fetch(url + element).then(count++)
       });
+
+      setAlertSeverity("success")
+      setAlertText(count + " zips deleted from db. this may take time to reflect on the map")
+      setAlertShowing(true)
 
       setSelectedZips([]);
       refreshArea();
       
-
-
     }
 
     function clearMarkers(){
 
        
-        if(markers.length > 1){
+        if(markers != null && markers.length > 1){
             markers.forEach(marker => {
                 marker.setMap(null);
             });
             setMarkers(null)
+        }else{
+          setAlertSeverity("warning")
+          setAlertText("There are no markers to clear")
+          setAlertShowing(true)
         }
     }
 
@@ -235,13 +243,71 @@ function Map() {
 
     tempPoly.setMap(map)
     tempPoly.setEditable(true)
+    setPolygon(tempPoly)
 
 
 
   }
 
+  function clearPoly(){
+    if(polygon != null){
+      polygon.setMap(null)
+      
+    }else{
+      setAlertSeverity("warning")
+      setAlertText("There is no polygon to clear.")
+      setAlertShowing(true);
+    }
+  }
+
+  const [foundZips, setFoundZips] = useState([]);
+  const [selectedText, setSelectedText] = useState([]);
+
+  function getZipsPoly(){
+
+    if(foundZips.length > 1){
+      setFoundZips([])
+    }
+
+    console.log("checking")
+    
+    allZips.forEach(item => {
+
+      let itemCoord = new google.maps.LatLng(item.Lat,item.Long)
+      setSelectedText([])
+
+      let isInside = google.maps.geometry.poly.containsLocation(
+        itemCoord,
+        polygon
+      )
+
+      if(isInside){
+        var marker = new google.maps.Marker({
+          position:itemCoord,
+          map:map,
+          
+        })
+
+        marker.setTitle(item.Zipcode)
+
+        setFoundZips(current => [...current, marker]);
+        setSelectedText(current => [...current, item.Zipcode])
+        
+      }
+      
+    });
+
+    console.log(selectedText)
+
+    
+
+  }
+
   const [customKML, setCustomKML] = useState();
   const [kmlClickable, setKmlClickable] = useState(true);
+  const [alertShowing, setAlertShowing] = useState(false);
+  const [alertText, setAlertText] = useState("test alert");
+  const [alertSeverity, setAlertSeverity] = useState("success")
 
   
 
@@ -249,9 +315,14 @@ function Map() {
 
 
   return isLoaded ? (
-    
+  
+  <div>
+    <div id='alertDiv' >
+      {alertShowing ? (
+        <Alert  severity={alertSeverity} variant='standard' onClose={() => {setAlertShowing(false)}}>{alertText}</Alert>
+      ) :(<></>)}
+    </div>
   <div className='flex'>
-
       <div className='flex flex-col items-center justify-center mx-auto '>
         <p className='text-2xl'>Selected Region:</p>
         <p className='uppercase'>{selectedRegion.slug}</p>
@@ -266,7 +337,8 @@ function Map() {
         <div className='h-[50vh]'>
                 
                 <p>Selected Zips</p>
-                <Textarea isReadOnly aria-label="selected zips" value={selectedZips}/>
+
+                <Textarea aria-label="selected zips" value={selectedZips}/>
                 <Button onPress={deleteSelected} className='my-4' color={"secondary"}>Delete Selected</Button>
                 <div className='py-4'>
                   <div>
@@ -290,8 +362,14 @@ function Map() {
                     setPolygonMode(e.target.checked)
                     console.log(polygonMode)
                     }}/>
+                  <div className='m-4'>
+                    <Button color={"primary"} onPress={drawPoly}>Draw Polygon</Button>
+                    <Button color={"warning"} onPress={clearPoly}>Clear Polygon</Button>
+                    <Button color={"secondary"} onPress={getZipsPoly}>Get Zips</Button>
+                    <Button color={"success"}>Add Zips to DB</Button>
+                    <Textarea value={selectedText}/>
+                  </div>
                   
-                  <Button color={"primary"} onPress={drawPoly}>Draw Polygon</Button>
                 </div>
                 
         </div>
@@ -303,6 +381,7 @@ function Map() {
   
     <div className='text-black p-4'>
         <GoogleMap
+        
         mapContainerStyle={containerStyle}
         center={center}
         zoom={zoom}
@@ -322,7 +401,6 @@ function Map() {
 
          setCustomKML(kml)
 
-         
 
          setMap(map);
          
@@ -334,6 +412,7 @@ function Map() {
       </GoogleMap>
     </div>
     
+  </div>
   </div>
      
   ) : <></>
