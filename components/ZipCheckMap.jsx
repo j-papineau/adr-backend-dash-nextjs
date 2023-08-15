@@ -268,8 +268,13 @@ function Map() {
     if(foundZips.length > 1){
       setFoundZips([])
     }
+    
 
-    console.log("checking")
+    
+    if(polygon != null){
+
+      let polyZips = []
+
     
     allZips.forEach(item => {
 
@@ -290,14 +295,19 @@ function Map() {
 
         marker.setTitle(item.Zipcode)
 
-        setFoundZips(current => [...current, marker]);
-        setSelectedText(current => [...current, item.Zipcode])
+        polyZips.push(item.Zipcode)
+        
         
       }
       
     });
-
-    console.log(selectedText)
+    console.log(polyZips)
+    setSelectedText(polyZips)
+  }else{
+    setAlertText("Polygon is not drawn.")
+    setAlertSeverity("warning")
+    setAlertShowing(true);
+  }
 
     
 
