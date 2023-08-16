@@ -1,4 +1,4 @@
-import SpencerGoogleSheet from "@/components/SpencerGoogleSheet"
+import SpencerGoogleSheet from "../components/SpencerGoogleSheet"
 import AdrMap from "../components/AdrMap"
 import Header from "../components/Header"
 import SpencerMap from "../components/SpencerMap"
