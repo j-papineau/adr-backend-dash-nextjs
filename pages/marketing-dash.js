@@ -7,7 +7,7 @@ const Profile = () => {
   return (
     <div className='bg-gray-100 dark:bg-darculaBG-medium min-h-screen'>
       <Header title="Marketing Dash"/>
-      
+      <p>test changes :)</p>
     </div>
   )
 }
