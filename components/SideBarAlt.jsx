@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { spencerView, basicView, devView } from "../data/sideBarItems";
+import { spencerView, basicView, devView, adminView, liasonView } from "../data/sideBarItems";
 import Image from "next/image";
 import { Divider } from "antd";
 import { UserAuth } from "../context/AuthContext";
@@ -68,6 +68,14 @@ const SideBarAlt = ({ children, darkThemeChange}) => {
         break;
       case "dev":
         setMenus(devView);
+        setNoPriv(false);
+        break;
+      case "admin":
+        setMenus(adminView);
+        setNoPriv(false);
+        break;
+      case "liason":
+        setMenus(liasonView);
         setNoPriv(false);
         break;
 

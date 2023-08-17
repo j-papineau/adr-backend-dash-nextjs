@@ -7,6 +7,7 @@ import RecentZipSearches from '../components/RecentZipSearches'
 import  Head  from 'next/head'
 import ZipSearchData from '../components/ZipSearchData'
 import { Divider } from 'antd'
+import { MdTitle } from 'react-icons/md'
 
 //const inter = Inter({ subsets: ['latin'] })
 
@@ -20,13 +21,11 @@ export default function Home() {
       <link rel='icon' href='/favico.ico'/>
     </Head>
     <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen'>
-      <Header  title="ADR Backend  *this is a demo page* " />
-      
-        <DashCards/>
-          <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
-            <ZipSearchData/>
-            <RecentZipSearches/>
-          </div>
+      <Header  title="ADR Backend Home Page" />
+      <div className='text-black dark:text-white flex flex-col justify-center items-center p-5'>
+        <h1 className='text-3xl my-2'>Welcome To The ADR Website Backend App!</h1>
+        <p>This project has been solely undertaken by the barketing squad</p>
+      </div>
     </main>
     </>
   )

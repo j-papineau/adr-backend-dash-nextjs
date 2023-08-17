@@ -6,7 +6,8 @@ export const teams = [
     {teamName: "Royal Salebrities", key:"Royals"},
     {teamName: "Shark Tank", key:"Sharks"},
     {teamName: "The Knights", key:"Knights"},
-    {teamName: "Bin Squad", key:"Bins"}
+    {teamName: "Bin Squad", key:"Bins"},
+    {teamName: "Hauler Liason", key:"HaulerLiason"}
 
 ]
 
@@ -17,4 +18,5 @@ export const privs = [
     {priv: "bins"},
     {priv: "admin"},
     {priv: "dev"},
+    {priv: "liason"}
 ]
