@@ -198,6 +198,7 @@ return isLoaded ? (
         <p>{radius} miles</p>
         <Button className='my-4' onPress={drawRadius}>Draw Radius</Button>
         <Button className='my-4' color={"warning"} onPress={clearAll}>Clear</Button>
+        <p classname='text-sm'>If downsizing area, clear first then redraw</p>
         <p className='pt-10'>Zips in Area</p>
         <Textarea className='my-4 h-full' maxRows={8} minRows={8} value={outputZips} isReadOnly/>
         <p>in progress</p>
