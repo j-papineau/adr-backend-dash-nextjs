@@ -5,7 +5,7 @@ import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocompl
 import PlacesAutoComplete from './PlacesAutoComplete';
 
 import SearchBar from "./SearchBar"
-import { Button, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Text} from '@nextui-org/react';
+import { Button, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Text, Input} from '@nextui-org/react';
 import { Elsie_Swash_Caps } from 'next/font/google';
 import { Slider } from '@mui/material';
 import { allZips } from "../data/zips"
@@ -143,7 +143,7 @@ function Map() {
     
     }
     else{
-        console.log("no area selected")
+        alert("cannot save zone, area is not selected")
     }
   }
 
@@ -200,7 +200,8 @@ return isLoaded ? (
         <Button className='my-4' color={"warning"} onPress={clearAll}>Clear</Button>
         <p className='pt-10'>Zips in Area</p>
         <Textarea className='my-4 h-full' maxRows={8} minRows={8} value={outputZips} isReadOnly/>
-        <Button onPress={handler}>Save to Hauler</Button>
+        <p>in progress</p>
+        <Button onPress={handler} disabled>Save to Hauler</Button>
         <Modal
             closeButton
             blur
@@ -208,10 +209,10 @@ return isLoaded ? (
             open={isOpen}
             onClose={closeHandler}>
                 <Modal.Header>
-                    <Text size={18}>Header</Text>
+                    <Text size={18}>Save Region To Hauler</Text>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Body</p>
+                    <Input disabled id="haulerName" placeholder='Hauler Name'></Input> 
                 </Modal.Body>
             </Modal>
         
