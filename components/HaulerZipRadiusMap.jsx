@@ -6,11 +6,9 @@ import PlacesAutoComplete from './PlacesAutoComplete';
 
 import SearchBar from "./SearchBar"
 import { Button, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Text, Input} from '@nextui-org/react';
-import { Elsie_Swash_Caps } from 'next/font/google';
 import { Slider } from '@mui/material';
 import { allZips } from "../data/zips"
-import SaveHaulerModal from './SaveHaulerModal';
-import { Dialog } from '@headlessui/react';
+
 
 
 

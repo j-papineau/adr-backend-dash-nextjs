@@ -1,6 +1,6 @@
 import { HiMenuAlt3 } from "react-icons/hi";
 import { RiSettings4Line } from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
+import { TbReportAnalytics, TbReportMoney } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import {BsFillChatLeftQuoteFill, BsPinMap} from "react-icons/bs"
@@ -38,10 +38,12 @@ export const devView = [
     { name: "Quote Tool", link: "/spencer-quote-tool", icon: BsFillChatLeftQuoteFill},
     { name: "ADR Map", link: "/adr-map", icon: FaMap},
     {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
+    { name: "Region Score", link: "/region-scores", icon: TbReportMoney, margin: true },
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Settings", link: "/settings", icon: RiSettings4Line},
     { name: "Admin Tools", link: "/admin", icon: MdAdminPanelSettings, margin: true },
     { name: "Super Secret Dev Area", link: "/dev", icon: FaUserSecret, margin: true },
+    
     
 ]
 
@@ -53,9 +55,11 @@ export const adminView = [
     { name: "Quote Tool", link: "/spencer-quote-tool", icon: BsFillChatLeftQuoteFill},
     { name: "ADR Map", link: "/adr-map", icon: FaMap},
     {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
+    { name: "Region Score", link: "/region-scores", icon: TbReportMoney, margin: true },
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Settings", link: "/settings", icon: RiSettings4Line},
     { name: "Admin Tools", link: "/admin", icon: MdAdminPanelSettings, margin: true },
+    
     
 ]
 

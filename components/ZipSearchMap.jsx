@@ -31,7 +31,7 @@ function Map({data}) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDC1y0pr-XmHq2UbAj8cUeDx2unB_MwCv8",
+    googleMapsApiKey: "AIzaSyCVBWeLH2VEZ-cEuVE3ZGmtIR5TI1vqm_s",
     libraries: libraries
   })
 
@@ -64,37 +64,37 @@ function Map({data}) {
     
     data.forEach(async search => {
 
-       getLatLngZip(search.zip).then((res) => {
+      //  getLatLngZip(search.zip).then((res) => {
 
-            var latLng = new google.maps.LatLng(res.lat, res.lng);    
+      //       var latLng = new google.maps.LatLng(res.lat, res.lng);    
 
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: search.zip,
-                map: map
-            })
+      //       var marker = new google.maps.Marker({
+      //           position: latLng,
+      //           title: search.zip,
+      //           map: map
+      //       })
 
-            const contentString = "<div>" +
-            "<h1> Search: " + search.zip + "</h1>" + 
-            "<li>Source " + search.sourceURL + "</li>"
-            + "<li>Date " + search.date + "</li>" + 
-            "<li>Went To " + search.slug + "</li>" + 
-            "</div>" 
+      //       const contentString = "<div>" +
+      //       "<h1> Search: " + search.zip + "</h1>" + 
+      //       "<li>Source " + search.sourceURL + "</li>"
+      //       + "<li>Date " + search.date + "</li>" + 
+      //       "<li>Went To " + search.slug + "</li>" + 
+      //       "</div>" 
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                ariaLabel: "zip popup"
-            });
+      //       var infowindow = new google.maps.InfoWindow({
+      //           content: contentString,
+      //           ariaLabel: "zip popup"
+      //       });
 
-            marker.addListener("click", () => {
-                infowindow.open({
-                    anchor:marker,
-                    map,
-                })
-            })
+      //       marker.addListener("click", () => {
+      //           infowindow.open({
+      //               anchor:marker,
+      //               map,
+      //           })
+      //       })
 
 
-       })
+      //  })
 
 
         
