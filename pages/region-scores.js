@@ -10,7 +10,7 @@ export default function RegionScore() {
     return (
       <>
       
-      <main className='bg-slate-100 dark:bg-darculaBG-medium h-[100vh]'>
+      <main className='bg-slate-100 dark:bg-darculaBG-medium h-[110vh] overflow-hidden'>
         <Header  title="Region Scores"/>
         <Tabs defaultValue={1}>
         <TabsList className="mb-4 rounded-xl bg-purple-500 flex font-sans items-center justify-center content-between min-w-tabs-list shadow-lg">
