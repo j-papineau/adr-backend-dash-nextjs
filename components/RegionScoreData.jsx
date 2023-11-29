@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Alert } from '@mui/material'
+import { Alert, Box } from '@mui/material'
 import {MdHelpCenter, MdAddBox, MdRefresh} from "react-icons/md"
+import {Modal} from '@mui/material'
+import {Typography} from '@mui/material'
 
 
 const RegionScoreData = () => {
@@ -17,6 +19,27 @@ const RegionScoreData = () => {
         "severity" : "" 
     }
 
+    const [openHelp, setOpenHelp] = useState(false);
+    const handleHelpOpen = () => setOpenHelp(true);
+    const handleHelpClose = () => setOpenHelp(false);
+
+    const [openAdd, setOpenAdd] = useState(false);
+    const handleAddOpen = () => setOpenAdd(true);
+    const handleAddClose = () => setOpenAdd(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      };
+
+
     function testAlert(){
         console.log("click");
         setAlert({
@@ -25,6 +48,8 @@ const RegionScoreData = () => {
             "severity": "success"
         })
     }
+
+
 
   return (
     <div>
@@ -39,13 +64,13 @@ const RegionScoreData = () => {
                 <div className='flex flex-row border bg-slate-200 shadow-md rounded-md'>
                     <p className='text-lg font-semibold p-4 italic'>Available Data Sets</p>
                         <div className='flex flex-row text-lg font-semibold p-4 justify-end w-[80%] text-slate-800 space-x-4'>
-                            <a >
+                            <a onClick={handleHelpOpen}>
                                 <MdHelpCenter size={30} className='hover:text-white drop-shadow-md'/>
                             </a>
-                            <a >
+                            <a onClick={handleAddOpen}>
                                 <MdAddBox size={30} className='hover:text-white drop-shadow-md'/>
                             </a>
-                            <a  >
+                            <a >
                                 <MdRefresh size={30} className='hover:text-white drop-shadow-md'/>
                             </a>
                         </div>
@@ -54,9 +79,33 @@ const RegionScoreData = () => {
 
                 </div>
             </div>
-            {/* <div className=' h-[50vh] w-[60%] bg-slate-400 rounded-md mx-4 p-2 shadow-md shadow-black'>
-                
-            </div> */}
+        <Modal
+        open = {openHelp}
+        onClose = {handleHelpClose}
+        aria-labelledby="modal-window"
+        aria-describedby="help-window">
+            <Box sx={style}>
+                <Typography variant="h6" component="h2">
+                    Help
+                </Typography>
+                <Typography sx={{mt: 2}}>
+                    Data should be in csv format of specified range from the region comparison report. <br />
+                </Typography>
+                <a href='https://www.google.com' className='italic underline text-blue-500' target='_blank'>tutorial</a>
+            </Box>
+        </Modal>
+
+        <Modal
+        open = {openAdd}
+        onClose = {handleAddClose}
+        aria-labelledby="modal-window"
+        aria-describedby="help-window">
+            <Box sx={style}>
+                <Typography variant="h6" component="h2">
+                    Add Data
+                </Typography>
+            </Box>
+        </Modal>
             
         </div>
     </div>
