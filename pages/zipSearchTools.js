@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react"
 import Header from "../components/Header"
-import { Box, Tab, Tabs } from "@mui/material"
-import ZipSearchTools from "../components/ZipSearchTools"
+import ZipDB from "../components/ZipDB"
 
 
 export default function zipSearchTools() {
@@ -16,9 +15,9 @@ export default function zipSearchTools() {
     return (
       <>
       
-      <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen'>
+      <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen overflow-hidden'>
         <Header title="Zip Search Tools"/>
-        <ZipSearchTools/>
+        <ZipDB/>
           
       </main>
       </>

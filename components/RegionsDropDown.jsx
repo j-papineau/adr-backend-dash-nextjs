@@ -24,7 +24,7 @@ const RegionsDropDown = ({ setSelectedRegion }) => {
         setItems(data)
         setLoading(false)
 
-    }   
+    }
 
     
 

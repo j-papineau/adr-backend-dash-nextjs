@@ -4,23 +4,15 @@ import { GoogleMap, KmlLayer, MarkerClusterer, useJsApiLoader} from '@react-goog
 import usePlacesAutocomplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import { Button, Loading, Textarea } from '@nextui-org/react';
-import axios from 'axios';
-
-import SearchBar from "./SearchBar"
-import RegionsDropDown from './RegionsDropDown';
 import { allZips } from "../data/zips"
-import { Alert, Switch } from '@mui/material';
+import { Alert, Switch, Button as MuiButton, Select, MenuItem, FormControl, InputLabel, TextField, Typography, Switch as MuiSwitch, FormControlLabel, Box, Modal} from '@mui/material';
 
-
-
-
+import {supabase} from "../supabase/supabase"
 
 const containerStyle = {
-  width: '800px',
-  height: '600px'
+  width: '900px',
+  height: '700px'
 };
-
-
 
 function Map() {
 
@@ -65,14 +57,12 @@ function Map() {
     const [markers, setMarkers] = useState([])
     const [selectedZips, setSelectedZips] = useState([])
     const [selectedMarkers, setSelectedMarkers] = useState({})
-    
-
-
     useEffect(() => {
 
       if((selectedRegion.zip !== "9999")){
         console.log("region changed: " + selectedRegion)
-        zoomMapToZip(selectedRegion.zip)
+        //TODO: Find fix for zoom
+        // zoomMapToZip(selectedRegion.zip)
         createMarkersByRegion(selectedRegion.slug)
       }
 
@@ -94,27 +84,20 @@ function Map() {
 
 
     async function createMarkersByRegion(slug){
+
         setMarkers([]);
         setZipsLoading(true)
-        const response = await fetch("https://adrstagingreal.wpengine.com/Joel-Dash/php/zipsInRegion.php?region=" + slug);
-        const zips = await response.json();
 
-        zips.forEach(item => {
-            allZips.forEach(element => {
-                if(element.Zipcode == item.ZIP){
-                    let lat = element.Lat;
-                    let lng = element.Long;
-                    addMarker(lat, lng, item.ZIP)
-                }
-            });
-        });
+        const {data, error} = await supabase.from('zip-code-slugs').select("zip").eq('slug', slug)
 
-       
-
-        let markerCluster = new MarkerClusterer(map, markers, {
-          imagePath: 'https://github.com/googlearchive/js-marker-clusterer/blob/gh-pages/images/m2.png',
-          gridSize: 10,
-          minimumClusterSize: 2
+        data.forEach(item => {
+          allZips.forEach(element => {
+            if(element.Zipcode == item.zip){
+              let lat = element.Lat;
+              let lng = element.Long;
+              addMarker(lat, lng, (item.zip).toString())
+            }
+          })
         })
 
         setZipsLoading(false);
@@ -154,14 +137,17 @@ function Map() {
 
     async function deleteSelected(){
       let temp = selectedZips
-      const url = "https://adrstagingreal.wpengine.com/Joel-Dash/php/deleteZip.php?appZip="
       let count = 0;
-      temp.forEach(async element => {
-        const response = await fetch(url + element).then(count++)
+
+      let errorZips = []
+
+       temp.forEach(async zip => {
+        const { error } = await supabase.from('zip-code-slugs').delete().eq('zip', zip)
+        count++
       });
 
       setAlertSeverity("success")
-      setAlertText(count + " zips deleted from db. this may take time to reflect on the map")
+      setAlertText("zips deleted from db. this may take time to reflect on the map")
       setAlertShowing(true)
 
       setSelectedZips([]);
@@ -189,16 +175,9 @@ function Map() {
       setSelectedRegion[{zip: "33619", slug:"tampa"}];
       setSelectedRegion[temp];
     }
-
-
-    
+ 
     const [polyMarkers, setPolyMarkers] = useState([])
-
-
     const mapClick = (e) => {
-
-      
-
       if(polygonMode){
         var marker = new google.maps.Marker({
           position:e.latLng,
@@ -211,9 +190,6 @@ function Map() {
       }else{
         console.log("poly mode is off")
       }
-
-     
-
     }
 
   const [polygon, setPolygon] = useState();
@@ -319,10 +295,60 @@ function Map() {
   const [alertText, setAlertText] = useState("test alert");
   const [alertSeverity, setAlertSeverity] = useState("success")
 
-  
+  // const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY)
 
+  const [uiReady, setUiReady] = useState(false)
+  const [selectableRegions, setSelectableRegions] = useState([])
+
+  useEffect(() => {
     
+    const fetchSelectableRegions = async () => {
+      const { data } = await supabase.from("unique_slugs").select('slug').order("slug", {ascending: true})
+      setSelectableRegions(data)
+    }
 
+    fetchSelectableRegions()
+    setUiReady(true)
+  }, [])
+
+  const addZipsToDB = () => {
+    console.log("adding zips to db");
+    let slug = document.getElementById("slugInput").value
+
+    if(slug == ""){
+      return;
+    }
+
+    selectedText.forEach(async zip => {
+      const { error } = await supabase.from("zip-code-slugs").insert({zip: zip, slug: slug})
+    });
+
+    handleClose()
+  }
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleOpen = () => {
+    if(selectedText.length > 0){
+      setModalOpen(true);
+    }else {
+      setAlertText("No Zips Selected")
+      setAlertSeverity("error")
+      setAlertShowing(true)
+    }
+  }
+  const handleClose = () => setModalOpen(false);
+
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   return isLoaded ? (
   
@@ -333,63 +359,121 @@ function Map() {
       ) :(<></>)}
     </div>
   <div className='flex'>
-      <div className='flex flex-col items-center justify-center mx-auto '>
-        <p className='text-2xl'>Selected Region:</p>
-        <p className='uppercase'>{selectedRegion.slug}</p>
-        <div className='p-2'>
-         <RegionsDropDown setSelectedRegion={setSelectedRegion}/>
-         {zipsLoading ? (<Loading/>) : (
-            <></>
-         )}
-         <Button className='my-4' color="warning" onPress={clearMarkers} >Clear Map</Button>
+    <div className='flex flex-col items-center bg-slate-200 h-[700px] w-[30%] mx-auto my-4 shadow-black drop-shadow-xl border'>
+    { uiReady ? (
+      <>
+        <div className='flex flex-row h-[10%] w-[90%] my-4 justify-center space-x-4'>
+          <FormControl className='w-[200px]'>
+            <InputLabel id="demo-simple-select-label">Select Region</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Age" 
+              placeholder='NONE' 
+              onChange={(e) => {setSelectedRegion({"zip":99999, "slug": e.target.value})}}
+            >
+              {selectableRegions.map((region, index) => (
+                <MenuItem key={index} value={region.slug}>{region.slug}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <div className='text-black flex flex-col text-center'> 
+            <Typography>Now Viewing Region:</Typography>
+            <p className='uppercase font-bold'>{selectedRegion.slug}</p>
+          </div>
         </div>
-        
-        <div className='h-[50vh]'>
-                
-                <p>Selected Zips</p>
 
-                <Textarea aria-label="selected zips" value={selectedZips}/>
-                <Button onPress={deleteSelected} className='my-4' color={"secondary"}>Delete Selected</Button>
-                <div className='py-4'>
-                  <div>
-                    <p>ADR Overlay Clickable</p>
-                    <Switch color={"primary"} defaultChecked={true} onChange={(e) => {
-                      setKmlClickable(e.target.checked)
-                      if(!e.target.checked){
-                        customKML.setOptions({
-                          clickable:false
-                        })
-                      }else{
-                        customKML.setOptions({
-                          clickable:true
-                        })
-                      }
-                    }}/>
-                  </div>
+        <div className='flex flex-row h-[20%] w-[90%] space-x-4 items-center justify-center'>
+          <TextField
+            id="outlined-multiline-static"
+            label="Selected Zips"
+            multiline
+            inputProps={{
+              readOnly: true
+            }}
+            rows={2}
+            defaultValue=" "
+            value={selectedZips}
+          />
 
-                  <p>Polygon Mode</p>
-                  <Switch color={"secondary"} onChange={(e) => {
-                    setPolygonMode(e.target.checked)
-                    console.log(polygonMode)
-                    }}/>
-                  <div className='m-4'>
-                    <Button color={"primary"} onPress={drawPoly}>Draw Polygon</Button>
-                    <Button color={"warning"} onPress={clearPoly}>Clear Polygon</Button>
-                    <Button color={"secondary"} onPress={getZipsPoly}>Get Zips</Button>
-                    <Button color={"success"}>Add Zips to DB</Button>
-                    <Textarea value={selectedText}/>
-                  </div>
-                  
-                </div>
-                
+          <MuiButton color='error' variant='contained' onClick={deleteSelected}>Delete Selected</MuiButton>
+
+        <Modal
+          open={modalOpen}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <div className='flex flex-col space-y-2 justify-center'>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Add Zips to DB
+              </Typography>
+              <TextField label="slug" id='slugInput'/>
+              <MuiButton className='w-40' color='success' variant='contained' onClick={addZipsToDB}>Add Zips</MuiButton>
+            </div>
+          </Box>
+        </Modal>
+          
         </div>
+
+        <div className='flex flex-col my-2 text-black items-center'>
+            <Typography variant="h5" color={"BlackText"}>Polygon Tools</Typography>
+            <div className='flex flex-row space-x-5 pt-4'>
+              <div className='flex flex-col items-center'>
+                <Typography variant="p">ADR Overlay Clickable</Typography>
+                <MuiSwitch defaultChecked onChange={(e) => {
+                  setKmlClickable(e.target.checked)
+                  if(!e.target.checked){
+                    customKML.setOptions({
+                      clickable:false
+                    })
+                  }else{
+                    customKML.setOptions({
+                      clickable:true
+                    })
+                  }
+                }} />
+              </div>
+              <div className='flex flex-col items-center'>
+                <Typography variant="p">Polygon Mode</Typography>
+                <MuiSwitch onChange={(e) => {
+                  setPolygonMode(e.target.checked)
+                }}/>
+              </div>
+            </div>
+            <div className='flex flex-row space-x-2 p-1'>
+                <MuiButton variant="contained" onClick={drawPoly}>Draw Polygon</MuiButton>
+                <MuiButton variant="contained" color='warning' onClick={clearPoly}>Clear Polygon</MuiButton>
+            </div>
+            <div className='flex flex-row space-x-2 p-2 my-2'>
+                <MuiButton variant="contained" onClick={getZipsPoly}>Get Zips</MuiButton>
+                <MuiButton variant="contained" color='success' onClick={handleOpen}>Add Zips to DB</MuiButton>
+            </div>
+            <TextField
+            id="outlined-multiline-static"
+            className='w-[90%]'
+            label="Zips in Polygon"
+            multiline
+            inputProps={{
+              readOnly: true
+            }}
+            rows={8}
+            defaultValue=" "
+            value={selectedText}
+          />  
+        </div>
+        <div className='flex flex-col my-2 text-black'>
+            {/* <MuiButton className='h-[40px]' variant='contained' color='error' >Clear Map</MuiButton> */}
+        </div>
+      </>
       
-
-        
+    ) : (<div className='mt-10'><Loading size='xl'></Loading></div>)}
     </div>
+    
 
   
-    <div className='text-black p-4'>
+    <div className='text-black p-4 shadow-black drop-shadow-xl'>
         <GoogleMap
         
         mapContainerStyle={containerStyle}
@@ -399,30 +483,22 @@ function Map() {
         id='googlemap'
         onClick={mapClick}
         onLoad={map => {
-
-          
-
-          
-         
          const kml = new google.maps.KmlLayer({
           url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",
           map: map,
          })
 
          setCustomKML(kml)
-
-
-         setMap(map);
-         
-          
+         setMap(map); 
         }}  
-        
       >
         <></>
       </GoogleMap>
     </div>
     
   </div>
+  
+
   </div>
      
   ) : <></>

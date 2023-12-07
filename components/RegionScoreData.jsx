@@ -3,6 +3,7 @@ import { Alert, Box } from '@mui/material'
 import {MdHelpCenter, MdAddBox, MdRefresh} from "react-icons/md"
 import {Modal} from '@mui/material'
 import {Typography} from '@mui/material'
+import RegionDataUpload from './RegionDataUpload'
 
 
 const RegionScoreData = () => {
@@ -101,10 +102,9 @@ const RegionScoreData = () => {
         aria-labelledby="modal-window"
         aria-describedby="help-window">
             <Box sx={style}>
-                <Typography variant="h6" component="h2">
-                    Add Data
-                </Typography>
+                <RegionDataUpload/>
             </Box>
+            
         </Modal>
             
         </div>
