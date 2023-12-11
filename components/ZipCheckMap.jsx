@@ -88,7 +88,7 @@ function Map() {
         setMarkers([]);
         setZipsLoading(true)
 
-        const {data, error} = await supabase.from('zip-code-slugs').select("zip").eq('slug', slug)
+        const {data, error} = await supabase.from('zip_code_slugs').select("zip").eq('slug', slug)
 
         data.forEach(item => {
           allZips.forEach(element => {
@@ -320,7 +320,7 @@ function Map() {
     }
 
     selectedText.forEach(async zip => {
-      const { error } = await supabase.from("zip-code-slugs").insert({zip: zip, slug: slug})
+      const { error } = await supabase.from("zip_code_slugs").insert({zip: zip, slug: slug})
     });
 
     handleClose()

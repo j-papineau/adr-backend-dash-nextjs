@@ -130,14 +130,7 @@ function Map() {
         setMarkers([])
         setOutputZips([])
     }
-    
-
-
   }
-
-
-
-
 
   return isLoaded ? (
     

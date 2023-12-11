@@ -120,11 +120,7 @@ const ZipCards = ({data, isLoading}) => {
                 <Loading/>
                </p>) : (
                
-                <motion.div
-                initial={{ opacity:0, y:-100 }}
-                animate={{ opacity:1, y:0, }}
-                transition={{ duration:.5 }}
-                >
+                <div>
                     <h2 className='dark:text-white mt-1 mb-4 font-medium text-3xl'>Top Zips</h2>
                     
                     {topZips.map((item, id) => (
@@ -145,7 +141,7 @@ const ZipCards = ({data, isLoading}) => {
                         </li>
                     ))}
                     
-                </motion.div>
+                </div>
                )}
                 
             </div>
@@ -156,11 +152,7 @@ const ZipCards = ({data, isLoading}) => {
                {isLoading ? (<p>
                 <Loading/>
                </p>) : (
-                <motion.div
-                initial={{ opacity:0, y:-100 }}
-                animate={{ opacity:1, y:0, }}
-                transition={{ duration:.5 }}
-                >
+                <div>
                     <h2 className='dark:text-white mt-1 mb-4 font-medium text-3xl'>Top Regions</h2>
                     
                     {topRegions.map((item, id) => (
@@ -177,7 +169,7 @@ const ZipCards = ({data, isLoading}) => {
                         </li>
                     ))}
                     
-                </motion.div>
+                </div>
                )}
             </div>
         </div>

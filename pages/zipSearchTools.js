@@ -15,7 +15,7 @@ export default function zipSearchTools() {
     return (
       <>
       
-      <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen overflow-hidden'>
+      <main className='bg-slate-900 min-h-screen'>
         <Header title="Zip Search Tools"/>
         <ZipDB/>
           

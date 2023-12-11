@@ -30,7 +30,7 @@ const zipSearchData = () => {
 
     axios.get(url).then(async (response) => {
         
-        
+        //data format {id, zip, date, sourceURL, slug}
         setRawData(response.data)
         setData(response.data)
         
@@ -90,9 +90,9 @@ const zipSearchData = () => {
     }
 
   return (
-    <AnimatePresence>
+
         <div className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen overflow-x-hidden overflow-y-scroll'>
-      <motion.div>
+      <div>
         <Header title="Zip Search Data"/>
         <div className='flex flex-row p-4 justify-evenly items-center'>
           <Button onPress={refreshData} className='mr-10 ml-10'>Refresh Data</Button>
@@ -118,13 +118,13 @@ const zipSearchData = () => {
           <ZipSearchMap data={data}/>
         )}
         
-      </motion.div>  
+      </div>  
     </div>
 
 
 
 
-    </AnimatePresence>
+  
     
   )
 }
