@@ -358,8 +358,8 @@ function Map() {
         <Alert  severity={alertSeverity} variant='standard' onClose={() => {setAlertShowing(false)}}>{alertText}</Alert>
       ) :(<></>)}
     </div>
-  <div className='flex'>
-    <div className='flex flex-col items-center bg-slate-200 h-[700px] w-[30%] mx-auto my-4 shadow-black drop-shadow-xl border'>
+  <div className='flex flex-row justify-center px-auto'>
+    <div className='flex flex-col items-center bg-slate-200 h-[700px] w-[30%] my-4 shadow-black drop-shadow-xl border'>
     { uiReady ? (
       <>
         <div className='flex flex-row h-[10%] w-[90%] my-4 justify-center space-x-4'>
