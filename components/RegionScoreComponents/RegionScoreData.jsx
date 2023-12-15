@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Box } from '@mui/material'
 import {MdHelpCenter, MdAddBox, MdRefresh} from "react-icons/md"
 import {Modal} from '@mui/material'
 import {Typography} from '@mui/material'
 import RegionDataUpload from './RegionDataUpload'
+import { DataGrid } from '@mui/x-data-grid'
+
 
 
 const RegionScoreData = () => {
@@ -49,6 +51,13 @@ const RegionScoreData = () => {
             "severity": "success"
         })
     }
+
+    useEffect(() => {
+        const fetchDataSets = async () => {
+            //fetch data sets from supabase
+            
+        }
+    })
 
 
 

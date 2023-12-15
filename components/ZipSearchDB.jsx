@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { Typography, Modal, Box, TextField, Button } from '@mui/material'
-import { MdHelpCenter, MdAddBox, MdRefresh } from 'react-icons/md'
+import { MdHelpCenter, MdAddBox, MdRefresh, MdFileCopy } from 'react-icons/md'
 import {Loading} from "@nextui-org/react"
 import { DataGrid } from '@mui/x-data-grid'
-
-
 import {supabase} from "../supabase/supabase"
 import { isConstructorDeclaration } from 'typescript'
 
@@ -37,7 +35,8 @@ const ZipSearchDB = () => {
 
     const cols = [
         {field: 'slug', headerName: 'slug', width: 120},
-        {field: 'url', headerName:'URL', width: 700}
+        {field: 'url', headerName:'URL', width: 400},
+        {field: 'phone', headerName:'Phone', width: 500}
     ]
     const [rows, setRows] = useState([])
 
@@ -53,6 +52,7 @@ const ZipSearchDB = () => {
         const fetchURLS = async () => {
             const {data} = await supabase.from("slug_urls").select()
             setRows(data);
+            console.log(data)
         }
 
         setURLTableLoading(true)
@@ -66,8 +66,9 @@ const ZipSearchDB = () => {
     const updateURL = async () => {
         let value = document.getElementById("uModalURLInput").value
         let slug = selectedRegion.slug
+        let phone = document.getElementById("uModalPhoneInput").value
         
-        const {error} = await supabase.from("slug_urls").update({url: value}).eq('slug', slug)
+        const {error} = await supabase.from("slug_urls").update({url: value, phone: phone}).eq('slug', slug)
 
         refreshURLTable()
         handleUModeClose()
@@ -76,8 +77,8 @@ const ZipSearchDB = () => {
     const addURLSlug = async () => {
         let slug = document.getElementById("newSlug").value
         let url = document.getElementById("newURL").value
-        
-        const {error} = await supabase.from("slug_urls").insert({slug: slug, url: url})
+        let phone = document.getElementById("newPhone").value
+        const {error} = await supabase.from("slug_urls").insert({slug: slug, url: url, phone: phone})
 
         refreshURLTable()
         handleAddURLClose()
@@ -136,7 +137,15 @@ const ZipSearchDB = () => {
                                     <Typography variant='h4'>Edit URL</Typography>
                                     <Typography variant='h6'>Slug: {selectedRegion.slug}</Typography>
                                     <p><strong>Current URL:</strong> {selectedRegion.url}</p>
+                                    <a className='hover:cursor-pointer w-20' onClick={() => {
+                                       navigator.clipboard.writeText(selectedRegion.url); 
+                                    }}><MdFileCopy/></a>
+                                    <p>Current Phone: {selectedRegion.phone}</p>
+                                    <a className='hover:cursor-pointer w-20 pb-2' onClick={() => {
+                                        navigator.clipboard.writeText(selectedRegion.phone);
+                                    }}><MdFileCopy/></a>
                                     <TextField label="New URL" id='uModalURLInput'/>
+                                    <TextField label="New Phone" id='uModalPhoneInput'/>
                                     <Button variant='contained' onClick={updateURL}>Save</Button>
                                 </div>
                             </Box>
@@ -155,6 +164,7 @@ const ZipSearchDB = () => {
                                     <Typography variant='h4'>Add Slug/URL </Typography>
                                     <TextField label="Slug" id='newSlug'/>
                                     <TextField label="URL" id='newURL'/>
+                                    <TextField label="Phone" id='newPhone'/>
                                     <Button variant='contained' onClick={addURLSlug} color='success'>Add</Button>
                                     <p>https://affordabledumpsterrental.com/</p>
                                     

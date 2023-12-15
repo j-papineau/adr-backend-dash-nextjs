@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Typography, TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material'
 import { Loading } from '@nextui-org/react';
-import {supabase} from '../supabase/supabase'
+import {supabase} from '../../supabase/supabase'
 import Papa from 'papaparse'
 
 
@@ -14,7 +14,7 @@ const RegionDataUpload = () => {
   const [errorText, setErrorText] = useState("")
   const [period, setPeriod] = useState("")
 
-  const attemptUpload = () => {
+  const attemptUpload = async () => {
     setIsLoading(true);
     setErrorText("");
     console.log(file);
@@ -30,14 +30,17 @@ const RegionDataUpload = () => {
     }else{
       //parse csv
         Papa.parse(file, {
-          complete: function(results) {
+          complete: async function(results) {
             console.log(results.data)
             uploadData = results.data
+            const {error} = await supabase.from("region_score_data").insert({start_date: startDate, end_date: endDate, data: uploadData, period: period})
           }
         })
       
         //send all data to supabase
 
+       
+        setIsLoading(false);
 
     }
   }

@@ -7,6 +7,8 @@ import SourcesBar from "./SourcesBar";
 import ZipSearchMap from "./ZipSearchMap";
 import Error from "./Error";
 import SearchUsage from "./SearchUsage";
+import ModalClicks from "../components/DataViewComponents/ModalClicks";
+
 
 
 const ZipGraphs = ({rawData, data, isLoading}) => {
@@ -33,6 +35,11 @@ const ZipGraphs = ({rawData, data, isLoading}) => {
                     label: 'Top Sources',
                     value:'topSources',
                     ref: useRef(),
+                },
+                {
+                  label: 'Modal Clicks',
+                  value:'modalClicks',
+                  ref: useRef()
                 }
             ]}
             /> 
@@ -49,6 +56,9 @@ const ZipGraphs = ({rawData, data, isLoading}) => {
             }
             {
               (selectedValue1 === 'topSources') && <SourcesBar data={data}/>
+            }
+            {
+              (selectedValue1 === 'modalClicks') && <ModalClicks/>
             }
 
           </div>

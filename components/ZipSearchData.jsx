@@ -6,6 +6,7 @@ import ZipBarChart from './ZipBarChart';
 import TopRegionsBar from './TopRegionsBar';
 import { Divider } from 'antd';
 import { motion } from 'framer-motion';
+import ModalClicks from "../components/DataViewComponents/ModalClicks";
 
 /*
 
@@ -34,6 +35,11 @@ const ZipSearchData = () => {
                     label: 'Top Regions',
                     value:'topRegions',
                     ref: useRef(),
+                },
+                {
+                    label: 'Modal Clicks',
+                    value:'modalClicks',
+                    ref: useRef(),
                 }
             ]}
             />
@@ -47,6 +53,9 @@ const ZipSearchData = () => {
            }
            {
             (selectedValue1 === 'topRegions') && <TopRegionsBar></TopRegionsBar>
+           }
+           {
+            (selectedValue1 === 'modalClicks') && <ModalClicks></ModalClicks>
            }
         </div>
        

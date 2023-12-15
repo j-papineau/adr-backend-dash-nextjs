@@ -3,7 +3,7 @@ import { Tab } from '@mui/base/Tab';
 import { TabsList } from '@mui/base/TabsList';
 import { TabPanel } from '@mui/base/TabPanel';
 import { Tabs } from '@mui/base/Tabs';
-import RegionScoreData from "../components/RegionScoreData";
+import RegionScoreData from "../components/RegionScoreComponents/RegionScoreData";
 
 
 export default function RegionScore() {
