@@ -5,6 +5,7 @@ import { TabPanel } from '@mui/base/TabPanel';
 import { Tabs } from '@mui/base/Tabs';
 import CheckZips from "../components/CheckZips"
 import ZipSearchDB from '../components/ZipSearchDB';
+import ZipSearchTest from './ZipSearchTest';
 
 const ZipDB = () => {
   return (
@@ -57,7 +58,7 @@ const ZipDB = () => {
             }}
             value={3}
           >
-            Test
+            Help
           </Tab>
         </TabsList>
         <TabPanel className="w-full font-sans" value={1}>
@@ -67,7 +68,7 @@ const ZipDB = () => {
           <ZipSearchDB/>
         </TabPanel>
         <TabPanel className="w-full font-sans" value={3}>
-          Test
+          <ZipSearchTest/>
         </TabPanel>
       </Tabs>
 
