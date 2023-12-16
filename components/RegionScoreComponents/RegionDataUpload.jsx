@@ -5,7 +5,7 @@ import {supabase} from '../../supabase/supabase'
 import Papa from 'papaparse'
 
 
-const RegionDataUpload = () => {
+const RegionDataUpload = ({handleAddClose, refreshTable}) => {
 
   const [file, setFile] = useState(null);
   const [startDate, setStartDate] = useState(null);
@@ -20,6 +20,7 @@ const RegionDataUpload = () => {
     console.log(file);
     console.log(startDate);
     console.log(endDate);
+    let name = document.getElementById("datasetName").value
 
     let uploadData;
 
@@ -31,9 +32,9 @@ const RegionDataUpload = () => {
       //parse csv
         Papa.parse(file, {
           complete: async function(results) {
-            console.log(results.data)
+            // console.log(results.data)
             uploadData = results.data
-            const {error} = await supabase.from("region_score_data").insert({start_date: startDate, end_date: endDate, data: uploadData, period: period})
+            const {error} = await supabase.from("region_score_data").insert({start_date: startDate, end_date: endDate, data: uploadData, period: period, dataset_name: name})
           }
         })
       
@@ -41,6 +42,8 @@ const RegionDataUpload = () => {
 
        
         setIsLoading(false);
+        refreshTable();
+        handleAddClose();
 
     }
   }
@@ -62,6 +65,8 @@ const RegionDataUpload = () => {
         <TextField type='date' onChange={(e) => {
           setEndDate(e.target.value);
         }}/>
+        <p>Dataset name</p>
+        <TextField type='text' id='datasetName'/>
 
         <p>Period</p>
         <FormControl>
