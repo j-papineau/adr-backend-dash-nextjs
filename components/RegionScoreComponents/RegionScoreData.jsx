@@ -186,7 +186,7 @@ const RegionScoreData = () => {
         aria-labelledby="modal-window"
         aria-describedby="help-window">
             <Box sx={big_modal_style}>
-                <RowEditModal row={selectedRow}/>
+                <RowEditModal row={selectedRow} handleClose={handleEditClose} refreshTable={refreshTable}/>
             </Box>
 
         </Modal>

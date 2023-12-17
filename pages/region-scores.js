@@ -4,6 +4,7 @@ import { TabsList } from '@mui/base/TabsList';
 import { TabPanel } from '@mui/base/TabPanel';
 import { Tabs } from '@mui/base/Tabs';
 import RegionScoreData from "../components/RegionScoreComponents/RegionScoreData";
+import RegionScoresMain from "../components/RegionScoreComponents/RegionScoresMain";
 
 
 export default function RegionScore() {
@@ -13,14 +14,14 @@ export default function RegionScore() {
       <main className='bg-slate-100 dark:bg-darculaBG-medium h-[110vh] overflow-hidden'>
         <Header  title="Region Scores"/>
         <Tabs defaultValue={1}>
-        <TabsList className="mb-4 rounded-xl bg-purple-500 flex font-sans items-center justify-center content-between min-w-tabs-list shadow-lg">
+        <TabsList className="mb-4 flex font-sans items-center justify-center content-between min-w-tabs-list shadow-lg">
           <Tab
             slotProps={{
               root: ({ selected, disabled }) => ({
                 className: `font-sans ${
                   selected
-                    ? 'text-purple-500 bg-white'
-                    : 'text-white bg-transparent focus:text-white hover:bg-purple-400'
+                    ? 'text-slate-800 bg-white'
+                    : 'text-white bg-transparent focus:text-white hover:bg-slate-400'
                 } ${
                   disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 } text-sm font-bold w-full p-2 m-1.5 border-0 rounded-lg flex justify-center focus:outline-0 focus:shadow-outline-purple-light`,
@@ -48,7 +49,7 @@ export default function RegionScore() {
           </Tab>
         </TabsList>
         <TabPanel className="w-full font-sans" value={1}>
-          Region Scores
+          <RegionScoresMain/>
         </TabPanel>
         <TabPanel className="w-full font-sans" value={2}>
           <RegionScoreData/>
