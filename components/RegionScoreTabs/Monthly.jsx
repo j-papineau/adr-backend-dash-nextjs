@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Select, Typography, Divider, FormControl, InputLabel, OutlinedInput, MenuItem, Checkbox, ListItemText, CircularProgress, Button} from '@mui/material'
+import { Select, Typography, Divider, FormControl, InputLabel, OutlinedInput, MenuItem, Checkbox, ListItemText, CircularProgress, Button,
+Card, CardContent, CardActions} from '@mui/material'
 import { supabase } from '../../supabase/supabase';
+import MonthCards from './MonthCards';
 
 const Monthly = () => {
 
@@ -51,6 +53,10 @@ const Monthly = () => {
         getMonths();
     }, [])
 
+
+    const [reportLoading, setReportLoading] = useState(false)
+    const [selectedRegion, setSelectedRegion] = useState("Albany")
+
   return (
     <div className='flex flex-col h-[90vh] w-[1000px] p-2'>
         <div className='flex flex-row space-x-4 items-center'>
@@ -79,7 +85,12 @@ const Monthly = () => {
             )}
             <Button className='h-[50px]' variant='contained'>Run Report</Button>
         </div>
-        <Divider/>
+        <div className='my-2'>
+            <Divider/>
+        </div>
+        <div className='bg-slate-100 w-[82vw] h-[75vh] p-4 rounded-md flex flex-col'>
+            
+        </div>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Overall from '../RegionScoreTabs/Overall';
 import Monthly from '../RegionScoreTabs/Monthly';
+import MonthComparison from '../RegionScoreTabs/MonthComparison';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,8 +61,9 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
-        <Tab label="Overall" {...a11yProps(0)} />
-        <Tab label="Monthly Report" {...a11yProps(1)} />
+        <Tab label="Overall" {...a11yProps(0)} disabled />
+        <Tab label="Monthly Report" {...a11yProps(1)} disabled/>
+        <Tab label="Month Comparison" {...a11yProps(2)} />
         
       </Tabs>
       <TabPanel value={value} index={0}>
@@ -69,6 +71,9 @@ export default function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Monthly/>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <MonthComparison/>
       </TabPanel>
       
     </Box>

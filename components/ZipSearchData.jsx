@@ -6,7 +6,7 @@ import ZipBarChart from './ZipBarChart';
 import TopRegionsBar from './TopRegionsBar';
 import { Divider } from 'antd';
 import { motion } from 'framer-motion';
-import ModalClicks from "../components/DataViewComponents/ModalClicks";
+import ModalClicks from "./DataViewComponents/ModalClicks";
 
 /*
 

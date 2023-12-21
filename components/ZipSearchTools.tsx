@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Tabs, Tab, Box} from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
-import CheckZips from "../components/CheckZips"
+import CheckZips from "./CheckZips"
 import ZipRadiusMap from './ZipRadiusMap';
 
 

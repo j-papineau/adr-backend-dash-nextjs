@@ -3,7 +3,7 @@ import { Typography, Modal, Box, TextField, Button } from '@mui/material'
 import { MdHelpCenter, MdAddBox, MdRefresh, MdFileCopy } from 'react-icons/md'
 import {Loading} from "@nextui-org/react"
 import { DataGrid } from '@mui/x-data-grid'
-import {supabase} from "../supabase/supabase"
+import {supabase} from "../supabase/supabase
 import { isConstructorDeclaration } from 'typescript'
 
 
