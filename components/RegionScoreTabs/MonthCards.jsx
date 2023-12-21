@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
 import { Typography, Card, CardActions, CardContent, Button, Box } from '@mui/material'
+import {FaArrowCircleUp, FaArrowCircleDown} from "react-icons/fa"
 
 const MonthCards = ({selected, sumObj}) => {
 
     useEffect(() => {
       
     },[])
+
+    const scoreGood = (selected.score >= sumObj.score)
 
 
   return (
@@ -14,24 +17,19 @@ const MonthCards = ({selected, sumObj}) => {
       <div className='flex flex-row mb-2 space-x-2'>
         <Card sx={{ maxWidth: 275 }}>
           <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              {selected.name}
+            <Typography color="text.secondary">
+              Score
             </Typography>
-            <Typography variant="h5" component="div">
-              65
+            <Typography variant="h5" component="div" className={scoreGood ? 'text-green-500' : 'text-red-500'}>
+              {Math.round(100 * selected.score) / 100}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
+            <div className='flex flex-row items-center space-x-2'>
+              {
+                scoreGood ? (<FaArrowCircleUp/>) : (<FaArrowCircleDown/>)
+              }
+              <p>{Math.round(((selected.score - sumObj.score) / sumObj.score) * 100)}% from average</p>
+            </div>
           </CardContent>
-          <CardActions>
-            <Button size="small">Learn More</Button>
-          </CardActions>
         </Card>
     </div>) : (<></>)}
     </div>

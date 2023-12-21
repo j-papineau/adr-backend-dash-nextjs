@@ -6,6 +6,8 @@ import MonthCards from './MonthCards';
 import {Region} from 'lib/Regions.js'
 import { jsx } from '@emotion/react';
 import AvgCard from './AvgCard';
+import MetricComparisonCard from './MetricComparisonCard';
+import MonthTrendGraphs from './MonthTrendGraphs';
 
 const MonthComparison = () => {
 
@@ -110,11 +112,11 @@ const MonthComparison = () => {
     }
 
   return (
-    <div className='flex flex-col h-[90vh] w-[1000px] p-2'>
+    <div className='flex flex-col h-[90vh] w-[1000px] p-2 overflow-scroll'>
         <div className='flex flex-row space-x-4 items-center'>
             { selectLoading ? (<CircularProgress/>) : (
                 <>
-                <FormControl sx={{m: 1, width: 300}}>
+                <FormControl sx={{m: 1, width: 200}}>
                     <InputLabel id="months-label">Month</InputLabel>
                     <Select
                        labelId='select-label'
@@ -164,8 +166,19 @@ const MonthComparison = () => {
         <div className='bg-slate-100 w-[82vw] h-[75vh] p-4 rounded-md flex flex-col'>
             { reportLoading ? (<></>) : (
                 <>
-                    <MonthCards selected={selectedRegion} sumObj={sumObj}/>
-                    <Divider/>   
+                    <Typography sx={{ fontSize: 22 }} color="text.secondary" gutterBottom>
+                        {selectedRegion.name}
+                    </Typography>
+                    <div className='flex flex-row space-x-2'>
+                        <MetricComparisonCard metricName={"Score"} metric={selectedRegion.score} avg={sumObj.score} inverse={false} suffix={'pts'}/>
+                        <MetricComparisonCard metricName={"CtL"} metric={selectedRegion.click_to_lead} avg={sumObj.click_to_lead} inverse={false} suffix={'%'}/>
+                        <MetricComparisonCard metricName={"CpL"} metric={selectedRegion.cost_per_lead} avg={sumObj.cost_per_lead} inverse={true} suffix={'$'}/>
+                        <MetricComparisonCard metricName={"Closing"} metric={selectedRegion.closing_rate} avg={sumObj.closing_rate} inverse={false} suffix={'%'}/>
+                    </div>
+                    <Divider className='py-2'/>
+                    <div className='flex flex-col'>
+                        <MonthTrendGraphs selectedRegion={selectedRegion}/>
+                    </div>
                 </>
             )}
         </div>
