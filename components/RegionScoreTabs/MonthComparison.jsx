@@ -112,7 +112,7 @@ const MonthComparison = () => {
     }
 
   return (
-    <div className='flex flex-col h-[90vh] w-[1000px] p-2 overflow-scroll'>
+    <div className='flex flex-col h-[1500px] w-[1000px] p-2 overflow-scroll'>
         <div className='flex flex-row space-x-4 items-center'>
             { selectLoading ? (<CircularProgress/>) : (
                 <>
@@ -163,10 +163,10 @@ const MonthComparison = () => {
         <div className='my-2'>
             <Divider/>
         </div>
-        <div className='bg-slate-100 w-[82vw] h-[75vh] p-4 rounded-md flex flex-col'>
+        <div className='w-[82vw] h-[100vh] p-4 rounded-md flex flex-col'>
             { reportLoading ? (<></>) : (
                 <>
-                    <Typography sx={{ fontSize: 22 }} color="text.secondary" gutterBottom>
+                    <Typography sx={{ fontSize: 24 }} color="text.primary" gutterBottom>
                         {selectedRegion.name}
                     </Typography>
                     <div className='flex flex-row space-x-2'>

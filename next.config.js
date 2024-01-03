@@ -13,6 +13,10 @@ const nextConfig = {
   },
 }
 
+module.exports = {
+  transpilePackages: ['@mui/x-charts']
+}
+
 // module.exports = {
 //   webpack5: true,
 //   webpack: (config) => {

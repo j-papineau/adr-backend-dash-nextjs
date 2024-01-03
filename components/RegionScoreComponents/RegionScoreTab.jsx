@@ -61,9 +61,9 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
-        <Tab label="Overall" {...a11yProps(0)} disabled />
-        <Tab label="Monthly Report" {...a11yProps(1)} disabled/>
-        <Tab label="Month Comparison" {...a11yProps(2)} />
+        <Tab label="Overall" {...a11yProps(0)}/>
+        <Tab label="Detailed KPI" {...a11yProps(1)} disabled/>
+        <Tab label="Months" {...a11yProps(2)} />
         
       </Tabs>
       <TabPanel value={value} index={0}>

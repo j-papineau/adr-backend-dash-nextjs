@@ -6,8 +6,12 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { supabase } from '../../supabase/supabase'
 import { Region } from '../../lib/Regions'
+import {RegionTS} from '../../lib/RegionTS'
 import MetricTrendGraph from './MetricTrendGraph';
 import MonthCompoundGraph from './MonthCompoundGraph';
+import DeviationComparison from './DeviationComparison';
+import GenericGraph from './GenericGraph';
+import { Data } from '@react-google-maps/api';
 
 const MonthTrendGraphs = ({selectedRegion}) => {
 
@@ -37,22 +41,48 @@ const MonthTrendGraphs = ({selectedRegion}) => {
             }
         }
 
+        function convertTimestampToMMDDYYYY(timestamp) {
+            const date = new Date(timestamp);
+            
+            // Extract month, day, and year components
+            const month = String(date.getMonth() + 1).padStart(2, '0');  // Months are 0-indexed
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            
+            // Format into MM/DD/YYYY
+            return `${month}/${day}/${year}`;
+        }
+
 
         const pullData = async () => {
             const {data, error} = await supabase.from("region_score_data").select().eq("period", "month")
             
-            let tempArr = {}
+            let tempArr = []
 
-            data.forEach(async (row) => {
-                let date = row["created_at"]
+            for (const row of data) {
+                let date = row["start_date"]
+                date = new Date(date)
+                let id = row["id"]
                 let obj = await extractRegion(row)
                 if(obj != null){
-                    tempArr[date] = obj
+                    let dataObj = {
+                        "date": date,
+                        "score": obj.score,
+                        "clicks": obj.clicks,
+                        "cpc": obj.cost_per_click,
+                        "cpl": obj.cost_per_lead,
+                        "closing_rate": obj.closing_rate,
+                        "ctl": obj.click_to_lead,
+                        
+                    }
+                    
+                    tempArr.push(dataObj)
                 }
-            })
+            }
+
+            tempArr.sort((a,b) => a.date - b.date)
 
             setDataMap(tempArr)
-            console.log(dataMap)  
             setGraphLoading(false)  
         }
 
@@ -72,7 +102,7 @@ const MonthTrendGraphs = ({selectedRegion}) => {
   return (
     <div>
         <Typography sx={{ fontSize: 22 }} color="text.secondary" gutterBottom>
-            Trends for {selectedRegion.name}
+            Trends for {selectedRegion.name} (Last 6 Months)
         </Typography>
         {graphLoading ? (<CircularProgress/>) : (
         <>
@@ -80,20 +110,22 @@ const MonthTrendGraphs = ({selectedRegion}) => {
             <TabContext value={value}>
                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="analytics graph visual">
-                    <Tab label="All" value="1"/>
-                    <Tab label="Score" value="2" />
-                    <Tab label="CtL" value="3" />
+                    <Tab label="Deviation" value="1"/>
+                    <Tab label="All" value="2" disabled/>
+                    <Tab label="Score" value="3" />
                     <Tab label="CpL" value="4" />
+                    <Tab label="CtL" value = "5" />
                 </TabList>
                 </Box>
                 <TabPanel value='1'>
-                    <MonthCompoundGraph/>
+                    <DeviationComparison dataMap={dataMap}/>
                 </TabPanel>
                 <TabPanel value="2">
-                    <MetricTrendGraph/>
+                    <MonthCompoundGraph dataMap={dataMap}/>
                 </TabPanel>
-                <TabPanel value="3">CtL</TabPanel>
-                <TabPanel value="4">CpL</TabPanel>
+                <TabPanel value="3"><GenericGraph dataMap={dataMap} metric={"score"} target={50}/></TabPanel>
+                <TabPanel value="4"><GenericGraph dataMap={dataMap} metric={"cpl"} target={22}/></TabPanel>
+                <TabPanel value="5"><GenericGraph dataMap={dataMap} metric={"ctl"} target={28}/></TabPanel>
             </TabContext>
         </Box>
         </>)}
