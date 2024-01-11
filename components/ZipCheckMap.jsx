@@ -484,7 +484,7 @@ function Map() {
         onClick={mapClick}
         onLoad={map => {
          const kml = new google.maps.KmlLayer({
-          url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1iXNhWbl6gWbRBomLTyX2KlnOKXxI4Yrh",
+          url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1TABGTRdPSt3usqWYDM2-MiVCyeKOgTk",
           map: map,
          })
 
