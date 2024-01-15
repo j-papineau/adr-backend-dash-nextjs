@@ -39,6 +39,7 @@ export const devView = [
     { name: "ADR Map", link: "/adr-map", icon: FaMap},
     {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
     { name: "Region Score", link: "/region-scores", icon: TbReportMoney, margin: true },
+    { name: "geoJSON editor", link: "/geoJSON", icon: FaMap},
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Settings", link: "/settings", icon: RiSettings4Line},
     { name: "Admin Tools", link: "/admin", icon: MdAdminPanelSettings, margin: true },

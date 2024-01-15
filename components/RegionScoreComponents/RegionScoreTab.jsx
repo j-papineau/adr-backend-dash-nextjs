@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Overall from '../RegionScoreTabs/Overall';
 import Monthly from '../RegionScoreTabs/Monthly';
 import MonthComparison from '../RegionScoreTabs/MonthComparison';
+import MonthvMonth from '../RegionScoreTabs/MonthvMonth';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,6 +65,7 @@ export default function VerticalTabs() {
         <Tab label="Overall" {...a11yProps(0)}/>
         <Tab label="Detailed KPI" {...a11yProps(1)} disabled/>
         <Tab label="Months" {...a11yProps(2)} />
+        <Tab label="Month vs. Month" {...a11yProps(3)} />
         
       </Tabs>
       <TabPanel value={value} index={0}>
@@ -74,6 +76,9 @@ export default function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <MonthComparison/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <MonthvMonth/>
       </TabPanel>
       
     </Box>
