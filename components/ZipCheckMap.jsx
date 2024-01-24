@@ -309,6 +309,7 @@ function Map() {
 
     fetchSelectableRegions()
     setUiReady(true)
+    console.log(customKML)
   }, [])
 
   const addZipsToDB = () => {
@@ -484,13 +485,22 @@ function Map() {
         onClick={mapClick}
         onLoad={map => {
          const kml = new google.maps.KmlLayer({
-          url: "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1TABGTRdPSt3usqWYDM2-MiVCyeKOgTk",
+          url: "https://ydtalmcsutkxxlyoskoq.supabase.co/storage/v1/object/public/adr-map/ADR%20Map%20(9).kml",
           map: map,
          })
 
+         kml.addListener('status_changed', () => {
+          console.log('KML Status:', kml.getStatus());
+          if (kml.getStatus() !== 'OK') {
+            console.error('Failed to load KML layer:', kml.url);
+          }
+        });
+        
          setCustomKML(kml)
          setMap(map); 
+         console.log(customKML)
         }}  
+        
       >
         <></>
       </GoogleMap>
