@@ -1,5 +1,8 @@
+'use client'
 import Header from "../components/Header"
-import JsonConverter from "../components/jsonProcessor/JsonConverter"
+import JsonConverter from "../components/mapStuff/JsonConverter"
+import MapStuff from "../components/mapStuff/MapStuff"
+import KmlUpload from "../components/mapStuff/kmlUpload"
 
 
 export default function geoJSON() {
@@ -7,9 +10,11 @@ export default function geoJSON() {
       <>
       
       <main className='bg-slate-100 dark:bg-darculaBG-medium min-h-screen'>
-        <Header  title="Geo JSON Editor"/>
+        <Header  title="Map File Editor"/>
 
-        <JsonConverter/>
+        <MapStuff/>
+
+       
         
           
       </main>

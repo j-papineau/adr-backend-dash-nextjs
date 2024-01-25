@@ -309,7 +309,6 @@ function Map() {
 
     fetchSelectableRegions()
     setUiReady(true)
-    console.log(customKML)
   }, [])
 
   const addZipsToDB = () => {
@@ -484,8 +483,12 @@ function Map() {
         id='googlemap'
         onClick={mapClick}
         onLoad={map => {
+
+          const {data, error} = supabase.storage.from('adr-map').getPublicUrl('CURRENT');
+          
+          console.log(data.publicUrl)
          const kml = new google.maps.KmlLayer({
-          url: "https://ydtalmcsutkxxlyoskoq.supabase.co/storage/v1/object/public/adr-map/ADR%20Map%20(9).kml",
+          url: data.publicUrl,
           map: map,
          })
 
@@ -498,7 +501,6 @@ function Map() {
         
          setCustomKML(kml)
          setMap(map); 
-         console.log(customKML)
         }}  
         
       >
