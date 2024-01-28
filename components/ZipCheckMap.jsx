@@ -485,11 +485,10 @@ function Map() {
         onLoad={async map => {
 
 
-        let curr = document.location.origin
-        console.log(curr)
+        //TODO: SCRAP KML GO GEOJSON
 
          const kml = new google.maps.KmlLayer({
-          url: "http://localhost:3000/map/CURRENT_KML.kml",
+          url: "https://ydtalmcsutkxxlyoskoq.supabase.co/storage/v1/object/public/map-files/ADR%20Map%20(13).kml",
           map: map,
          })
 
