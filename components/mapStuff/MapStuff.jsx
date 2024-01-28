@@ -1,6 +1,5 @@
 import React from 'react'
 import JsonConverter from './JsonConverter'
-import KmlUpload from './kmlUpload'
 import KMLChange from './KMLChange'
 import JsonSetter from './JsonSetter'
 

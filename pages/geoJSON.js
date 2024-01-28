@@ -1,8 +1,7 @@
 'use client'
 import Header from "../components/Header"
-import JsonConverter from "../components/mapStuff/JsonConverter"
 import MapStuff from "../components/mapStuff/MapStuff"
-import KmlUpload from "../components/mapStuff/kmlUpload"
+
 
 
 export default function geoJSON() {
