@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { Box, TextField, Button, CircularProgress } from '@mui/material'
-import KmlUpload from './kmlUpload';
+
 
 
 const JsonConverter = () => {
