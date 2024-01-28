@@ -482,15 +482,17 @@ function Map() {
         ref={mapReference}
         id='googlemap'
         onClick={mapClick}
-        onLoad={map => {
+        onLoad={async map => {
 
-          const {data, error} = supabase.storage.from('adr-map').getPublicUrl('CURRENT');
-          
-          console.log(data.publicUrl)
+
+        let curr = document.location.origin
+        console.log(curr)
+
          const kml = new google.maps.KmlLayer({
-          url: data.publicUrl,
+          url: "http://localhost:3000/map/CURRENT_KML.kml",
           map: map,
          })
+
 
          kml.addListener('status_changed', () => {
           console.log('KML Status:', kml.getStatus());

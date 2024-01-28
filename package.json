@@ -29,7 +29,6 @@
     "firebase": "^10.0.0",
     "framer-motion": "^10.13.1",
     "google-auth-library": "^9.0.0",
-    "google-spreadsheet": "^4.0.2",
     "googleapis": "^123.0.0",
     "jquery": "^3.7.0",
     "leaflet": "^1.9.4",

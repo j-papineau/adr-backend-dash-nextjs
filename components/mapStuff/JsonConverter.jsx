@@ -27,7 +27,7 @@ const JsonConverter = () => {
 
 
   return (
-    <div className='flex flex-col items-center justify-center p-2'>
+    <div className='flex flex-col items-center justify-center'>
       <div className='h-full w-full flex flex-col justify-center items-center'>
         <div className='flex flex-col space-y-4 p-4 bg-slate-300 rounded-md mx-4 shadow-md shadow-black items-center'>
           <p className='text-xl'>KML to Json</p>
