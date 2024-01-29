@@ -4,7 +4,6 @@ import { TextField, CircularProgress, Button, Modal, Box, Typography } from '@mu
 import {supabase} from "/supabase/supabase.js"
 import toGeoJSON from '@mapbox/togeojson'
 import { geoJson } from 'leaflet';
-import PreviewMap from './previewMap';
 import { MapContainer, Marker, TileLayer, Tooltip, Popup } from "react-leaflet"
 import ModalMap from './ModalMap'
 // import "leaflet/dist/leaflet.css"
