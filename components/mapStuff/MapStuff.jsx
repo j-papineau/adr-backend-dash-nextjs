@@ -1,11 +1,42 @@
-import React, { useState } from 'react'
-import { Box, Divider, TextField } from '@mui/material'
-import KmlUpload from './KmlUpload'
-import CustomerMap from './CustomerMap'
-import InternalMap from './InternalMap'
+import React, { useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { Box, CircularProgress, Divider, TextField } from '@mui/material'
+// import KmlUpload from './KmlUpload'
+// import CustomerMap from './CustomerMap'
+// import InternalMap from './InternalMap'
 import { MdRefresh } from 'react-icons/md'
 
+//
+
+
 const MapStuff = () => {
+
+  const CustomerMap = useMemo(() => dynamic(
+    () => import('./CustomerMap'),
+    {
+      loading: () => <CircularProgress/>,
+      ssr: false
+    }
+  ), [])
+  
+  const InternalMap = useMemo(() => dynamic(
+    () => import('./InternalMap'),
+    {
+      loading: () => <CircularProgress/>,
+      ssr: false
+    }
+  ), [])
+
+  const KmlUpload = useMemo(() => dynamic(
+    () => import('./KmlUpload'),
+    {
+      loading: () => <CircularProgress/>,
+      ssr: false
+    }
+  ), [])
+
+
+
 
   const [internalData, setInternalData] = useState(null);
   const [customerData, setCustomerData] = useState(null);

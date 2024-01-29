@@ -1,16 +1,25 @@
 'use client'
-import React, { useState } from 'react'
+import dynamic from 'next/dynamic'
+import React, { useState, useMemo } from 'react'
 import { TextField, CircularProgress, Button, Modal, Box, Typography } from '@mui/material'
 import {supabase} from "/supabase/supabase.js"
 import toGeoJSON from '@mapbox/togeojson'
 import { geoJson } from 'leaflet';
 import { MapContainer, Marker, TileLayer, Tooltip, Popup } from "react-leaflet"
-import ModalMap from './ModalMap'
+// import ModalMap from './ModalMap'
 // import "leaflet/dist/leaflet.css"
 
 
 
 const KmlUpload = () => {
+
+  const ModalMap = useMemo(() => dynamic(
+    () => import('./ModalMap'),
+    {
+      loading: () => <CircularProgress/>,
+      ssr: false
+    }
+  ), [])
 
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

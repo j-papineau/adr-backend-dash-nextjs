@@ -1,7 +1,8 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 const InternalMap = () => {
     // 37.0902° N, 95.7129° W
