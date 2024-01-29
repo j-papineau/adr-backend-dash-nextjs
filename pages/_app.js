@@ -1,6 +1,7 @@
 import SideBarAlt from '../components/SideBarAlt'
 import { AuthContextProvider } from '../context/AuthContext'
 import '../styles/globals.css'
+
 import { UserAuth } from '../context/AuthContext'
 import Login from './login'
 import {useState, useEffect} from 'react'

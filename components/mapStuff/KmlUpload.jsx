@@ -1,6 +1,14 @@
+'use client'
 import React, { useState } from 'react'
-import { TextField, CircularProgress, Button } from '@mui/material'
+import { TextField, CircularProgress, Button, Modal, Box, Typography } from '@mui/material'
 import {supabase} from "/supabase/supabase.js"
+import toGeoJSON from '@mapbox/togeojson'
+import { geoJson } from 'leaflet';
+import PreviewMap from './previewMap';
+import { MapContainer, Marker, TileLayer, Tooltip, Popup } from "react-leaflet"
+import ModalMap from './ModalMap'
+// import "leaflet/dist/leaflet.css"
+
 
 
 const KmlUpload = () => {
@@ -8,17 +16,57 @@ const KmlUpload = () => {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [mapUploaded, setMapUploaded] = useState(false);
+  const [tempJson, setTempJson] = useState({})
+  const [finalJSON, setFinalJson] = useState(null);
   
   const uploadFile = async () => {
-    if(file == null){
+    if (file == null) {
       return;
     }
   
-    //process kml to geoJSON
-    
+    setIsLoading(true);
+    setFinalJson(null);
   
+    // process kml to geoJSON
   
-  }
+    // creates XMLDOM from file string
+    const reader = new FileReader();
+  
+    reader.onload = (e) => {
+      const contents = e.target.result;
+      var xmlStr = contents;
+  
+      // Now you can use xmlStr for further processing
+      var dom = new DOMParser().parseFromString(xmlStr, 'text/xml');
+  
+      var geoJson = toGeoJSON.kml(dom);
+      setTempJson(geoJson);
+      // popup map??
+      handleOpen();
+  
+      setIsLoading(false);
+    };
+  
+    // Start reading the file
+    reader.readAsText(file);
+  };
+  
+
+  //modal stuff
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const handleOpen = () => setPreviewOpen(true);
+  const handleClose = () => setPreviewOpen(false);
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
     <div className='flex flex-col'>
@@ -33,9 +81,40 @@ const KmlUpload = () => {
           {isLoading ? (<CircularProgress/>) : (<></>)}
         </div>
         <div className='flex flex-col mx-8 space-y-2'>
-          <Button variant='contained' disabled={file == null}>Upload File</Button>
-          <Button variant='contained' disabled={!mapUploaded}>Change Customer Map</Button>
+          <Button variant='contained' disabled={file == null} onClick={uploadFile}>Upload</Button>
+          <Button color='secondary' variant='contained' disabled={finalJSON == null}>Change Customer Map</Button>
+          <p>Note: Customer map will handle stripping the file to just polygons</p>
         </div>
+
+        
+
+        <Modal
+        open={previewOpen}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+          <div>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Does This Look Right?
+              </Typography>
+                  {/* map */}
+              <ModalMap geoJson={tempJson}/>
+
+              <div className='flex flex-row space-x-4 items-center justify-center mt-4'>
+                  <Button variant='contained' color='success' onClick={() => {
+                    setFinalJson(tempJson);
+                    handleClose();
+                  }}>Yes</Button>
+                  <Button variant='contained' color='error' onClick={() => {
+                    setFinalJson(null);
+                    handleClose();
+                  }}>No</Button>
+              </div>
+          </div>
+          </Box>
+        </Modal>
       
       </div>
     </div>
