@@ -58,6 +58,43 @@ const KmlUpload = () => {
     // Start reading the file
     reader.readAsText(file);
   };
+
+  const updateMaps = async () => {
+    setIsLoading(true);
+    await uploadCustomer()
+    await uploadInternal()
+    setIsLoading(false);
+  }
+
+  const uploadCustomer = async() => {
+    //parse strip markers and others
+
+    // const {data, error} = await supabase.storage.from('map-jsons').upload('customer', finalJSON, {
+    //   cacheControl: '3600',
+    //   upsert: true,
+    //   contentType: 'application/json'
+    // })
+    // if(error){
+    //   alert(error.message)
+    // }
+
+    const {data, error} = await supabase.from('maps').insert({map_data:finalJSON}).eq('id', 2);
+
+    if(error){
+      alert(error.message)
+    }
+
+  }
+
+  const uploadInternal = async() => {
+    const {data, error} = await supabase.storage.from('map-jsons').update('internal', finalJSON, {
+      upsert: true,
+      contentType: 'application/json'
+    })
+    if(error){
+      alert(error.message)
+    }
+  }
   
 
   //modal stuff
@@ -90,7 +127,7 @@ const KmlUpload = () => {
         </div>
         <div className='flex flex-col mx-8 space-y-2'>
           <Button variant='contained' disabled={file == null} onClick={uploadFile}>Upload</Button>
-          <Button color='secondary' variant='contained' disabled={finalJSON == null}>Change Customer Map</Button>
+          <Button color='secondary' variant='contained' disabled={finalJSON == null} onClick={updateMaps} >Update Maps</Button>
           <p>Note: Customer map will handle stripping the file to just polygons</p>
         </div>
 
