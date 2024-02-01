@@ -16,7 +16,7 @@ const ModalMap = () => {
         //customer map id 2
         const fetchData = async () => {
             const {data, error} = await supabase.from('maps').select().eq('id', 2);
-            console.log(data[0].map_data)
+            // console.log(data[0].map_data)
             setJson(data[0].map_data)
             setJsonLoading(false);
         }

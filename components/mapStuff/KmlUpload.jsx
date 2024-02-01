@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react'
 import { TextField, CircularProgress, Button, Modal, Box, Typography } from '@mui/material'
 import {supabase} from "/supabase/supabase.js"
 import toGeoJSON from '@mapbox/togeojson'
-import { geoJson } from 'leaflet';
+import { featureGroup, geoJson } from 'leaflet';
 import { MapContainer, Marker, TileLayer, Tooltip, Popup } from "react-leaflet"
 // import ModalMap from './ModalMap'
 // import "leaflet/dist/leaflet.css"
@@ -61,8 +61,8 @@ const KmlUpload = () => {
 
   const updateMaps = async () => {
     setIsLoading(true);
-    await uploadCustomer()
-    await uploadInternal()
+    await uploadInternal();
+    await uploadCustomer();
     setIsLoading(false);
   }
 
@@ -77,8 +77,27 @@ const KmlUpload = () => {
     // if(error){
     //   alert(error.message)
     // }
+    // console.log(finalJSON.features);
+    // console.log("parsing");
 
-    const {data, error} = await supabase.from('maps').insert({map_data:finalJSON}).eq('id', 2);
+    let jsonCopy = finalJSON;
+
+    let tempFeat = jsonCopy.features;
+    let finalFeat = [];
+
+    tempFeat.forEach(feature => {
+      // console.log(feature.geometry)
+      if(feature.geometry.type == "Polygon" || feature.geometry.type == "GeometryCollection"){
+        feature.properties = ""
+        finalFeat.push(feature)
+      }
+    });
+
+    // console.log(finalFeat)
+    jsonCopy.features = finalFeat;
+    // console.log(jsonCopy.features)
+
+    const {data, error} = await supabase.from('maps').update({map_data:jsonCopy}).eq('id', 2);
 
     if(error){
       alert(error.message)
@@ -87,10 +106,7 @@ const KmlUpload = () => {
   }
 
   const uploadInternal = async() => {
-    const {data, error} = await supabase.storage.from('map-jsons').update('internal', finalJSON, {
-      upsert: true,
-      contentType: 'application/json'
-    })
+    const {data, error} = await supabase.from('maps').update({map_data:finalJSON}).eq('id', 3)
     if(error){
       alert(error.message)
     }
@@ -130,8 +146,6 @@ const KmlUpload = () => {
           <Button color='secondary' variant='contained' disabled={finalJSON == null} onClick={updateMaps} >Update Maps</Button>
           <p>Note: Customer map will handle stripping the file to just polygons</p>
         </div>
-
-        
 
         <Modal
         open={previewOpen}

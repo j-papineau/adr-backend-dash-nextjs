@@ -5,6 +5,7 @@ import { Box, CircularProgress, Divider, TextField } from '@mui/material'
 // import CustomerMap from './CustomerMap'
 // import InternalMap from './InternalMap'
 import { MdRefresh } from 'react-icons/md'
+// import MapSettings from './MapSettings'
 
 //
 
@@ -35,6 +36,15 @@ const MapStuff = () => {
     }
   ), [])
 
+  const MapSettings = useMemo(() => dynamic(
+    () => import('./MapSettings'),
+    {
+      loading: () => <CircularProgress/>,
+      ssr: false
+    }
+  ), [])
+
+
 
 
 
@@ -53,14 +63,17 @@ const MapStuff = () => {
           <Divider />
         </div>
         <div className='flex flex-row justify-between items-center'>
-          <p className='text-2xl font-bold'>Map Preview</p>
-          <a onClick={() => {
+          <div className='flex flex-col my-4'>
+            <p className='text-2xl font-bold'>Map Preview</p>
+            <p>Marker icons omitted for load speed</p>
+          </div>
+          {/* <a onClick={() => {
 
           }}>
             <MdRefresh size={30} className='hover:text-blue-200'/>
-          </a>
+          </a> */}
         </div>
-        <div className='flex items-center justify-center flex-col lg:flex-row md:space-x-4'>
+        <div className='flex items-center justify-center flex-col lg:flex-row md:space-x-4 h-[400px]'>
           <div className='flex flex-col md:w-full'>
             <p className='text-xl'>Internal</p>
             <InternalMap/>
@@ -69,6 +82,12 @@ const MapStuff = () => {
             <p className='text-xl'>Customer Facing</p>
             <CustomerMap/>
           </div>
+        </div>
+        <div className='my-8'>
+          <Divider />
+        </div>
+        <div>
+          <MapSettings/>
         </div>
       </div>
     </div>
