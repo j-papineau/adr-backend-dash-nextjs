@@ -5,6 +5,7 @@ import { Box, CircularProgress, Divider, TextField } from '@mui/material'
 // import CustomerMap from './CustomerMap'
 // import InternalMap from './InternalMap'
 import { MdRefresh } from 'react-icons/md'
+import KMLCompare from './KMLCompare'
 // import MapSettings from './MapSettings'
 
 //
@@ -57,6 +58,9 @@ const MapStuff = () => {
 
   return (
     <div className='flex flex-col bg-slate-200 p-10 m-4 rounded-md'>
+      <div className='m-2 p-2'>
+        <KMLCompare/>
+      </div>
       <div className='rounded-md m-2 p-2'>
         <KmlUpload/>
         <div className='my-4'>
