@@ -5,11 +5,11 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import {BsFillChatLeftQuoteFill, BsPinMap} from "react-icons/bs"
 import { MdDashboard, MdOutlineDashboard } from "react-icons/md";
-import { FaMap, FaSearch } from "react-icons/fa";
+import { FaFunnelDollar, FaMap, FaSearch } from "react-icons/fa";
 import { FaUserSecret } from "react-icons/fa";
 import NoPrivs from "../components/NoPrivs";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { FaCog } from "react-icons/fa";
+import { FaCog, FaSearchDollar } from "react-icons/fa";
 
 
 export const spencerView = [
@@ -40,6 +40,7 @@ export const devView = [
     {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
     { name: "Region Score", link: "/region-scores", icon: TbReportMoney, margin: true },
     { name: "Website Map Editor", link: "/geoJSON", icon: FaMap},
+    { name: "Pricing By Area", link: "/PricingByArea", icon: FaFunnelDollar},
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Settings", link: "/settings", icon: RiSettings4Line},
     { name: "Admin Tools", link: "/admin", icon: MdAdminPanelSettings, margin: true },
