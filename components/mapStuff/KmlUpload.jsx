@@ -49,6 +49,7 @@ const KmlUpload = () => {
   
       var geoJson = toGeoJSON.kml(dom);
       setTempJson(geoJson);
+      console.log(geoJson);
       // popup map??
       handleOpen();
   
