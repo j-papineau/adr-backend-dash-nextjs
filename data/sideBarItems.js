@@ -1,11 +1,11 @@
 import { HiMenuAlt3 } from "react-icons/hi";
 import { RiSettings4Line } from "react-icons/ri";
-import { TbReportAnalytics, TbReportMoney } from "react-icons/tb";
+import { TbAdjustments, TbReportAnalytics, TbReportMoney } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import {BsFillChatLeftQuoteFill, BsPinMap} from "react-icons/bs"
 import { MdDashboard, MdOutlineDashboard } from "react-icons/md";
-import { FaFunnelDollar, FaMap, FaSearch } from "react-icons/fa";
+import { FaFunnelDollar, FaMap, FaSearch, FaWordpress } from "react-icons/fa";
 import { FaUserSecret } from "react-icons/fa";
 import NoPrivs from "../components/NoPrivs";
 import { MdAdminPanelSettings } from "react-icons/md";
@@ -34,6 +34,7 @@ export const devView = [
     
     {name: "Mktg. Dash", link: "/marketing-dash", icon: MdDashboard},
     { name: "Zip Search Analytics", link: "/zipSearchData", icon: TbReportAnalytics},
+    {name: "Thank You Pages", link: "/thankyou", icon: FaWordpress},
     { name: "Zip Search DB/Tools", link: "/zipSearchTools", icon: FaSearch},
     { name: "Quote Tool", link: "/spencer-quote-tool", icon: BsFillChatLeftQuoteFill},
     { name: "ADR Map", link: "/adr-map", icon: FaMap},

@@ -16,7 +16,7 @@ const CurrentMap = () => {
             setJson(data[0].map_data)
             setJsonLoading(false);
         }
-        fetchData()
+        fetchData();
     })
 
 
