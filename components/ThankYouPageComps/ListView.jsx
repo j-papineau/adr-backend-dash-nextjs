@@ -87,7 +87,7 @@ const ListView = () => {
     const handleRegionAdd = async () => {
         const {error} = await supabase.from("region_info").insert(
             {
-                regionID: newRegionID,
+                regionID: parseInt(newRegionID),
                 phone: newRegionPhone,
                 name: newRegionName
             }
@@ -120,11 +120,16 @@ const ListView = () => {
         </div>
         <div className='flex flex-row m-auto '>
             <div className='flex flex-row justify-center'>
-                <div className=' h-[85vh] w-[80vh] rounded-md mx-4 p-2 shadow-md shadow-black bg-white'>
+                <div className=' h-[95vh] w-[80vh] rounded-md mx-4 p-2 shadow-md shadow-black bg-white'>
                     <div className='flex flex-row border bg-slate-200 shadow-md rounded-md'>
                         <p className='text-lg font-semibold p-2 italic text-black'>Thank you page config </p>
                         <div className='flex flex-row text-lg font-semibold p-4 justify-end w-[80%] text-slate-800 space-x-4'>
-                                <MdAddBox size={30} onClick={handleAddModalOpen} className='hover:text-white drop-shadow-md'/>
+                                <MdAddBox size={30} onClick={() => {
+                                    setNewRegionID();
+                                    setNewRegionName();
+                                    setNewRegionPhone();
+                                    handleAddModalOpen()
+                                }} className='hover:text-white drop-shadow-md'/>
                                 <a onClick={refreshRegionTable}>
                                     <MdRefresh size={30} className='hover:text-white drop-shadow-md'/>
                                 </a>
@@ -133,6 +138,7 @@ const ListView = () => {
 
                     {regionTableLoading ? (<Loading className='p-20' size='xl'/>) : (
                         <DataGrid
+                        autoHeight
                             rows={rows}
                             columns={cols}
                             initialState={{
@@ -206,7 +212,7 @@ const ListView = () => {
                             <Box style={modalStyle}>
                                 <div className='flex flex-col space-y-2 justify-center bg-slate-100 p-8'>
                                     <Typography variant='h4'>Add Region</Typography> 
-                                    <TextField label='regionID' value={newRegionID} onChange={(e) => {setNewRegionID(parseInt(e.target.value))}}/>
+                                    <TextField label='regionID' value={newRegionID} onChange={(e) => {setNewRegionID(e.target.value)}}/>
                                     <TextField label='phone' value={newRegionPhone} onChange={(e) => {setNewRegionPhone(e.target.value)}}/>
                                     <TextField label='name' value={newRegionName} onChange={(e) => {setNewRegionName(e.target.value)}}/>
                                     <Button

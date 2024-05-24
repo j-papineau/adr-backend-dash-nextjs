@@ -85,7 +85,7 @@ const ZipSearchDB = () => {
     }
 
   return (
-    <div className='h-full w-full bg-slate-900 rounded-md p-4 flex flex-col'>
+    <div className='h-[200vh] w-full bg-slate-900 rounded-md p-4 flex flex-col'>
         <div className="flex flex-row w-full space-x-5">
             <Typography variant='h4'>Zip Search DB</Typography>
             <Typography variant='p' color={"gray"}>(data source: "https://ydtalmcsutkxxlyoskoq.supabase.co")</Typography>
@@ -93,7 +93,7 @@ const ZipSearchDB = () => {
         <div className='flex flex-row m-auto'>
 
             <div className='flex flex-row justify-center'>
-                <div className=' h-[85vh] w-[80vh] bg-slate-600 rounded-md mx-4 p-2 shadow-md shadow-black'>
+                <div className=' h-[95vh] w-[80vh] bg-slate-600 rounded-md mx-4 p-2 shadow-md shadow-black'>
 
                     <div className='flex flex-row border bg-slate-200 shadow-md rounded-md'>
                         <p className='text-lg font-semibold p-2 italic text-black'>Zip Search Configs</p>
@@ -109,16 +109,17 @@ const ZipSearchDB = () => {
                         {urlTableLoading ? (<Loading className='p-20' size='xl'/>) : (
                         <div className='bg-white rounded-md my-2'>
                                 <DataGrid
+                                autoHeight
                                     rows={rows}
                                     columns={cols}
                                     initialState={{
                                     pagination: {
                                         paginationModel: {
-                                        pageSize: 10,
+                                        pageSize: 20,
                                         },
                                     },
                                     }}
-                                    pageSizeOptions={[5,10]}
+                                    pageSizeOptions={[20,30]}
                                     onRowClick={(e) => {
                                         setSelectedRegion(e.row)
                                         handleUModeOpen()
