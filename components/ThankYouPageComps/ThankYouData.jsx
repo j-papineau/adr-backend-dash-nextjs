@@ -18,10 +18,11 @@ const ThankYouData = () => {
             <Typography variant='h4'>Thank You Page Data</Typography>
         </div>
         <div className='flex flex-col m-auto space-y-4 text-center '>
-            <Typography variant='h5' className='text-white'>Last 30 Days</Typography>
-            <ThankYouGraph days={30} doLog={true}/>
             <Typography variant='h5' className='text-white'>Last 7 Days</Typography>
             <ThankYouGraph days={7} doLog={false}/>
+            <Typography variant='h5' className='text-white'>Last 30 Days</Typography>
+            <ThankYouGraph days={30} doLog={true}/>
+            
         </div>
     </div>
   )
