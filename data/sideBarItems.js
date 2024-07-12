@@ -33,6 +33,7 @@ export const basicView  = [
 export const devView = [
     
     {name: "Mktg. Dash", link: "/marketing-dash", icon: MdDashboard},
+    { name: "PBZ", link: "/pbz", icon: FaMap},
     { name: "Zip Search Analytics", link: "/zipSearchData", icon: TbReportAnalytics},
     {name: "Thank You Pages", link: "/thankyou", icon: FaWordpress},
     { name: "Zip Search DB/Tools", link: "/zipSearchTools", icon: FaSearch},
