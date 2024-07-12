@@ -28,11 +28,17 @@ const PBZMain = () => {
             <Box sx={{borderBottom: 1, borderColor: 'divider'}} >
               <TabList onChange={handleTabChange} aria-label="tabs">
                 <Tab  label="Tool" value="1"/>
+                <Tab label="Zip Calculator" value="3"/>
                 <Tab label="File Stuff (Admin)" value="2"/>
               </TabList>
             </Box>
               <TabPanel value="1">
                 <Tool/>
+              </TabPanel>
+              <TabPanel value="3">
+                <>
+                Calculator :)
+                </>
               </TabPanel>
               <TabPanel value="2">
                 <FileStuff/>

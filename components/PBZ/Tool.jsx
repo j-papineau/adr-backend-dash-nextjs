@@ -6,6 +6,8 @@ import {supabase} from "/supabase/supabase.js"
 import { Button, CircularProgress, TextField, Typography } from '@mui/material'
 import L from 'leaflet'
 import newIconURL from "../../public/images/markerImage.png"
+import { GoXCircleFill, GoCheckCircleFill } from "react-icons/go";
+
 
 
 
@@ -89,6 +91,8 @@ const Tool = () => {
                     console.log("Found poly");
                     console.log(feature);
                     return;
+                }else{
+                    setSelectedPoly(null)
                 }
             }
         }
@@ -123,10 +127,33 @@ const Tool = () => {
         {(selectedPoly != null) ? (
         <>
             <div className='bg-slate-200 rounded-md p-2 flex flex-col space-y-2'>
-                <p className='font-semibold'>Pricing Information</p>
+                <h5 className='font-semibold underline'>Pricing Information</h5>
                 <p><strong>RegionID:</strong> {selectedPoly.properties.regionID} </p>
-                <p><strong>Add $:</strong> {selectedPoly.properties.Price_Modifier} </p>
                 <p><strong>Extra Day:</strong> {selectedPoly.properties.extra_day} </p>
+                <div className='flex flex-row space-x-3'>
+                    <div className='flex flex-col align-bottom'>
+                        <p>10s</p>
+                        {(selectedPoly.properties["10s"] == 'yes') ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom'>
+                        <p>20s</p>
+                        {(selectedPoly.properties["20s"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom'>
+                        <p>30s</p>
+                        {(selectedPoly.properties["30s"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom'>
+                        <p>40s</p>
+                        {(selectedPoly.properties["40s"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                </div>
+
+                <p><strong>10</strong> (add ${selectedPoly.properties["10_add"]}): ${199 + selectedPoly.properties["10_add"]}</p>
+                <p><strong>20</strong> (add ${selectedPoly.properties["20_add"]}): ${210 + selectedPoly.properties["20_add"]}</p>
+                <p><strong>30</strong> (add ${selectedPoly.properties["30_add"]}): ${330 + selectedPoly.properties["30_add"]}</p>
+                <p><strong>40</strong> (add ${selectedPoly.properties["40_add"]}): ${450 + selectedPoly.properties["40_add"]}</p>
+                <p><strong>extra day:</strong> {selectedPoly.properties.extra_day} </p>
                 <p><strong>concrete?</strong> {selectedPoly.properties.concrete} </p>
             </div>
         </>) : (<></>)}
