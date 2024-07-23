@@ -60,6 +60,8 @@ const Calculator = () => {
 
     const [perDay, setPerDay] = useState(0);
 
+    const [note, setNote] = useState("");
+
     const execSearch = async() => {
         setSearching(true);
         setShowResults(true);
@@ -255,7 +257,7 @@ const Calculator = () => {
                 <>
                     <p><strong>Region:</strong> {selectedRegion.name}</p>
                     
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col my-4'>
                         <Typography variant='h5'>Price Breakdown</Typography>
                         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
                             <div className='bg-slate-300 rounded-md p-4 text-center'>
@@ -275,6 +277,17 @@ const Calculator = () => {
                                 <Typography variant='h5'>${basePrice + zoneModifier + weightCost + daysCost}</Typography>
                             </div>
                         </div>
+                        <div className='mt-4'>
+                            <TextField value={selectedRegion["pbz_note"]}
+                                multiline
+                                InputLabelProps={{ shrink: true }}
+                                label="CRM info"
+                                rows={10}
+                                fullWidth
+                                disabled={true}
+                            />
+                        </div>
+                        
                     </div>
 
 
