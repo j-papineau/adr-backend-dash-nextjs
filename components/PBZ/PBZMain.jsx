@@ -1,7 +1,6 @@
 import React, {useMemo, useState} from 'react'
 import { Box, CircularProgress, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-// import Tool from './Tool';
 import FileStuff from './FileStuff';
 import dynamic from 'next/dynamic';
 import Calculator from './Calculator';

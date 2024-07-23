@@ -2,7 +2,6 @@ import { Typography, TextField, Button, Select, MenuItem, FormControl, InputLabe
 import React, { useState } from 'react'
 import {supabase} from "/supabase/supabase.js"
 import * as turf from '@turf/turf'
-import { withInfo } from 'antd/es/modal/confirm'
 
 
 const Calculator = () => {
