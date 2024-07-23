@@ -36,7 +36,7 @@ const ReplaceFile = () => {
             <Typography variant='h5'>Update File</Typography>
             <Divider></Divider>
             <div className='flex flex-row space-x-4'>
-                <Input type='file' onChange={(e) => {
+                <Input className='m-2' type='file' onChange={(e) => {
                 setFile(e.target.files[0]);
                 }}>
                 </Input>

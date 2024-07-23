@@ -4,6 +4,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab'
 // import Tool from './Tool';
 import FileStuff from './FileStuff';
 import dynamic from 'next/dynamic';
+import Calculator from './Calculator';
 
 const PBZMain = () => {
 
@@ -22,7 +23,7 @@ const PBZMain = () => {
     }
 
   return (
-    <div className='w-full h-screen bg-slate-100 rounded-md'>
+    <div className='w-full h-[200vh] bg-slate-100 rounded-md'>
         <Box sx={{width: '100%', typography: 'body1'}}>
           <TabContext value={tabValue}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}} >
@@ -37,7 +38,7 @@ const PBZMain = () => {
               </TabPanel>
               <TabPanel value="3">
                 <>
-                Calculator :)
+                <Calculator/>
                 </>
               </TabPanel>
               <TabPanel value="2">
