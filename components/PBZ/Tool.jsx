@@ -8,6 +8,7 @@ import L from 'leaflet'
 import newIconURL from "../../public/images/markerImage.png"
 import { GoXCircleFill, GoCheckCircleFill } from "react-icons/go";
 import SizeDisplay from './SizeDisplay'
+import HaulerCard from './HaulerCard'
 
 
 
@@ -15,7 +16,7 @@ import SizeDisplay from './SizeDisplay'
 const Tool = () => {
 
     const newIcon = new L.Icon({
-        iconUrl: newIconURL
+        iconUrl: "/images/marker-icon.png"
     })
 
     const [jsonLoading, setJsonLoading] = useState(true);
@@ -91,9 +92,27 @@ const Tool = () => {
         console.log("getting info for region: " + regionID);
 
         const {data, error} = await supabase.from("region_info").select().eq('regionID', regionID);
-
+        if(error){
+            console.log(error)
+            alert("error fetching region")
+            return;
+        }
         setCurrentRegion(data[0]);
 
+    }
+
+    const [haulers, setHaulers] = useState(null)
+
+    const parseHaulers = (feature) => {
+        console.log(feature.properties.haulers)
+        if(feature.properties.haulers == null){
+            setHaulers(null);
+        }else{
+            let haulersTemp = feature.properties.haulers.split(', ');
+            setHaulers(haulersTemp);
+            console.log(haulersTemp)
+        }
+        
     }
 
     const checkPip = async (checkPos) => {
@@ -105,6 +124,7 @@ const Tool = () => {
                     setSelectedPoly(feature);
                     console.log("Found poly");
                     console.log(feature);
+                    parseHaulers(feature);
                     return;
                 }else{
                     setSelectedPoly(null)
@@ -145,26 +165,64 @@ const Tool = () => {
                 <h5 className='font-semibold underline'>Pricing Information</h5>
                 <p><strong>RegionID:</strong> {selectedPoly.properties.regionID} </p>
                 <div className='flex flex-row space-x-3'>
-                    <div className='flex flex-col align-bottom'>
+                    <div className='flex flex-col align-bottom items-center'>
                         <p>10s</p>
                         {(selectedPoly.properties["10s"] == 'yes') ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
                     </div>
-                    <div className='flex flex-col align-bottom'>
+                    <div className='flex flex-col align-bottom items-center'>
                         <p>15s</p>
                         {(selectedPoly.properties["15s"] == 'yes') ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
                     </div>
-                    <div className='flex flex-col align-bottom'>
+                    <div className='flex flex-col align-bottom items-center'>
                         <p>20s</p>
                         {(selectedPoly.properties["20s"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
                     </div>
-                    <div className='flex flex-col align-bottom'>
+                    <div className='flex flex-col align-bottom items-center'>
                         <p>30s</p>
                         {(selectedPoly.properties["30s"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
                     </div>
-                    <div className='flex flex-col align-bottom'>
+                    <div className='flex flex-col align-bottom items-center'>
                         <p>40s</p>
                         {(selectedPoly.properties["40s"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
                     </div>
+                </div>
+                <p className='font-bold'>Clean Fill</p>
+                <div className='flex flex-row space-x-3'>
+                <div className='flex flex-col align-bottom items-center'>
+                        <p>10s</p>
+                        {(selectedPoly.properties["10s_cf"] == 'yes') ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom items-center'>
+                        <p>15s</p>
+                        {(selectedPoly.properties["15s_cf"] == 'yes') ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom items-center'>
+                        <p>20s</p>
+                        {(selectedPoly.properties["20s_cf"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom items-center'>
+                        <p>30s</p>
+                        {(selectedPoly.properties["30s_cf"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                    <div className='flex flex-col align-bottom items-center'>
+                        <p>40s</p>
+                        {(selectedPoly.properties["40s_cf"] == "yes") ? (<GoCheckCircleFill color='green'/>) : (<GoXCircleFill color='red'/>)}
+                    </div>
+                </div>
+                <div className='flex flex-col'>
+                <p className='font-bold'>Haulers</p>
+                    {(haulers != null) ? (
+                        <div className='flex flex-row space-x-2'>
+                        {haulers.map((str, index) => (
+                            <HaulerCard name={str}/>
+                        ))}
+                        </div>
+                        ) : (
+                        <>
+                            <p>No Hauler Information for this Polygon</p>
+                        </>
+                    )}
+                    
                 </div>
 
 

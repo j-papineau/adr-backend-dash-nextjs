@@ -4,6 +4,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab'
 import FileStuff from './FileStuff';
 import dynamic from 'next/dynamic';
 import Calculator from './Calculator';
+import PolygonEditor from './PolygonEditor';
 
 const PBZMain = () => {
 
@@ -22,7 +23,7 @@ const PBZMain = () => {
     }
 
   return (
-    <div className='w-full h-[200vh] bg-slate-100 rounded-md'>
+    <div className='w-full h-[250vh] bg-slate-100 rounded-md'>
         <Box sx={{width: '100%', typography: 'body1'}}>
           <TabContext value={tabValue}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}} >
@@ -30,6 +31,7 @@ const PBZMain = () => {
                 <Tab  label="Tool" value="1"/>
                 <Tab label="Zip Calculator" value="3"/>
                 <Tab label="File Stuff (Admin)" value="2"/>
+                <Tab label="Polygon Editor (Not Ready Yet)" value="4"/>
               </TabList>
             </Box>
               <TabPanel value="1">
@@ -42,6 +44,9 @@ const PBZMain = () => {
               </TabPanel>
               <TabPanel value="2">
                 <FileStuff/>
+              </TabPanel>
+              <TabPanel value="4">
+                <PolygonEditor/>
               </TabPanel>
           </TabContext>
         </Box>

@@ -15,7 +15,15 @@ const RegionTable = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const {data, error} = await supabase.from("region_info").select();
+            const {data, error} = await supabase.from("region_info").select().order('name', {ascending: true});
+            data.sort((a, b) => {
+                let nameA = a.name.toLowerCase();
+                let nameB = b.name.toLowerCase();
+                if(nameA < nameB) return -1;
+                if(nameA > nameB) return 1;
+                return 0;
+            });
+
             setRows(data);
         }
         setIsLoading(true);
@@ -28,6 +36,13 @@ const RegionTable = () => {
         setIsLoading(true);
         setSelectedRegion(null);
         const {data, error} = await supabase.from("region_info").select();
+        data.sort((a, b) => {
+            let nameA = a.name.toLowerCase();
+            let nameB = b.name.toLowerCase();
+            if(nameA < nameB) return -1;
+            if(nameA > nameB) return 1;
+            return 0;
+        });
         setRows(data);
         setIsLoading(false);
     }
