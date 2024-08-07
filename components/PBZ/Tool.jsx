@@ -77,7 +77,7 @@ const Tool = () => {
             let lat = data[0].lat;
             let lng = data[0].lng;
             setMarkerPos([lat,lng]);
-            map.setView([lat, lng], 10);
+            map.setView([lat, lng], 14);
             checkPip([lat,lng]);
         }else{
             alert("unable to find that zip code :(")
@@ -95,6 +95,7 @@ const Tool = () => {
         if(error){
             console.log(error)
             alert("error fetching region")
+            setCurrentRegion(null);
             return;
         }
         setCurrentRegion(data[0]);
@@ -121,6 +122,10 @@ const Tool = () => {
                 const polygon = L.geoJSON(feature);
                 if(polygon.getBounds().contains(checkPos)){
                     await getRegionInfo(feature.properties.regionID);
+                    if(currentRegion == null){
+                        setSelectedPoly(null);
+                        return;
+                    }
                     setSelectedPoly(feature);
                     console.log("Found poly");
                     console.log(feature);
