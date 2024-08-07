@@ -4,7 +4,6 @@ import { TabContext, TabList, TabPanel } from '@mui/lab'
 import FileStuff from './FileStuff';
 import dynamic from 'next/dynamic';
 import Calculator from './Calculator';
-import PolygonEditor from './PolygonEditor';
 
 const PBZMain = () => {
 
@@ -15,6 +14,14 @@ const PBZMain = () => {
             ssr: false
         }
     ), [])
+
+    const PolygonEditor = useMemo(() => dynamic(
+      () => import('./PolygonEditor'),
+      {
+        loading: () => <CircularProgress/>,
+        ssr: false
+      }
+    ))
     
     const [tabValue, setTabValue] = useState('1');
 
