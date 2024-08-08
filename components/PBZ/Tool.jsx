@@ -34,6 +34,7 @@ const Tool = () => {
 
 
     function blobToJson(blob){
+        
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
@@ -99,6 +100,7 @@ const Tool = () => {
             return;
         }
         setCurrentRegion(data[0]);
+        console.log(data[0]);
 
     }
 
@@ -235,6 +237,7 @@ const Tool = () => {
                 <Divider/>
 
                 <SizeDisplay
+                isAvailable={selectedPoly.properties["10s"] == 'yes'}
                 title={"10s"}
                 basePrice={currentRegion["10_price"]}
                 baseWeight={currentRegion["10_weight"]}
@@ -242,6 +245,7 @@ const Tool = () => {
                 priceMod={selectedPoly.properties["10_add"]}
                 />
                 <SizeDisplay
+                isAvailable={selectedPoly.properties["15s"] == 'yes'}
                 title={"15s"}
                 basePrice={currentRegion["15_price"]}
                 baseWeight={currentRegion["15_weight"]}
@@ -249,6 +253,7 @@ const Tool = () => {
                 priceMod={selectedPoly.properties["15_add"]}
                 />
                 <SizeDisplay
+                isAvailable={selectedPoly.properties["20s"] == 'yes'}
                 title={"20s"}
                 basePrice={currentRegion["20_price"]}
                 baseWeight={currentRegion["20_weight"]}
@@ -256,6 +261,7 @@ const Tool = () => {
                 priceMod={selectedPoly.properties["20_add"]}
                 />
                 <SizeDisplay
+                isAvailable={selectedPoly.properties["30s"] == 'yes'}
                 title={"30s"}
                 basePrice={currentRegion["30_price"]}
                 baseWeight={currentRegion["30_weight"]}
@@ -263,12 +269,49 @@ const Tool = () => {
                 priceMod={selectedPoly.properties["30_add"]}
                 />
                 <SizeDisplay
+                isAvailable={selectedPoly.properties["40s"] == 'yes'}
                 title={"40s"}
                 basePrice={currentRegion["40_price"]}
                 baseWeight={currentRegion["40_weight"]}
                 perThou={currentRegion["40_per_thou"]}
                 priceMod={selectedPoly.properties["40_add"]}
                 />
+
+                <Typography variant='h5'>Clean Fill</Typography>
+                <Divider/>
+                <SizeDisplay
+                isAvailable={selectedPoly.properties["10s_cf"] == 'yes'}
+                title={"10s"}
+                basePrice={currentRegion["10cf_price"]}
+                baseWeight={currentRegion["10cf_weight"]}
+                perThou={currentRegion["10cf_per_thou"]}
+                priceMod={selectedPoly.properties["10_add"]}
+                />
+                <SizeDisplay
+                isAvailable={selectedPoly.properties["20s_cf"] == 'yes'}
+                title={"20s"}
+                basePrice={currentRegion["20cf_price"]}
+                baseWeight={currentRegion["20cf_weight"]}
+                perThou={currentRegion["20cf_per_thou"]}
+                priceMod={selectedPoly.properties["20_add"]}
+                />
+                <SizeDisplay
+                isAvailable={selectedPoly.properties["30s_cf"] == 'yes'}
+                title={"30s"}
+                basePrice={currentRegion["30cf_price"]}
+                baseWeight={currentRegion["30cf_weight"]}
+                perThou={currentRegion["30cf_per_thou"]}
+                priceMod={selectedPoly.properties["30_add"]}
+                />
+                <SizeDisplay
+                isAvailable={selectedPoly.properties["40s_cf"] == 'yes'}
+                title={"40s"}
+                basePrice={currentRegion["40cf_price"]}
+                baseWeight={currentRegion["40cf_weight"]}
+                perThou={currentRegion["40cf_per_thou"]}
+                priceMod={selectedPoly.properties["40_add"]}
+                />
+
 
                 <div className='flex flex-col'>
                     <Typography variant='h5'>Days</Typography>
@@ -296,17 +339,6 @@ const Tool = () => {
                     />
                 </div>
 
-
-
-                {/* <p><strong>10</strong>: ${currentRegion["10_price"] + selectedPoly.properties["10_add"]}</p>
-                <p><strong>15</strong>: ${currentRegion["15_price"] + selectedPoly.properties["15_add"]}</p>
-                <p><strong>20</strong>: ${currentRegion["20_price"] + selectedPoly.properties["20_add"]}</p>
-                <p><strong>30</strong>: ${currentRegion["30_price"] + selectedPoly.properties["30_add"]}</p>
-                <p><strong>40</strong>: ${currentRegion["40_price"] + selectedPoly.properties["40_add"]}</p>
-                <p><strong>days:</strong> {currentRegion["days_allowed"]}</p>
-                <p><strong>extra day:</strong> {currentRegion["extra_day"]} </p> */}
-                
-                {/* <p><strong>concrete?</strong> {selectedPoly.properties.concrete} </p> */}
             </div>
         </>) : (<></>)}
         

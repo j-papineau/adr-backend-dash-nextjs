@@ -1,11 +1,15 @@
-import React, {useMemo, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import { Box, CircularProgress, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import FileStuff from './FileStuff';
 import dynamic from 'next/dynamic';
 import Calculator from './Calculator';
+import { UserAuth } from '../../context/AuthContext';
 
 const PBZMain = () => {
+
+  const {user, logOut, googleSignIn, userData, userPrivilege} = UserAuth()
+
 
     const Tool = useMemo(() => dynamic(
         () => import('./Tool'),
@@ -29,6 +33,11 @@ const PBZMain = () => {
       setTabValue(newValue)
     }
 
+  useEffect(() => {
+    console.log(user);
+    console.log(userPrivilege);
+  })
+
   return (
     <div className='w-full h-[250vh] bg-slate-100 rounded-md'>
         <Box sx={{width: '100%', typography: 'body1'}}>
@@ -37,24 +46,25 @@ const PBZMain = () => {
               <TabList onChange={handleTabChange} aria-label="tabs">
                 <Tab  label="Tool" value="1"/>
                 <Tab label="Zip Calculator" value="3"/>
-                <Tab label="File Stuff (Admin)" value="2"/>
-                <Tab label="Polygon Editor (Not Ready Yet)" value="4"/>
+                <Tab disabled={userPrivilege == 'liason'} label="File Stuff (Admin)" value="2"/>
+                <Tab disabled={userPrivilege == 'liason'} label="Polygon Editor (Not Ready Yet)" value="4"/>
+                
               </TabList>
             </Box>
               <TabPanel value="1">
                 <Tool/>
               </TabPanel>
               <TabPanel value="3">
-                <>
                 <Calculator/>
-                </>
               </TabPanel>
-              <TabPanel value="2">
-                <FileStuff/>
-              </TabPanel>
-              <TabPanel value="4">
-                <PolygonEditor/>
-              </TabPanel>
+
+                  <TabPanel value="2">
+                    <FileStuff/>
+                  </TabPanel>
+                  <TabPanel value="4">
+                    <PolygonEditor/>
+                  </TabPanel>
+              
           </TabContext>
         </Box>
 

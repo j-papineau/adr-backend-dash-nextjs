@@ -68,6 +68,7 @@ export const adminView = [
 ]
 
 export const liasonView = [
+    { name: "PBZ", link: "/pbz", icon: FaMap},
     {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
     { name: "ADR Map", link: "/adr-map", icon: FaMap},
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },

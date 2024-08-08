@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, CircularProgress, FormControl, InputLabel, MenuItem, Select, Slider, TextField, TextareaAutosize, Typography } from '@mui/material';
+import { Button, Checkbox, CircularProgress, Divider, FormControl, InputLabel, MenuItem, Select, Slider, TextField, TextareaAutosize, Typography } from '@mui/material';
 import { supabase } from 'supabase/supabase';
 import { IoMdAdd, IoMdRefresh } from "react-icons/io";
 import PriceSlider from './PriceSlider';
@@ -251,6 +251,134 @@ const RegionTable = () => {
                         setSelectedRegion(old);
                     }}/>
                 </div>
+
+                <Typography variant='h5'>Clean Fill Prices:</Typography>
+                <Divider/>
+
+                <p>10s:</p>
+                <div className='flex flex-row'>
+                    <TextField value={selectedRegion["10cf_price"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Price"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["10cf_price"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["10cf_weight"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Weight"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["10cf_weight"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["10cf_per_thou"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Price per 1000lbs"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["10cf_per_thou"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                </div>
+
+                <p>20s:</p>
+                <div className='flex flex-row'>
+                    <TextField value={selectedRegion["20cf_price"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Price"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["20cf_price"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["20cf_weight"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Weight"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["20cf_weight"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["20cf_per_thou"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Price per 1000lbs"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["20cf_per_thou"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                </div>
+
+                <p>30s:</p>
+                <div className='flex flex-row'>
+                    <TextField value={selectedRegion["30cf_price"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Price"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["30cf_price"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["30cf_weight"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Weight"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["30cf_weight"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["30cf_per_thou"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Price per 1000lbs"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["30cf_per_thou"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                </div>
+
+                <p>40s:</p>
+                <div className='flex flex-row'>
+                    <TextField value={selectedRegion["40cf_price"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Price"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["40cf_price"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["40cf_weight"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Base Weight"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["40cf_weight"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                    <TextField value={selectedRegion["40cf_per_thou"]}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
+                    label="Price per 1000lbs"
+                    onChange={(e) => {
+                        let old = { ...selectedRegion};
+                        old["40cf_per_thou"] = parseInt(e.target.value);
+                        setSelectedRegion(old);
+                    }}/>
+                </div>
+
 
                 <div className='flex flex-row pt-4'>
                     <TextField value={selectedRegion["days_allowed"]}
