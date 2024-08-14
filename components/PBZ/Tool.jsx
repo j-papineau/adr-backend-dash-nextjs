@@ -111,7 +111,7 @@ const Tool = () => {
         if(feature.properties.haulers == null){
             setHaulers(null);
         }else{
-            let haulersTemp = feature.properties.haulers.split(', ');
+            let haulersTemp = feature.properties.haulers.split('/ ');
             setHaulers(haulersTemp);
             console.log(haulersTemp)
         }
