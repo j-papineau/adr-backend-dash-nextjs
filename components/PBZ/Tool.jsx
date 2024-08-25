@@ -9,6 +9,8 @@ import newIconURL from "../../public/images/markerImage.png"
 import { GoXCircleFill, GoCheckCircleFill } from "react-icons/go";
 import SizeDisplay from './SizeDisplay'
 import HaulerCard from './HaulerCard'
+import * as turf from '@turf/turf'
+
 
 
 
@@ -120,10 +122,19 @@ const Tool = () => {
     }
 
     const checkPip = async (checkPos) => {
+        console.log("check pos:" + checkPos)
+        var point = turf.point([checkPos[1], checkPos[0]]);
+
         for (let feature of json.features){
+
             if(feature.geometry.type === 'Polygon'){
+                let coords = feature.geometry.coordinates;
+                console.log(coords);
+                let poly = turf.polygon(coords);
+
                 const polygon = L.geoJSON(feature);
-                if(polygon.getBounds().contains(checkPos)){
+
+                if(turf.booleanPointInPolygon(point, poly)){
                     await getRegionInfo(feature.properties.regionID);
                     if(currentRegion == null){
                         setSelectedPoly(null);
@@ -140,6 +151,8 @@ const Tool = () => {
             }
         }
     }
+
+
 
   return (
     <div className='flex flex-col space-y-4'>
@@ -171,7 +184,17 @@ const Tool = () => {
         <>
             <div className='bg-slate-200 rounded-md p-2 flex flex-col space-y-2'>
                 <h5 className='font-semibold underline'>Pricing Information</h5>
-                <p><strong>RegionID:</strong> {selectedPoly.properties.regionID} </p>
+                <div className='flex flex-row space-x-2'>
+                    <div className='flex flex-col p-2 m-2 rounded-md bg-slate-300 text-center items-center'>
+                        <p className='italic'><strong>RegionID</strong></p>
+                        <Typography className='font-semibold' variant='h6'> {selectedPoly.properties.regionID} </Typography>
+                    </div>
+                    <div className='flex flex-col p-2 m-2 rounded-md bg-slate-300 text-center items-center'>
+                        <p className='italic'><strong>Region Name</strong></p>
+                        <Typography className='font-semibold' variant='h6'>{currentRegion.name}</Typography>
+                    </div>
+                </div>
+            
                 <div className='flex flex-row space-x-3'>
                     <div className='flex flex-col align-bottom items-center'>
                         <p>10s</p>
@@ -322,7 +345,7 @@ const Tool = () => {
                             <Typography variant='h6'>{currentRegion["days_allowed"]}</Typography>
                         </div>
                         <div className='bg-slate-300 rounded-md p-4 text-center'>
-                            <Typography variant='p'>Extra Day</Typography>
+                            <Typography variant='p'>Per Day</Typography>
                             <Typography variant='h6'>${currentRegion["extra_day"]}</Typography>
                         </div>
                     </div>
