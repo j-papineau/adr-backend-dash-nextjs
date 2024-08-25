@@ -68,6 +68,7 @@ const Tool = () => {
     }, [])
 
     const searchZip = async () => {
+        setSelectedPoly(null);
         let inputValue = document.getElementById("zipInput").value
         inputValue = Number(inputValue)
         console.log(inputValue)
@@ -79,7 +80,7 @@ const Tool = () => {
             let lng = data[0].lng;
             setMarkerPos([lat,lng]);
             map.setView([lat, lng], 14);
-            checkPip([lat,lng]);
+            await checkPip([lat,lng]);
         }else{
             alert("unable to find that zip code :(")
         }
