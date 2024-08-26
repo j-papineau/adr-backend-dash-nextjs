@@ -10,12 +10,16 @@ import { GoXCircleFill, GoCheckCircleFill } from "react-icons/go";
 import SizeDisplay from './SizeDisplay'
 import HaulerCard from './HaulerCard'
 import * as turf from '@turf/turf'
+import { UserAuth } from "../../context/AuthContext";
 
 
 
 
 
 const Tool = () => {
+
+    const {user, logOut, googleSignIn, userData, userPrivilege} = UserAuth()
+
 
     const newIcon = new L.Icon({
         iconUrl: "/images/marker-icon.png"
@@ -70,12 +74,17 @@ const Tool = () => {
     }, [])
 
     const searchZip = async () => {
+        
         setSelectedPoly(null);
         let inputValue = document.getElementById("zipInput").value
         inputValue = Number(inputValue)
-        console.log(inputValue)
+        trackSearch(inputValue);
         //get lat lng from supabase
         const {data, error} = await supabase.from('all_zips').select().eq('zip', inputValue)
+        if(error){
+            alert('zip code invalid / not in DB');
+            return;
+        }
         console.log(data)
         if(data.length > 0){
             let lat = data[0].lat;
@@ -87,6 +96,16 @@ const Tool = () => {
             alert("unable to find that zip code :(")
         }
         
+
+    }
+
+    const trackSearch = async (inputValue) => {
+        console.log("tracking" + inputValue);
+        console.log(user.uid);
+        const {error} = await supabase.from('zip_tool_history').insert({zip_queried: inputValue, user: user.uid});
+        if(error){
+            console.log(error);
+        }
 
     }
 
@@ -129,7 +148,7 @@ const Tool = () => {
 
             if(feature.geometry.type === 'Polygon'){
                 let coords = feature.geometry.coordinates;
-                console.log(coords);
+                // console.log(coords);
                 let poly = turf.polygon(coords);
 
                 const polygon = L.geoJSON(feature);
@@ -174,7 +193,7 @@ const Tool = () => {
                 <div className='flex flex-col space-y-2'>
                     <Typography variant='h5'>Search by zip</Typography>
                     <div className='flex flex-row w-[50%] space-x-2'>
-                        <TextField id='zipInput'></TextField>
+                        <TextField type='number' id='zipInput'></TextField>
                         <Button variant='contained' onClick={searchZip}>Search</Button>
                     </div>
                 </div>
