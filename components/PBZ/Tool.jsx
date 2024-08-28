@@ -37,6 +37,8 @@ const Tool = () => {
     const [selectedPoly, setSelectedPoly] = useState(null);
 
     const [currentRegion, setCurrentRegion] = useState(null);
+    
+    const [isZoneOOA, setIsZoneOOA] = useState(false);
 
 
     function blobToJson(blob){
@@ -202,6 +204,7 @@ const Tool = () => {
         {(selectedPoly != null) ? (
         <>
             <div className='bg-slate-200 rounded-md p-2 flex flex-col space-y-2'>
+                
                 <h5 className='font-semibold underline'>Pricing Information</h5>
                 <div className='flex flex-row space-x-2'>
                     <div className='flex flex-col p-2 m-2 rounded-md bg-slate-300 text-center items-center'>
