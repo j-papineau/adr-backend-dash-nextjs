@@ -5,6 +5,7 @@ import FileStuff from './FileStuff';
 import dynamic from 'next/dynamic';
 import Calculator from './Calculator';
 import { UserAuth } from '../../context/AuthContext';
+import History from './History';
 
 const PBZMain = () => {
 
@@ -48,6 +49,7 @@ const PBZMain = () => {
                 <Tab label="Zip Calculator" value="3"/>
                 <Tab disabled={userPrivilege == 'liason'} label="File Stuff (Admin)" value="2"/>
                 <Tab disabled={userPrivilege == 'liason'} label="Polygon Editor (Not Ready Yet)" value="4"/>
+                <Tab label="Usage History" value="5"/>
                 
               </TabList>
             </Box>
@@ -63,6 +65,9 @@ const PBZMain = () => {
                   </TabPanel>
                   <TabPanel value="4">
                     <PolygonEditor/>
+                  </TabPanel>
+                  <TabPanel value="5">
+                    <History/>
                   </TabPanel>
               
           </TabContext>
