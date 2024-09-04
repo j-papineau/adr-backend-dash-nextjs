@@ -6,6 +6,7 @@ import L from 'leaflet'
 import {allZipPolygons} from "../../data/all_zip_polys"
 import {supabase} from "/supabase/supabase.js"
 import { testFunc } from './ClosingByZip'
+import { readCSVtoJSON } from '../../lib/FileHelpers'
 
 const ByZip = () => {
 
@@ -27,8 +28,7 @@ const ByZip = () => {
             const {data, error} = await supabase.from("region_info").select("regionID, name");
 
             //sort regions alphabetically
-
-
+            
             setRegions(data);
             setRegionsLoaded(true);
             
@@ -49,8 +49,13 @@ const ByZip = () => {
             width: 250,
             },
         },
-        };
+    };
 
+    const runProcess = () => {
+
+        console.log(e.target.files[0]);
+        
+    }
 
     
   return (
@@ -59,11 +64,17 @@ const ByZip = () => {
         <div className='flex flex-row space-x-4'>
             <div className='flex flex-col p-2'>
                 <Typography variant='h6'>Customer List (sold)</Typography>
-                <Input type='file' />
+                <Input value={soldFile} type='file' onChange={(e) => {
+                    setSoldFile(e.target.files[0]);
+                    
+                }} />
             </div>
             <div className='flex flex-col p-2'>
                 <Typography variant='h6'>Customer List (quoted)</Typography>
-                <Input type='file' />
+                <Input value={quotedFile} type='file' onChange={(e) => {
+                    setQuotedFile(e.target.files[0]);
+
+                }}/>
             </div>
             <div className='flex flex-col p-2 items-center space-y-2'>
                 {regionsLoaded ? (<>
