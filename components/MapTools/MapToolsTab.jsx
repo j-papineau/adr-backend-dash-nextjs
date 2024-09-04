@@ -30,6 +30,15 @@ const MapToolsTab = () => {
         }
     ), [])
 
+    const ByZip = useMemo(() => dynamic(
+      () => import('./ByZip'),
+      {
+        loading: () => <CircularProgress/>,
+        ssr: false
+      }
+      
+    ), [])
+
 
   return (
 
@@ -41,6 +50,7 @@ const MapToolsTab = () => {
                   <TabList onChange={handleTabChange} aria-label="tabs">
                     <Tab  label="Import from Zips" value="1"/>
                     <Tab label="Zips from Radius" value="2"/>
+                    <Tab label="Closing by Zip" value="3"/>
         
                   </TabList>
                 </Box>
@@ -50,6 +60,10 @@ const MapToolsTab = () => {
 
                     <TabPanel value="2">
                         <FromRadius/>
+                    </TabPanel>
+
+                    <TabPanel value="3">
+                        <ByZip/>
                     </TabPanel>
               </TabContext>
             </Box>
