@@ -5,8 +5,10 @@ import { Button, CircularProgress, Divider, TextField, Typography, Select, Input
 import L from 'leaflet'
 import {allZipPolygons} from "../../data/all_zip_polys"
 import {supabase} from "/supabase/supabase.js"
-import { testFunc } from './ClosingByZip'
-import { readCSVtoJSON } from '../../lib/FileHelpers'
+import * as CBZ from '../../lib/ClosingByZip'
+import * as fh from '../../lib/FileHelpers'
+import * as xlsx from 'xlsx'
+
 
 const ByZip = () => {
 
@@ -16,29 +18,55 @@ const ByZip = () => {
 
     const [isMapShowing, setisMapShowing] = useState(false);
 
-    const [quotedFile, setQuotedFile] = useState(null);
-    const [soldFile, setSoldFile] = useState(null);
+    const [quotedFileData, setQuotedFileData] = useState(null);
+    const [soldFileData, setSoldFileData] = useState(null);
     const [regions, setRegions] = useState({});
     const [regionsLoaded, setRegionsLoaded] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [minDate, setMinDate] = useState(null);
+    const [maxDate, setMaxDate] = useState(null);
+
+    const [quotedFileFinal, setQuotedFileFinal] = useState(null);
+    const [soldFileFinal, setSoldFileFinal] = useState(null);
+    const [finalPolygons, setFinalPolygons] = useState({});
+
 
     useEffect(() => {
 
-        const getRegions = async () => {
-            const {data, error} = await supabase.from("region_info").select("regionID, name");
-
-            //sort regions alphabetically
-            
-            setRegions(data);
-            setRegionsLoaded(true);
-            
-        }
-
-        getRegions();
-
+        setRegionsLoaded(false);
 
     }, [])
 
+    useEffect(() => {
+
+        if(quotedFileData === null || soldFileData === null){
+            console.log("one or more files is null");
+            return;
+        }else{
+            setIsProcessing(true);
+            //get region list
+            var lookup = {};
+            var items = soldFileData;
+            var result = [];
+            for (var item, i=0; item = items[i++];){
+                var regionName = item["Region Name"];
+                if(!(regionName in lookup)){
+                    lookup[regionName] = 1;
+                    result.push(regionName);
+                }
+            }
+            
+            setRegions(result);
+            setRegionsLoaded(true);
+
+            setIsProcessing(false);
+
+        }
+
+    }, [soldFileData, quotedFileData])
+
+    
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
 
@@ -52,10 +80,43 @@ const ByZip = () => {
     };
 
     const runProcess = () => {
+        setisMapShowing(false);
+        setIsProcessing(true);
 
-        console.log(e.target.files[0]);
+        if(quotedFileData === null || soldFileData === null){
+            alert("file error.");
+            return;
+        }
+
+        // filter out by region
+        var soldFiltered = soldFileData.filter((entry) => {
+            return entry["Region Name"] === selectedRegion;
+        })
+
+        var quotedFiltered = quotedFileData.filter((entry) => {
+            return entry["Region Name"] === selectedRegion;
+        })
+
+
+        //get unique zips from quoted filtered
+        let soldZips = CBZ.getUniqueZips(soldFiltered);
+        let quotedZips = CBZ.getUniqueZips(quotedFiltered);
+        let finalZips = (soldZips.length > quotedZips) ? soldZips : quotedZips;
         
+        // CBZ.convertExcelDatesToSanePersonDates(soldFiltered);
+
+        let closingFinalByZip = CBZ.getClosingByZip(finalZips, soldFiltered, quotedFiltered);
+
+        let polygonsWithClosing = CBZ.getPolygonGeometries(closingFinalByZip);
+        setFinalPolygons(polygonsWithClosing);
+        console.log(polygonsWithClosing);
+
+        setIsProcessing(false);
+        setisMapShowing(true);
+
     }
+
+    
 
     
   return (
@@ -64,18 +125,17 @@ const ByZip = () => {
         <div className='flex flex-row space-x-4'>
             <div className='flex flex-col p-2'>
                 <Typography variant='h6'>Customer List (sold)</Typography>
-                <Input value={soldFile} type='file' onChange={(e) => {
-                    setSoldFile(e.target.files[0]);
-                    
-                }} />
-            </div>
-            <div className='flex flex-col p-2'>
-                <Typography variant='h6'>Customer List (quoted)</Typography>
-                <Input value={quotedFile} type='file' onChange={(e) => {
-                    setQuotedFile(e.target.files[0]);
-
+                <TextField type='file' onChange={(e) => {
+                    fh.handleXLSXUpload(e, setSoldFileData);
                 }}/>
+
+                <Typography variant='h6'>Customer List (quoted)</Typography>
+                <TextField type='file' onChange={(e) => {
+                    fh.handleXLSXUpload(e, setQuotedFileData);
+                }}/>
+
             </div>
+
             <div className='flex flex-col p-2 items-center space-y-2'>
                 {regionsLoaded ? (<>
                 <FormControl sx={{m: 1, width: 200}}>
@@ -90,26 +150,45 @@ const ByZip = () => {
 
                         {regions.map((region, key) => (
                             
-                            <MenuItem value={region.regionID} key={key}>
-                                <ListItemText primary={region.name}/>
+                            <MenuItem value={region} key={key}>
+                                <ListItemText primary={region}/>
                             </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
 
-                </>) : (<CircularProgress size={30}/>)}
+                </>) : (<></>)}
 
-                <Button disabled={(quotedFile == null | soldFile == null | selectedRegion == null)} variant='contained'>Process</Button>
+                <Button size={'large'} disabled={(quotedFileData == null | soldFileData == null | selectedRegion == null)} variant='contained' onClick={runProcess}>Process</Button>
+                {isProcessing ? (<CircularProgress color='secondary'/>) : (<></>)}
             </div>
         </div>
         
         {(!isMapShowing) ? (<></>) : (
             <>
-            <MapContainer ref={setMap} center={mapCenter} zoom={mapZoom} scrollWheelZoom={false} style={{height: 600, width: "100%"}}>
+            <MapContainer ref={setMap} center={mapCenter} zoom={mapZoom} scrollWheelZoom={true} style={{height: 600, width: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />  
+                />
+                {
+                    
+                    finalPolygons.map((polygon) => {
+
+                        if( polygon.geometry && polygon.geometry.coordinates && Array.isArray(polygon.geometry.coordinates[0])){
+                            return (
+                                <Polygon key={polygon.zipCode} 
+                            positions={polygon.geometry.coordinates[0].map(coord => [coord[1], coord[0]])} 
+                            pathOptions={{ color: polygon.color, weight: 2, fillOpacity: 0.5 }}
+                            eventHandlers={{
+                                click: () => console.log(polygon.zipCode),
+                            }}
+                            />
+                            )
+                        }
+                    })
+                    
+                }
             </MapContainer>
             </>
         )}
