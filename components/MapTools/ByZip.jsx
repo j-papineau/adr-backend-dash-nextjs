@@ -206,7 +206,7 @@ const ByZip = () => {
         
         {(!isMapShowing) ? (<></>) : (
             <>
-            <MapContainer ref={setMap} center={mapCenter} zoom={mapZoom} scrollWheelZoom={false} style={{height: 600, width: "100%"}}>
+            <MapContainer ref={setMap} center={mapCenter} zoom={mapZoom} scrollWheelZoom={true} style={{height: 600, width: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
