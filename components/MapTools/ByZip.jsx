@@ -8,6 +8,7 @@ import {supabase} from "/supabase/supabase.js"
 import * as CBZ from '../../lib/ClosingByZip'
 import * as fh from '../../lib/FileHelpers'
 import * as xlsx from 'xlsx'
+import { DataGrid } from '@mui/x-data-grid'
 
 
 const ByZip = () => {
@@ -30,6 +31,7 @@ const ByZip = () => {
     const [quotedFileFinal, setQuotedFileFinal] = useState(null);
     const [soldFileFinal, setSoldFileFinal] = useState(null);
     const [finalPolygons, setFinalPolygons] = useState({});
+    const [flattenedData, setFlattenedData] = useState({});
 
 
     useEffect(() => {
@@ -56,6 +58,8 @@ const ByZip = () => {
                     result.push(regionName);
                 }
             }
+
+            result.sort();
             
             setRegions(result);
             setRegionsLoaded(true);
@@ -109,12 +113,48 @@ const ByZip = () => {
 
         let polygonsWithClosing = CBZ.getPolygonGeometries(closingFinalByZip);
         setFinalPolygons(polygonsWithClosing);
-        console.log(polygonsWithClosing);
+        // console.log(polygonsWithClosing);
+
+        setFlattenedData(flattenData(polygonsWithClosing));
 
         setIsProcessing(false);
         setisMapShowing(true);
 
     }
+
+    const flattenData = (data) => {
+        return data.map((item, index) => ({
+            id: index + 1,
+            zip: item.info.zip,
+            closingRate: item.info.closingRate,
+            quotedCount: item.info.quotedCount,
+            soldCount: item.info.soldCount,
+            center: item.centerOfMass
+        }))
+    }
+
+
+    const cols = [
+        {field: 'id', headerName: 'ID', hide: true},
+        {field: 'zip', headerName: 'Zip', width: 120,},
+        {field: 'closingRate', headerName: 'Closing Rate', width: 120},
+        {field: 'quotedCount', headerName: 'Quoted'},
+        {field: 'soldCount', headerName: 'Sold'}
+    ]
+
+    
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      };
 
     
 
@@ -166,7 +206,7 @@ const ByZip = () => {
         
         {(!isMapShowing) ? (<></>) : (
             <>
-            <MapContainer ref={setMap} center={mapCenter} zoom={mapZoom} scrollWheelZoom={true} style={{height: 600, width: "100%"}}>
+            <MapContainer ref={setMap} center={mapCenter} zoom={mapZoom} scrollWheelZoom={false} style={{height: 600, width: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -181,15 +221,44 @@ const ByZip = () => {
                             positions={polygon.geometry.coordinates[0].map(coord => [coord[1], coord[0]])} 
                             pathOptions={{ color: polygon.color, weight: 2, fillOpacity: 0.5 }}
                             eventHandlers={{
-                                click: () => console.log(polygon.zipCode),
+                                click: () => console.log(polygon),
                             }}
-                            />
+                            >
+                                <Popup>
+                                    <div>
+                                        <h1 className='text-xl'><strong>{polygon.zipCode}</strong></h1>
+                                        <p><strong>Closing: </strong>{polygon.info.closingRate}</p>
+                                        <p><strong>Quoted: </strong>{polygon.info.quotedCount}</p>
+                                        <p><strong>Sold: </strong>{polygon.info.soldCount}</p>
+                                    </div>
+                                </Popup>
+                            </Polygon>
                             )
                         }
                     })
                     
                 }
             </MapContainer>
+
+            <div className='flex flex-col'>
+                <DataGrid
+                rows={flattenedData}
+                columns={cols}
+                initialState={{
+                    pagination: {
+                        paginationModel: {
+                        pageSize: 10,
+                        },
+                    },
+                    }}
+                    pageSizeOptions={[5,10]}
+                    //onRowClick flash polygon
+                    onRowClick={(e) => {
+                        console.log(e.row.center);
+                        map.flyTo([e.row.center[1], e.row.center[0]], 13);
+                    }}
+                />
+            </div>
             </>
         )}
         
