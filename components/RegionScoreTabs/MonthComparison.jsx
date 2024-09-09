@@ -8,7 +8,7 @@ import { jsx } from '@emotion/react';
 import AvgCard from './AvgCard';
 import MetricComparisonCard from './MetricComparisonCard';
 import MonthTrendGraphs from './MonthTrendGraphs';
-import { testFunc } from '../MapTools/ClosingByZip';
+
 
 const MonthComparison = () => {
 
