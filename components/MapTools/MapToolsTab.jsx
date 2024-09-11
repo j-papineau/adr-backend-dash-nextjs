@@ -3,6 +3,7 @@ import { Box, CircularProgress, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import dynamic from 'next/dynamic'
 import LoadingWithText from './LoadingWithText'
+import CTLByZip from './CTLByZip'
 // import FromRadius from './FromRadius'
 // import PolyFromZips from './PolyFromZips'
 
@@ -48,10 +49,10 @@ const MapToolsTab = () => {
               <TabContext value={tabValue}>
                 <Box sx={{borderBottom: 1, borderColor: 'divider'}} >
                   <TabList onChange={handleTabChange} aria-label="tabs">
-                    <Tab  label="Import from Zips" value="1"/>
-                    <Tab label="Zips from Radius" value="2"/>
+                    <Tab  label="Import from Zips" value="1" hidden/>
+                    <Tab label="Zips from Radius" value="2" hidden/>
                     <Tab label="Closing by Zip" value="3"/>
-        
+                    <Tab label="Google Ads By Zip" value="4"/>
                   </TabList>
                 </Box>
                     <TabPanel value="1">
@@ -64,6 +65,9 @@ const MapToolsTab = () => {
 
                     <TabPanel value="3">
                         <ByZip/>
+                    </TabPanel>
+                    <TabPanel value="4">
+                      <CTLByZip/>
                     </TabPanel>
               </TabContext>
             </Box>
