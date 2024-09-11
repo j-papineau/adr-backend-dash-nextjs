@@ -3,7 +3,7 @@ import { Box, CircularProgress, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import dynamic from 'next/dynamic'
 import LoadingWithText from './LoadingWithText'
-import CTLByZip from './CTLByZip'
+
 // import FromRadius from './FromRadius'
 // import PolyFromZips from './PolyFromZips'
 
@@ -33,6 +33,15 @@ const MapToolsTab = () => {
 
     const ByZip = useMemo(() => dynamic(
       () => import('./ByZip'),
+      {
+        loading: () => <CircularProgress/>,
+        ssr: false
+      }
+      
+    ), [])
+
+    const CTLByZip = useMemo(() => dynamic(
+      () => import('./CTLByZip'),
       {
         loading: () => <CircularProgress/>,
         ssr: false
