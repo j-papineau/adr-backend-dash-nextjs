@@ -40,55 +40,80 @@ const CTLByZip = () => {
 
     const [flattenedData, setFlattenedData] = useState(null);
 
+    const [finalMapData, setFinalMapData] = useState(null);
+
+    const [colorCodeMode, setColorCodeMode] = useState("CPL");
+
 
     const cols = [
         {field: 'id', headerName: 'ID', hide: true},
         {field: 'zip', headerName: 'Zip', width: 120,},
-        {field: 'closingRate', headerName: 'Closing Rate', width: 120},
-        {field: 'quotedCount', headerName: 'Quoted'},
-        {field: 'soldCount', headerName: 'Sold'}
+        {field: 'ctl', headerName: 'CTL', width: 120},
+        {field: 'cpl', headerName: 'CPL'},
     ]
 
     const flattenData = (data) => {
         return data.map((item, index) => ({
             id: index + 1,
-            zip: item.info.zip,
-            closingRate: item.info.closingRate,
-            quotedCount: item.info.quotedCount,
-            soldCount: item.info.soldCount,
-            center: item.centerOfMass
+            zip: item["Matched location"],
+            ctl: item["CTL"],
+            cpl: item["CPL"],
+            center: item["center"]
         }))
     }
 
+
     const processData = () => {
         //trim zip codes from matched location
-        GBZ.trimZips(gadData);
+        
+        let trimmed = GBZ.trimZips(gadData);
         let acc = CBZ.countZipOccurences(crmData);
-        console.log(acc)
+        let joined = GBZ.joinLeadstoGad(acc, trimmed, colorCodeMode)
+        //join acc (leads by zip) to gad data
+        //get big sums
+        setFinalMapData(joined);
+        console.log(joined)
+        setFlattenedData(flattenData(joined))
+        console.log(flattenedData)
+        setisMapShowing(true);
 
         
     }
 
 
     return (
-        <div className='h-[150vh] flex flex-col space-y-4'>
-            <div className='flex flex-row space-x-4 items-center'>
-            <Typography variant='h6'>CRM List</Typography>
-                <TextField type='file' onChange={(e) => {
-                    console.log("crm file")
-                    fh.handleXLSXUpload(e, setCrmData);
-                }}/>
-
-                <Typography variant='h6'>GAD Data</Typography>
-                <p>(remove generated rows and export as xlsx)</p>
-                <TextField type='file' onChange={(e) => {
-                    fh.handleXLSXUpload(e, setGadData);
-                }}/>   
-            </div>
-            <div className='flex flex-row space-x-4 items-center'>
-
-                <Button onClick={processData} disabled={crmData == null | gadData == null} variant='contained' size='large' >Process</Button>
+        <div className='h-[200vh] flex flex-col space-y-4'>
+            <div className='flex flex-row space-x-4 items-end'>
             
+                <div className='flex flex-col'>
+                    <Typography variant='h6'>CRM List</Typography>
+                    <TextField type='file' onChange={(e) => {
+                        console.log("crm file")
+                        fh.handleXLSXUpload(e, setCrmData);
+                    }}/>
+                </div>
+
+                <div className='flex flex-col'>
+                    <Typography variant='h6'>GAD Data</Typography>
+                    <p className='text-xs'>(remove generated rows and export as xlsx)</p>
+                    <TextField type='file' onChange={(e) => {
+                        fh.handleXLSXUpload(e, setGadData);
+                    }}/>
+                </div>
+   
+            </div>
+
+            <div className='flex flex-row space-x-4 items-center'>
+                <div className='flex flex-col'>
+                    <Typography variant='h6'>Sales Data</Typography>
+                    <TextField disabled type='file' onChange={(e) => {
+                        fh.handleXLSXUpload(e, setGadData);
+                    }}/>
+                </div>
+            </div>
+            <div className='flex flex-col space-x-4 items-center'>
+
+                 <Button size={'large'} disabled={(crmData == null || gadData == null)} variant='contained' onClick={processData}>Process</Button>
             </div>
 
             <div className='flex flex-col p-2 items-center'>
@@ -101,7 +126,63 @@ const CTLByZip = () => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />  
 
+                        {
+                            finalMapData.map((item) => {
+                                if(item.geometry && item.geometry.coordinates && Array.isArray(item.geometry.coordinates)){
+                                    return (
+                                        <Polygon key={item["Matched location"]}
+                                        positions={item.geometry.coordinates[0].map(coord => [coord[1], coord[0]])}
+                                        pathOptions={{color: item.color_code, weight: 2, fillOpacity:.3}}
+                                        eventHanders={{
+                                            click: () => console.log(item)
+                                        }}
+                                        >
+                                            <Popup>
+                                                <div>
+                                                    <h1 className='text-xl'><strong>{item["Matched location"]}</strong></h1>
+                                                    <p><strong>CPL: </strong>{Math.round(item.CPL)}</p>
+                                                    <p><strong>CPC: </strong>{item["Avg. CPC"]}</p>
+                                                    <p><strong>CTL: </strong>{item["CTL"]}</p>
+                                                    <p><strong>Clicks: </strong>{item["Clicks"]}</p>
+                                                    <p><strong>Leads: </strong>{item["Leads"]}</p>
+                                                    <p><strong>Cost: </strong>{item["Cost"]}</p>
+                                                </div>
+                                                
+                                            </Popup>
+
+                                        </Polygon>
+                                    )
+                                }
+                            })
+                        }
+
                         </MapContainer>
+
+                        <FormControl sx={{m: 1, width: 200}}>
+                            <InputLabel id="select-label">Color Code Based On</InputLabel>
+                            <Select
+                                    
+                                    labelId='select-label'
+                                    fullWidth
+                                    value={colorCodeMode}
+                                    label="Color Coding"
+                                    onChange={(e) => {
+                                        setColorCodeMode(e.target.value)
+                                        if(isMapShowing){
+                                            processData()
+                                        }}}
+                                    MenuProps={MenuProps}
+                                    input={<OutlinedInput label="tag" />}>
+                                        
+                                        <MenuItem value={"CTL"} key={1}>
+                                            <ListItemText primary={"Click to Lead"}/>
+                                        </MenuItem>
+                                        <MenuItem value={"CPL"} key={2}>
+                                            <ListItemText primary={"Cost Per Lead"}/>
+                                        </MenuItem>
+
+                            </Select>
+                        </FormControl>
 
                         <div className='flex flex-col'>
                         <DataGrid
