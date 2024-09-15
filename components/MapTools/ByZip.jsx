@@ -10,6 +10,7 @@ import * as fh from '../../lib/FileHelpers'
 import * as xlsx from 'xlsx'
 import { DataGrid } from '@mui/x-data-grid'
 import 'leaflet/dist/leaflet.css'
+import NiceNumberCard from "../NiceComponents/NiceNumberCard"
 
 
 
@@ -170,21 +171,25 @@ const ByZip = () => {
   return (
     
     <div className='h=[150vh] flex flex-col space-y-4'>
-        <div className='flex flex-row space-x-4'>
-            <div className='flex flex-col p-2'>
-                <Typography variant='h6'>Sales List</Typography>
-                <TextField type='file' onChange={(e) => {
-                    fh.handleXLSXUpload(e, setSoldFileData);
-                }}/>
+        <div className='flex flex-col space-x-4 border p-2 drop-shadow-lg items-center'>
+            <div className='flex flex-row p-2 space-x-2 items-center'>
+                <div>
+                    <Typography variant='h6'>Sales List</Typography>
+                    <TextField type='file' onChange={(e) => {
+                        fh.handleXLSXUpload(e, setSoldFileData);
+                    }}/>
+                </div>
 
-                <Typography variant='h6'>Everything List</Typography>
-                <TextField type='file' onChange={(e) => {
-                    fh.handleXLSXUpload(e, setQuotedFileData);
-                }}/>
+                <div>
+                    <Typography variant='h6'>Everything List</Typography>
+                    <TextField type='file' onChange={(e) => {
+                        fh.handleXLSXUpload(e, setQuotedFileData);
+                    }}/>
+                </div>
 
             </div>
 
-            <div className='flex flex-col p-2 items-center space-y-2'>
+            <div className='flex flex-row p-2 items-center space-y-2'>
                 {regionsLoaded ? (<>
                 <FormControl sx={{m: 1, width: 200}}>
                     <InputLabel id="select-label">Region</InputLabel>
@@ -248,11 +253,11 @@ const ByZip = () => {
                     
                 }
             </MapContainer>
-            <div className='flex flex-col'>
-                <p><strong>Leads:</strong> {finalLeads}</p>
-                <p><strong>Quotes:</strong> {finalQuotes} </p>
-                <p><strong>Sales:</strong> {finalSales}</p>
-                <p><strong>Closing:</strong> {finalCR}</p>
+            <div className='flex flex-row space-x-2'>
+                <NiceNumberCard titleText="Leads" numberText={finalLeads}/>
+                <NiceNumberCard titleText="Quotes" numberText={finalQuotes}/>
+                <NiceNumberCard titleText="Sales" numberText={finalSales}/>
+                <NiceNumberCard titleText="Closing" numberText={Math.round(finalCR * 100) / 100}/>
             </div>
 
             <div className='flex flex-col'>
