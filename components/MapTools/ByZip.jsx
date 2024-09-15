@@ -9,6 +9,8 @@ import * as CBZ from '../../lib/ClosingByZip'
 import * as fh from '../../lib/FileHelpers'
 import * as xlsx from 'xlsx'
 import { DataGrid } from '@mui/x-data-grid'
+import 'leaflet/dist/leaflet.css'
+
 
 
 const ByZip = () => {
@@ -32,6 +34,10 @@ const ByZip = () => {
     const [soldFileFinal, setSoldFileFinal] = useState(null);
     const [finalPolygons, setFinalPolygons] = useState({});
     const [flattenedData, setFlattenedData] = useState({});
+    const [finalLeads, setFinalLeads] = useState(0);
+    const [finalSales, setFinalSales] = useState(0);
+    const [finalQuotes, setFinalQuotes] = useState(0);
+    const [finalCR, setFinalCR] = useState(0); 
 
 
     useEffect(() => {
@@ -105,11 +111,11 @@ const ByZip = () => {
         //get unique zips from quoted filtered
         let soldZips = CBZ.getUniqueZips(soldFiltered);
         let quotedZips = CBZ.getUniqueZips(quotedFiltered);
-        let finalZips = (soldZips.length > quotedZips) ? soldZips : quotedZips;
+        let finalZips = quotedZips;
         
         // CBZ.convertExcelDatesToSanePersonDates(soldFiltered);
 
-        let closingFinalByZip = CBZ.getClosingByZip(finalZips, soldFiltered, quotedFiltered);
+        let closingFinalByZip = CBZ.getClosingByZip(finalZips, soldFiltered, quotedFiltered, setFinalLeads, setFinalQuotes, setFinalSales, setFinalCR);
 
         let polygonsWithClosing = CBZ.getPolygonGeometries(closingFinalByZip);
         setFinalPolygons(polygonsWithClosing);
@@ -126,6 +132,7 @@ const ByZip = () => {
         return data.map((item, index) => ({
             id: index + 1,
             zip: item.info.zip,
+            leadCount: item.info.leadCount,
             closingRate: item.info.closingRate,
             quotedCount: item.info.quotedCount,
             soldCount: item.info.soldCount,
@@ -138,6 +145,7 @@ const ByZip = () => {
         {field: 'id', headerName: 'ID', hide: true},
         {field: 'zip', headerName: 'Zip', width: 120,},
         {field: 'closingRate', headerName: 'Closing Rate', width: 120},
+        {field: 'leadCount', headerName: 'Leads'},
         {field: 'quotedCount', headerName: 'Quoted'},
         {field: 'soldCount', headerName: 'Sold'}
     ]
@@ -164,12 +172,12 @@ const ByZip = () => {
     <div className='h=[150vh] flex flex-col space-y-4'>
         <div className='flex flex-row space-x-4'>
             <div className='flex flex-col p-2'>
-                <Typography variant='h6'>Customer List (sold)</Typography>
+                <Typography variant='h6'>Sales List</Typography>
                 <TextField type='file' onChange={(e) => {
                     fh.handleXLSXUpload(e, setSoldFileData);
                 }}/>
 
-                <Typography variant='h6'>Customer List (quoted)</Typography>
+                <Typography variant='h6'>Everything List</Typography>
                 <TextField type='file' onChange={(e) => {
                     fh.handleXLSXUpload(e, setQuotedFileData);
                 }}/>
@@ -230,6 +238,7 @@ const ByZip = () => {
                                         <p><strong>Closing: </strong>{polygon.info.closingRate}</p>
                                         <p><strong>Quoted: </strong>{polygon.info.quotedCount}</p>
                                         <p><strong>Sold: </strong>{polygon.info.soldCount}</p>
+                                        <p><strong>Leads: </strong>{polygon.info.leadCount}</p>
                                     </div>
                                 </Popup>
                             </Polygon>
@@ -239,6 +248,12 @@ const ByZip = () => {
                     
                 }
             </MapContainer>
+            <div className='flex flex-col'>
+                <p><strong>Leads:</strong> {finalLeads}</p>
+                <p><strong>Quotes:</strong> {finalQuotes} </p>
+                <p><strong>Sales:</strong> {finalSales}</p>
+                <p><strong>Closing:</strong> {finalCR}</p>
+            </div>
 
             <div className='flex flex-col'>
                 <DataGrid

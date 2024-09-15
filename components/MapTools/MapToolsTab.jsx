@@ -9,7 +9,7 @@ import LoadingWithText from './LoadingWithText'
 
 const MapToolsTab = () => {
 
-    const [tabValue, setTabValue] = useState('1');
+    const [tabValue, setTabValue] = useState('3');
 
     const handleTabChange = (e, newValue) => {
         setTabValue(newValue);
@@ -58,19 +58,19 @@ const MapToolsTab = () => {
               <TabContext value={tabValue}>
                 <Box sx={{borderBottom: 1, borderColor: 'divider'}} >
                   <TabList onChange={handleTabChange} aria-label="tabs">
-                    <Tab  label="Import from Zips" value="1" hidden/>
-                    <Tab label="Zips from Radius" value="2" hidden/>
+                    {/* <Tab  label="Import from Zips" value="1" hidden/>
+                    <Tab label="Zips from Radius" value="2" hidden/> */}
                     <Tab label="Closing by Zip" value="3"/>
                     <Tab label="Google Ads By Zip" value="4"/>
                   </TabList>
                 </Box>
-                    <TabPanel value="1">
+                    {/* <TabPanel value="1">
                         <PolyFromZips/>
                     </TabPanel>
 
                     <TabPanel value="2">
                         <FromRadius/>
-                    </TabPanel>
+                    </TabPanel> */}
 
                     <TabPanel value="3">
                         <ByZip/>
