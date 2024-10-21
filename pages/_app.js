@@ -1,7 +1,7 @@
 import SideBarAlt from '../components/SideBarAlt'
 import { AuthContextProvider } from '../context/AuthContext'
 import '../styles/globals.css'
-
+import {Toaster} from "react-hot-toast"
 import { UserAuth } from '../context/AuthContext'
 import Login from './login'
 import {useState, useEffect} from 'react'
@@ -44,6 +44,7 @@ export default function App({ Component, pageProps }) {
    <AuthContextProvider>
     
       <SideBarAlt  darkThemeChange={handleThemeSwitch}>
+        
         <AnimatePresence
           initial={{ x:1000 }}
           animate={{ x:0 }}
@@ -51,6 +52,7 @@ export default function App({ Component, pageProps }) {
           exit= {{x:1000}}
         >
           <motion.div>
+            <Toaster />
             <Component {...pageProps} />
           </motion.div>
           
