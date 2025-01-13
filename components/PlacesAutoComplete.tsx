@@ -23,6 +23,7 @@ const PlacesAutocomplete = ({
 
   const renderSuggestions = () => {
     return data.map((suggestion) => {
+      console.log(suggestion)
       const {
         place_id,
         structured_formatting: { main_text, secondary_text },
@@ -33,6 +34,7 @@ const PlacesAutocomplete = ({
         <li
           key={place_id}
           onClick={() => {
+            
             setValue(description, false);
             clearSuggestions();
             onAddressSelect && onAddressSelect(description);
@@ -45,10 +47,10 @@ const PlacesAutocomplete = ({
   };
 
   return (
-    <div className="text-black dark:text-white">
+    <div className="text-black">
       <Input 
         clearable
-        
+        width="300px"
         value={value}
         label="Search"
         disabled={!ready}

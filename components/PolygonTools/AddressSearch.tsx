@@ -1,5 +1,5 @@
 "use client"
-import { Input } from '@mui/material'
+import { CircularProgress, Input } from '@mui/material'
 import React, { useEffect, useMemo } from 'react'
 import GooglePlacesAutoComplete from "react-google-places-autocomplete";
 import PlacesAutocomplete from '../PlacesAutoComplete';
@@ -13,20 +13,21 @@ type Props = {
 
 const AddressSearch = (props: Props) => {
 
-  const libraries = useMemo(() => ['places'], []);
+  // const libraries = useMemo(() => ['places'], []);
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_G_KEY,
-    libraries: libraries as Libraries
-  })
+  // const { isLoaded } = useJsApiLoader({
+  //   id: 'google-map-script',
+  //   googleMapsApiKey: process.env.NEXT_PUBLIC_G_KEY,
+  //   libraries: libraries as Libraries
+  // })
 
   return (
     <div>
-      {isLoaded && (
-        <PlacesAutocomplete  />
-      )}
-        {/* <Input value={props.value} onChange={(e) => props.setValue(e.target.value)}/> */}
+      {/* {isLoaded && (
+        <PlacesAutocomplete  onAddressSelect={(e) => props.setValue(e)}/>
+      )} */}
+      <PlacesAutocomplete onAddressSelect={(e) => props.setValue(e)} />
+        
     </div>
   )
 }

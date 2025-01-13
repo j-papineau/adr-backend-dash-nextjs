@@ -31,7 +31,7 @@ const ByZips = (props: Props) => {
     <div className='flex flex-col space-y-2'>
         <p><strong>Comma Delimited List of Zips </strong></p>
         <TextField 
-        placeholder='32176, 32177, 32000, ...'
+        placeholder='32164, 32137'
         multiline
         value={zipInput} 
         onChange={(e) => {setZipInput(e.target.value)}}

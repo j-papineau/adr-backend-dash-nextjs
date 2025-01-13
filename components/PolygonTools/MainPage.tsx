@@ -5,6 +5,7 @@ import ByZips from './ByZips'
 import ByRadius from './ByRadius'
 import dynamic from 'next/dynamic'
 import * as GM from "../.././lib/hooks/GoogleMaps"
+import TestIsodistance from './TestIsodistance'
 
 type Props = {}
 
@@ -27,6 +28,14 @@ const MainPage = (props: Props) => {
         }
     ), [])
 
+    const TestIsoDistanceTest = useMemo(() => dynamic(
+        () => import('./TestIsodistance'),
+        {
+            loading: () => <CircularProgress/>,
+            ssr:false
+        }
+    ), [])
+
   return (
     <div className='w-full h-full flex flex-col bg-white shadow'>
         <div>
@@ -40,6 +49,7 @@ const MainPage = (props: Props) => {
                     <Tab label="Zips from Radius" value="2" hidden/> */}
                     <Tab label="Zip Codes" value="1"/>
                     <Tab label="Radius" value="2"/>
+                    <Tab label="Test Isodistance" value="3" disabled/>
                     </TabList>
                 </Box>
                 <TabPanel value='1'>
@@ -47,6 +57,9 @@ const MainPage = (props: Props) => {
                 </TabPanel>
                 <TabPanel value='2'>
                     <ByRadius/>
+                </TabPanel>
+                <TabPanel value='3'>
+                    <TestIsoDistanceTest/>
                 </TabPanel>
             </TabContext>
         </div>
