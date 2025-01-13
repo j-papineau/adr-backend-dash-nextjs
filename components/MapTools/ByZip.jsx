@@ -24,6 +24,7 @@ const ByZip = () => {
 
     const [quotedFileData, setQuotedFileData] = useState(null);
     const [soldFileData, setSoldFileData] = useState(null);
+    const [gadFileData, setGadFileData] = useState(null);
     const [regions, setRegions] = useState({});
     const [regionsLoaded, setRegionsLoaded] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState(null);
@@ -184,6 +185,12 @@ const ByZip = () => {
                     <Typography variant='h6'>Everything List</Typography>
                     <TextField type='file' onChange={(e) => {
                         fh.handleXLSXUpload(e, setQuotedFileData);
+                    }}/>
+                </div>
+                <div>
+                    <Typography variant='h6'>GAD data</Typography>
+                    <TextField type='file' onChange={(e) => {
+                        fh.handleXLSXUpload(e, setGadFileData);
                     }}/>
                 </div>
 

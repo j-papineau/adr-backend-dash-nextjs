@@ -40,7 +40,7 @@ export const devView = [
     { name: "Zip Search DB/Tools", link: "/zipSearchTools", icon: FaSearch},
     { name: "Quote Tool", link: "/spencer-quote-tool", icon: BsFillChatLeftQuoteFill},
     { name: "ADR Map", link: "/adr-map", icon: FaMap},
-    {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
+    {name: "Polygon Tools", link: "/polygon-tools", icon: FaMap},
     { name: "Region Score", link: "/region-scores", icon: TbReportMoney, margin: true },
     { name: "Website Map Editor", link: "/geoJSON", icon: FaMap},
     { name: "Pricing By Area", link: "/PricingByArea", icon: FaFunnelDollar},
@@ -71,7 +71,7 @@ export const adminView = [
 export const liasonView = [
     { name: "PBZ", link: "/pbz", icon: FaMap},
     {name: "Hauler Radius", link:"/radius", icon: BsPinMap},
-    { name: "ADR Map", link: "/adr-map", icon: FaMap},
+    {name: "Polygon Tools", link: "/polygon-tools", icon: FaMap},
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Settings", link: "/settings", icon: RiSettings4Line},
 
